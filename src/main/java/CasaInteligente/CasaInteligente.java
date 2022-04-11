@@ -19,7 +19,7 @@ public class CasaInteligente {
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
     /**
-     * Constructor for objects of class CasaInteligente
+     * Construtor por omissão de CasaInteligente.
      */
     public CasaInteligente() {
         // initialise instance variables
@@ -28,6 +28,10 @@ public class CasaInteligente {
         this.locations = new HashMap();
     }
 
+    /**
+     * Construtor parametrizado de CasaInteligente.
+     * @param morada
+     */
     public CasaInteligente(String morada) {
         // initialise instance variables
         this.morada = morada;
