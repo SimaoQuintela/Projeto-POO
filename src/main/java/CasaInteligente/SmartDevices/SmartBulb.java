@@ -14,6 +14,9 @@ public class SmartBulb extends SmartDevice {
     public static final int COLD = 0;
     
     private int tone;
+    private int dimensions;
+    private int dailyConsumption;
+
 
     /**
      * Construtor por omissão de uma SmartBulb
@@ -25,8 +28,8 @@ public class SmartBulb extends SmartDevice {
     }
 
     /**
-     * Construtor parametrizado de uma SmartBulb
-     * @param id
+     * Construtor parametrizado de uma SmartBulb.
+     * @param id Código que identifica a SmartBulb.
      * @param tone
      */
     public SmartBulb(String id, int tone) {
