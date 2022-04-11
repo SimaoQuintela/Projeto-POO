@@ -13,31 +13,53 @@ public class SmartDevice {
     private boolean on;
 
     /**
-     * Constructor for objects of class SmartDevice
+     * Construtor por omissão de um SmartDevice.
      */
     public SmartDevice() {
         this.id = "";
         this.on = false;
     }
 
+    /**
+     * Construtor parametrizado de um SmartDevice.
+     * @param s Código que identifica o SmartDevice.
+     */
     public SmartDevice(String s) {
         this.id = s;
         this.on = false;
     }
 
+    /**
+     * Construtor parametrizado de um SmartDevice.
+     * @param s Código que identifica o SmartDevice.
+     * @param on Estado (ligado ou desligado) do SmartDevice.
+     */
     public SmartDevice(String s, boolean on){
         this.id = s;
         this.on = on;
     }
 
+    /**
+     * Construtor de cópia de um SmartDevice.
+     * @param s SmartDevice utilizado no processo de cópia para o novo SmartDevice.
+     */
     public SmartDevice(SmartDevice s) {
         this(s.getID(), s.getOn());
     }
 
+    /**
+     * Método que devolve uma cópia do SmartDevice recetor da mensagem.
+     * @return cópia do SmartDevice recetor da mensagem.
+     */
     public SmartDevice clone(){
         return new SmartDevice(this);
     }
 
+    /**
+     * Método que verifica a igualdade entre um objeto e o SmartDevice recetor da mensagem.
+     * @param o objeto comparado com o SmartDevice.
+     * @return booleano que indica se são iguais.
+     */
     public boolean equals(Object o){
         if(this == o) {
             return true;
@@ -55,6 +77,10 @@ public class SmartDevice {
         );
     }
 
+    /**
+     * Método que produz uma String na qual está representado o SmartDevice.
+     * @return string que representa o SmartDevice.
+     */
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
@@ -64,18 +90,36 @@ public class SmartDevice {
         return sb.toString();
     }
 
+    /**
+     * Método que devolve o estado do SmartDevice.
+     * @return Estado do SmartDevice.
+     */
     public boolean getOn() {return this.on;}
 
+    /**
+     * Método que devolve o código que identifica o SmartDevice.
+     * @return Código que identifica o SmartDevice.
+     */
     public String getID() {return this.id;}
 
+    /**
+     * Método que liga o SmartDevice.
+     */
     public void turnOn() {
         this.on = true;
     }
 
+    /**
+     * Método que desliga o SmartDevice.
+     */
     public void turnOff() {
         this.on = false;
     }
 
+    /**
+     * Método que altera o estado do SmartDevice.
+     * @param b Novo estado do SmartDevice.
+     */
     public void setOn(boolean b) {this.on = b;}
 
 }

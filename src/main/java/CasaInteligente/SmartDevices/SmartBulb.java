@@ -16,7 +16,7 @@ public class SmartBulb extends SmartDevice {
     private int tone;
 
     /**
-     * Constructor for objects of class SmartBulb
+     * Construtor por omissão de uma SmartBulb
      */
     public SmartBulb() {
         // initialise instance variables
@@ -24,12 +24,21 @@ public class SmartBulb extends SmartDevice {
         this.tone = NEUTRAL;
     }
 
+    /**
+     * Construtor parametrizado de uma SmartBulb
+     * @param id
+     * @param tone
+     */
     public SmartBulb(String id, int tone) {
         // initialise instance variables
         super(id);
         this.tone = tone;
     }
 
+    /**
+     *
+     * @param id
+     */
     public SmartBulb(String id) {
         // initialise instance variables
         super(id);
