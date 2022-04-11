@@ -1,4 +1,4 @@
-package CasaInteligente;
+package CasaInteligente.SmartDevices;
 
 /**
  * Uma SmartBulb é uma lâmpada inteligente que além de ligar e desligar (já que

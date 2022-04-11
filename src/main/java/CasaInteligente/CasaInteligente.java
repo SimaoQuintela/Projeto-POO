@@ -1,4 +1,6 @@
 package CasaInteligente;
+import CasaInteligente.SmartDevices.SmartDevice;
+
 import java.util.*;
 
 

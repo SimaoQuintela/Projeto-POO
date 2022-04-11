@@ -1,4 +1,4 @@
-package CasaInteligente;
+package CasaInteligente.SmartDevices;
 
 /**
  * Um SmartSpeaker é um SmartDevice que além de ligar e desligar permite também

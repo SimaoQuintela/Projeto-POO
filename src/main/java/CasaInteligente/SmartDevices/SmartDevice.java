@@ -1,4 +1,4 @@
-package CasaInteligente;
+package CasaInteligente.SmartDevices;
 
 /**
  * A classe SmartDevice é um contactor simples.

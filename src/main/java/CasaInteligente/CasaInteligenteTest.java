@@ -1,6 +1,9 @@
 package CasaInteligente;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import CasaInteligente.SmartDevices.SmartBulb;
+import CasaInteligente.SmartDevices.SmartSpeaker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
