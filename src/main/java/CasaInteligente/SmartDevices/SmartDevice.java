@@ -25,23 +25,57 @@ public class SmartDevice {
         this.on = false;
     }
 
-    public SmartDevice(String s, boolean b) {
+    public SmartDevice(String s, boolean on){
         this.id = s;
-        this.on = b;
+        this.on = on;
     }
+
+    public SmartDevice(SmartDevice s) {
+        this(s.getID(), s.getOn());
+    }
+
+    public SmartDevice clone(){
+        return new SmartDevice(this);
+    }
+
+    public boolean equals(Object o){
+        if(this == o) {
+            return true;
+        }
+
+        if(o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        SmartDevice s = (SmartDevice)o;
+
+        return (
+                this.id.equals(s.getID()) &&
+                this.getOn() == s.getOn()
+        );
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Id: ").append(this.getID()).append("\n");
+        sb.append("Ligado: ").append(this.getOn()).append("\n");
+
+        return sb.toString();
+    }
+
+    public boolean getOn() {return this.on;}
+
+    public String getID() {return this.id;}
 
     public void turnOn() {
         this.on = true;
     }
-    
+
     public void turnOff() {
         this.on = false;
     }
-    
-    public boolean getOn() {return this.on;}
-    
+
     public void setOn(boolean b) {this.on = b;}
-    
-    public String getID() {return this.id;}
 
 }

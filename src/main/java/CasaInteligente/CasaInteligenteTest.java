@@ -54,12 +54,12 @@ public class CasaInteligenteTest {
     public void testAddFindDevice() {
         CasaInteligente casaInte1 = new CasaInteligente("Gualtar");
         SmartBulb smartBul1 = new SmartBulb("b1");
-        SmartSpeaker smartSpe1 = new SmartSpeaker("s1");
+        SmartSpeaker smartSpe1 = new SmartSpeaker("s1", 0);
         assertFalse(casaInte1.existsDevice("b1"));
         assertFalse(casaInte1.existsDevice("s1"));
-        casaInte1.addDevice(smartBul1);
+        casaInte1.addDevice(smartBul1, "sala");
         assertTrue(casaInte1.existsDevice("b1"));
-        casaInte1.addDevice(smartSpe1);
+        casaInte1.addDevice(smartSpe1, "cozinha");
         assertTrue(casaInte1.existsDevice("s1"));
         assertTrue(casaInte1.existsDevice("b1"));
     }
@@ -68,7 +68,7 @@ public class CasaInteligenteTest {
     public void testGetDevice() {
         CasaInteligente casaInte1 = new CasaInteligente("Gualtar");
         SmartBulb smartBul1 = new SmartBulb("b1");
-        casaInte1.addDevice(smartBul1);
+        casaInte1.addDevice(smartBul1, "sala");
         assertTrue(casaInte1.getDevice("b1").equals(smartBul1));
     }
 
@@ -77,7 +77,7 @@ public class CasaInteligenteTest {
         CasaInteligente casaInte1 = new CasaInteligente("Gualtar");
         SmartBulb smartBul1 = new SmartBulb("b1");
         assertFalse(smartBul1.getOn());
-        casaInte1.addDevice(smartBul1);
+        casaInte1.addDevice(smartBul1, "cozinha");
         smartBul1.setOn(true);
         assertTrue(smartBul1.getOn());
         assertFalse(casaInte1.getDevice("b1").getOn());
@@ -87,9 +87,9 @@ public class CasaInteligenteTest {
     public void testSetAllOn() {
         CasaInteligente casaInte1 = new CasaInteligente("Gualtar");
         SmartBulb smartBul1 = new SmartBulb("b1");
-        SmartSpeaker smartSpe1 = new SmartSpeaker("s1");
-        casaInte1.addDevice(smartBul1);
-        casaInte1.addDevice(smartSpe1);
+        SmartSpeaker smartSpe1 = new SmartSpeaker("s1", 0);
+        casaInte1.addDevice(smartBul1, "sala");
+        casaInte1.addDevice(smartSpe1, "quarto");
         assertFalse(casaInte1.getDevice("b1").getOn());
         assertFalse(casaInte1.getDevice("s1").getOn());
         casaInte1.setAllOn(true);
@@ -112,11 +112,11 @@ public class CasaInteligenteTest {
     public void testAddToRoom() {
         CasaInteligente casaInte1 = new CasaInteligente("Gualtar");
         SmartBulb smartBul1 = new SmartBulb("b1");
-        SmartSpeaker smartSpe1 = new SmartSpeaker("s1");
-        SmartSpeaker smartSpe2 = new SmartSpeaker("s2");
-        casaInte1.addDevice(smartBul1);
-        casaInte1.addDevice(smartSpe1);
-        casaInte1.addDevice(smartSpe2);
+        SmartSpeaker smartSpe1 = new SmartSpeaker("s1", 0);
+        SmartSpeaker smartSpe2 = new SmartSpeaker("s2", 0);
+        casaInte1.addDevice(smartBul1, "sotão");
+        casaInte1.addDevice(smartSpe1, "sala");
+        casaInte1.addDevice(smartSpe2, "cozinha");
         casaInte1.addRoom("sala");
         casaInte1.addRoom("quarto");
         casaInte1.addToRoom("sala", "b1");

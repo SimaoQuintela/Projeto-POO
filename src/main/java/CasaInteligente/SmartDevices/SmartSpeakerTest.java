@@ -45,7 +45,7 @@ public class SmartSpeakerTest {
     public void testConstructor() {
         SmartSpeaker smartSpe1 = new SmartSpeaker();
         assertTrue(smartSpe1!=null);
-        smartSpe1 = new SmartSpeaker("b1");
+        smartSpe1 = new SmartSpeaker("b1", 0);
         assertTrue(smartSpe1!=null);
         smartSpe1 = new SmartSpeaker("b1", "RUM", 5);
         assertTrue(smartSpe1!=null);
@@ -89,7 +89,7 @@ public class SmartSpeakerTest {
 
     @Test
     public void testSetChannel() {
-        SmartSpeaker smartSpe1 = new SmartSpeaker("s1");
+        SmartSpeaker smartSpe1 = new SmartSpeaker("s1", 0);
         smartSpe1.setChannel("RUM");
         assertEquals("RUM", smartSpe1.getChannel());
         smartSpe1.setChannel("XPTO");

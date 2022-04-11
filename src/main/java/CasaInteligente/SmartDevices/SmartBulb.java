@@ -36,6 +36,39 @@ public class SmartBulb extends SmartDevice {
         this.tone = NEUTRAL;
     }
 
+    public SmartBulb(SmartBulb s){
+        super(s.getID());
+        this.tone = s.getTone();
+    }
+
+    public SmartBulb clone(){
+        return new SmartBulb(this);
+    }
+
+    // dúvidas aqui, devo comparar com a class SmartDevice?
+    public boolean equals(Object o){
+        if(o == this)
+            return true;
+
+        if(o == null || this.getClass() != o.getClass())
+            return false;
+
+        SmartBulb s = (SmartBulb) o;
+
+        return (this.tone == s.getTone());
+    }
+
+    // dúvidas aqui, devo invocar o toString da classe SmartDevice ?
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("------- Smart Bulb -------\n");
+        sb.append("Tonalidade: ").append(this.getTone()).append("\n");
+
+        return sb.toString();
+    }
+
+
     public void setTone(int t) {
         if (t>WARM) this.tone = WARM;
         else if (t<COLD) this.tone = COLD;

@@ -2,10 +2,12 @@ package CasaInteligente;
 import CasaInteligente.SmartDevices.SmartDevice;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toMap;
 
 /**
- * A CasaInteligente faz a gestão dos SmartDevices que existem e dos 
+ * A CasaInteligente faz a gestão dos SmartDevices que existem e dos
  * espaços (as salas) que existem na casa.
  *
  * @author (your name)
@@ -33,30 +35,55 @@ public class CasaInteligente {
         this.locations = new HashMap();
     }
 
-    
-    public void setDeviceOn(String devCode) {
-        this.devices.get(devCode).turnOn();
+    public CasaInteligente(String morada, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
+        this(morada);
+        this.devices = devices.entrySet()
+                              .stream()
+                              .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
+
+        this.locations = locations.entrySet()
+                                  .stream()
+                                  .collect(toMap(e-> e.getKey(), e->e.getValue()));
     }
 
-    public boolean existsDevice(String id) {
-        return this.devices.containsKey(id);
-    }
-    
-    public void addDevice(SmartDevice s) {
-        this.devices.put(s.getID(), s);
+    // verificar se a composição está bem aplicada
+    public CasaInteligente(CasaInteligente c){
+        this(c.morada, c.devices, c.locations);
     }
 
-    public SmartDevice getDevice(String s) {
-        return this.devices.get(s);
+    // importante verificar se o equals está bem construído
+    public boolean equals(Object o){
+        if (o ==this)
+            return true;
+
+        if(o == null || o.getClass() != this.getClass())
+            return false;
+
+        CasaInteligente c = (CasaInteligente) o;
+
+        return(
+            this.getMorada().equals(c.morada) &&
+            this.devices.equals(c.devices)    &&
+            this.locations.equals(c.locations)
+        );
     }
 
-    public void setOn(String s, boolean b) {
-        this.getDevice(s).setOn(b);
+    public CasaInteligente clone(){
+        return new CasaInteligente(this);
     }
 
-    public void setAllOn(boolean b) {
-        this.devices.values().forEach(s -> s.setOn(b));
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Morada: ").append(this.getMorada()).append("\n");
+        sb.append("------------- Smart Devices ------------- ");
+        for(String device: this.devices.keySet()){
+            sb.append(this.devices.get(device).toString());
+        }
+
+        return sb.toString();
     }
+
 
     public void addRoom(String s) {
         List<String> roomDevices = new ArrayList<>();
@@ -67,14 +94,81 @@ public class CasaInteligente {
         return this.locations.containsKey(s);
     }
 
-    public void addToRoom (String s1, String s2) {
-        if(hasRoom(s1))
+    public void addToRoom(String s1, String s2) {
+        if (hasRoom(s1))
             this.locations.get(s1).add(s2);
-
-
     }
 
-    public boolean roomHasDevice (String s1, String s2) {
+    public boolean roomHasDevice(String s1, String s2) {
         return this.locations.get(s1).contains(s2);
     }
+
+    public boolean existsDevice(String id) {
+        return this.devices.containsKey(id);
+    }
+
+    public void addDevice(SmartDevice s, String location) {
+        this.devices.put(s.getID(), s);
+        this.locations.get(location).add(s.getID());
+    }
+
+    // gets e sets
+    public String getMorada() {
+        return this.morada;
+    }
+
+    public SmartDevice getDevice(String s) {
+        return this.devices.get(s).clone();
+    }
+
+    public Map<String, SmartDevice> getDevices() {
+        Map<String, SmartDevice> new_devices = new HashMap<>();
+        new_devices = this.devices.entrySet()
+                                  .stream()
+                                  .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
+
+
+        return new_devices;
+    }
+
+    /* dúvidas aqui ao adicionar os values
+    public Map<String, List<String>> getLocations() {
+        Map<String, SmartDevice> new_locations = new HashMap<>();
+        new_locations = this.locations.entrySet()
+                                      .stream()
+                                      .collect(toMap(e->e.getKey(),    ));
+
+
+        return new_locations;
+    }
+    */
+
+    public void setMorada(String morada) {
+        this.morada = morada;
+    }
+
+    public void setDevices(Map<String, SmartDevice> devices) {
+        this.devices = devices.entrySet()
+                              .stream()
+                              .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
+    }
+
+    public void setLocations(Map<String, List<String>> locations) {
+        this.locations = locations.entrySet()
+                                  .stream()
+                                  .collect(toMap(e-> e.getKey(), e->e.getValue()));
+    }
+
+    public void setDeviceOn(String devCode) {
+        this.devices.get(devCode).turnOn();
+    }
+
+    public void setOn(String s, boolean b) {
+        this.getDevice(s).setOn(b);
+    }
+
+    public void setAllOn(boolean b) {
+        this.devices.values().forEach(s -> s.setOn(b));
+    }
+
 }

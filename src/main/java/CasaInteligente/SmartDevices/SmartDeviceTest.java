@@ -44,9 +44,9 @@ public class SmartDeviceTest {
     public void testContructor() {
         SmartDevice smartDev1 = new SmartDevice();
         assertTrue(smartDev1!=null);
-        smartDev1 = new SmartDevice("b1");
-        assertTrue(smartDev1!=null);
         smartDev1 = new SmartDevice("b1", true);
+        assertTrue(smartDev1!=null);
+        smartDev1 = new SmartDevice("b1", false);
         assertTrue(smartDev1!=null);
     }
     
@@ -62,15 +62,15 @@ public class SmartDeviceTest {
     public void testGetOn() {
         SmartDevice smartDev1 = new SmartDevice();
         assertFalse(smartDev1.getOn());
-        smartDev1 = new SmartDevice("b1", false);
+        smartDev1 = new SmartDevice("b1");
         assertFalse(smartDev1.getOn());
-        smartDev1 = new SmartDevice("b1", true);
+        smartDev1 = new SmartDevice("b1");
         assertTrue(smartDev1.getOn());
     }
 
     @Test
     public void testSetOn() {
-        SmartDevice smartDev1 = new SmartDevice("b1", false);
+        SmartDevice smartDev1 = new SmartDevice("b1");
         smartDev1.setOn(true);
         assertTrue(smartDev1.getOn());
         smartDev1.setOn(false);

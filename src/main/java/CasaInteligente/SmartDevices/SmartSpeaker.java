@@ -21,21 +21,64 @@ public class SmartSpeaker extends SmartDevice {
      */
     public SmartSpeaker() {
         // initialise instance variables
+        super();
         this.channel = "";
         this.volume = 0;
     }
 
-    public SmartSpeaker(String s) {
+    public SmartSpeaker(String s, int volume) {
         // initialise instance variables
+        super();
         this.channel = s;
-        this.volume = 0;
+        this.volume = volume;
     }
 
-    public SmartSpeaker(String cod, String channel, int i) {
+    public SmartSpeaker(String cod, String channel, int volume) {
         // initialise instance variables
+        super(cod);
         this.channel = channel;
-        this.setVolume(i);
+        this.setVolume(volume);
     }
+
+    public SmartSpeaker(SmartSpeaker s){
+        this(s.getID() ,s.getChannel(), s.getVolume());
+    }
+
+    public SmartSpeaker clone(){
+        return new SmartSpeaker(this);
+    }
+
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+
+        if(o == null || o.getClass() != this.getClass())
+            return false;
+
+        SmartSpeaker s = (SmartSpeaker) o;
+
+        return(
+                this.volume == s.getVolume() &&
+                this.getChannel().equals(s.getChannel())
+        );
+    }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("------- Smart Speaker -------\n");
+        sb.append("Canal: ").append(this.getChannel()).append("\n");
+        sb.append("Volume: ").append(this.getVolume()).append("\n");
+
+        return sb.toString();
+    }
+
+
+
+
+
+
+
 
     public void volumeUp() {
         if (this.volume<MAX) this.volume++;
