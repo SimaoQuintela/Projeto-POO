@@ -151,6 +151,7 @@ public class CasaInteligente {
         this.morada = morada;
     }
 
+    /* discutir com o grupo estes dois métodos
     public void setDevices(Map<String, SmartDevice> devices) {
         this.devices = devices.entrySet()
                               .stream()
@@ -162,7 +163,7 @@ public class CasaInteligente {
                                   .stream()
                                   .collect(toMap(e-> e.getKey(), e->e.getValue()));
     }
-
+    */
     public void setDeviceOn(String devCode) {
         this.devices.get(devCode).turnOn();
     }

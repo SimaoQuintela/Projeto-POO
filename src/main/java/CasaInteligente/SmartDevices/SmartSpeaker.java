@@ -35,7 +35,7 @@ public class SmartSpeaker extends SmartDevice {
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String s, int volume, String brand) {
+    public SmartSpeaker(String s, String brand, int volume) {
         // initialise instance variables
         super();
         this.channel = s;
@@ -91,7 +91,7 @@ public class SmartSpeaker extends SmartDevice {
         return(
                 this.volume == s.getVolume() &&
                 this.getChannel().equals(s.getChannel()) &&
-                this.brand.equals(s.getBrand()));
+                this.brand.equals(s.getBrand())
         );
     }
 

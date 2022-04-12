@@ -53,6 +53,49 @@ public class SmartCamera extends SmartDevice {
     }
 
     /**
+     * Método que verifica a igualdade entre a SmartCamera e um outro objeto.
+     * @param obj Objeto que é comparado com a SmartCamera.
+     * @return Booleano que indica se são iguais.
+     */
+    public boolean equals(Object obj){
+        if(obj == this){
+            return true;
+        }
+        if((obj == null) || (obj.getClass() != this.getClass())){
+            return false;
+        }
+
+        SmartCamera c = (SmartCamera) obj;
+        return (this.resolution.equals(c.getResolution()) &&
+                this.fileSize == c.getFileSize() &&
+                this.consumption == c.getConsumption());
+    }
+
+    /**
+     * Método que devolve uma cópia da SmartCamera.
+     * @return cópia da SmartCamera.
+     */
+    public SmartCamera clone(){
+        return new SmartCamera(this);
+    }
+
+    /**
+     * Método que produz uma string na qual está representada a SmartCamera.
+     * @return String que representa a SmartCamera.
+     */
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("------- Smart Bulb -------\n");
+        sb.append("Resolução: ");
+        sb.append(this.resolution.toString());
+        sb.append("\nTamanho do ficheiro gerado: ");
+        sb.append(this.fileSize);
+        sb.append("\nConsumo energético: ");
+        sb.append(this.consumption);
+        return sb.toString();
+    }
+
+    /**
      * Método que altera a resolução da SmartCamera.
      * @param res Nova resolução.
      */
@@ -99,48 +142,4 @@ public class SmartCamera extends SmartDevice {
     public int getConsumption(){
         return this.consumption;
     }
-
-    /**
-     * Método que verifica a igualdade entre a SmartCamera e um outro objeto.
-     * @param obj Objeto que é comparado com a SmartCamera.
-     * @return Booleano que indica se são iguais.
-     */
-    public boolean equals(Object obj){
-        if(obj == this){
-            return true;
-        }
-        if((obj == null) || (obj.getClass() != this.getClass())){
-            return false;
-        }
-
-        SmartCamera c = (SmartCamera) obj;
-        return (this.resolution.equals(c.getResolution()) &&
-                this.fileSize == c.getFileSize() &&
-                this.consumption == c.getConsumption());
-    }
-
-    /**
-     * Método que devolve uma cópia da SmartCamera.
-     * @return cópia da SmartCamera.
-     */
-    public SmartCamera clone(){
-        return new SmartCamera(this);
-    }
-
-    /**
-     * Método que produz uma string na qual está representada a SmartCamera.
-     * @return String que representa a SmartCamera.
-     */
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("------- Smart Bulb -------\n");
-        sb.append("Resolução: ");
-        sb.append(this.resolution.toString());
-        sb.append("\nTamanho do ficheiro gerado: ");
-        sb.append(this.fileSize);
-        sb.append("\nConsumo energético: ");
-        sb.append(this.consumption);
-        return sb.toString();
-    }
-
 }
