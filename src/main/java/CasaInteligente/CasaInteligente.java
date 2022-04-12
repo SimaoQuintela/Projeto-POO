@@ -24,21 +24,27 @@ public class CasaInteligente {
     public CasaInteligente() {
         // initialise instance variables
         this.morada = "";
-        this.devices = new HashMap();
-        this.locations = new HashMap();
+        this.devices = new HashMap<>();
+        this.locations = new HashMap<>();
     }
 
     /**
      * Construtor parametrizado de CasaInteligente.
-     * @param morada
+     * @param morada Morada da CasaInteligente.
      */
     public CasaInteligente(String morada) {
         // initialise instance variables
         this.morada = morada;
-        this.devices = new HashMap();
-        this.locations = new HashMap();
+        this.devices = new HashMap<>();
+        this.locations = new HashMap<>();
     }
 
+    /**
+     * Construtor parametrizado de CasaInteligente.
+     * @param morada Morada da CasaInteligente.
+     * @param devices Dispositivos existentes na casa.
+     * @param locations Divisões da CasaInteligente.
+     */
     public CasaInteligente(String morada, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
         this(morada);
         this.devices = devices.entrySet()
@@ -50,11 +56,20 @@ public class CasaInteligente {
                                   .collect(toMap(e-> e.getKey(), e->e.getValue()));
     }
 
+    /**
+     * Construtor de cópia de CasaInteligente.
+     * @param c CasaInteligente que é copiada.
+     */
     // verificar se a composição está bem aplicada
     public CasaInteligente(CasaInteligente c){
         this(c.morada, c.devices, c.locations);
     }
 
+    /**
+     * Método que verifica a igualdade entre a CasaInteligente e um outro objeto.
+     * @param o Objeto que é compara com a CasaInteligente.
+     * @return Booleano que indica o resultado da comparação.
+     */
     // importante verificar se o equals está bem construído
     public boolean equals(Object o){
         if (o ==this)
@@ -72,59 +87,116 @@ public class CasaInteligente {
         );
     }
 
+    /**
+     * Método que devolve uma cópia da CasaInteligente recetora da mensagem.
+     * @return Cópia da CasaInteligente.
+     */
     public CasaInteligente clone(){
         return new CasaInteligente(this);
     }
 
+    /**
+     * Método que produz uma string na qual está representada a CasaInteligente.
+     * @return String que representa a CasaInteligente.
+     */
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
         sb.append("Morada: ").append(this.getMorada()).append("\n");
-        sb.append("------------- Smart Devices ------------- ");
-        for(String device: this.devices.keySet()){
+        sb.append("------------- Locations ------------- ");
+        /*for(String device: this.devices.keySet()){
             sb.append(this.devices.get(device).toString());
+        }*/
+        for(String division: locations.keySet()){
+            sb.append(division).append(": ");
+            List<String> temp = this.locations.get(division);
+            for(String id: temp){
+                sb.append(this.devices.get(id).toString());
+                sb.append("; ");
+            }
+            sb.append("\n");
         }
 
         return sb.toString();
     }
 
 
+    /**
+     * Método que adiciona uma nova divisão à CasaInteligente.
+     * @param s Nova divisão da CasaInteligente.
+     */
     public void addRoom(String s) {
         List<String> roomDevices = new ArrayList<>();
         this.locations.put(s, roomDevices);
     }
 
+    /**
+     * Método que verifica se uma determinada divisão existe na CasaInteligente.
+     * @param s Divisão que se pretende saber se existe na CasaInteligente.
+     * @return Booleano que indica se a Divisão existe na CasaInteligente.
+     */
     public boolean hasRoom(String s) {
         return this.locations.containsKey(s);
     }
 
+    /**
+     * Método que adiciona o identificador de um SmartDevice a uma divisão da CasaInteligente.
+     * @param s1 Divisão da CasaInteligente.
+     * @param s2 Código de identificação do SmartDevice.
+     */
     public void addToRoom(String s1, String s2) {
         if (hasRoom(s1))
             this.locations.get(s1).add(s2);
     }
 
+    /**
+     * Método que verifica se um determinado SmartDevice existe numa determinada divisão da CasaInteligente.
+     * @param s1 Divisão da CasaInteligente.
+     * @param s2 Código de identificação do SmartDevice.
+     * @return Booleano que indica se o SmartDevice existe na divisão da CasaInteligente.
+     */
     public boolean roomHasDevice(String s1, String s2) {
         return this.locations.get(s1).contains(s2);
     }
 
+    /**
+     * Método que verifica se um determinado SmartDevice existe na CasaInteligente.
+     * @param id Código de identificação do SmartDevice.
+     * @return
+     */
     public boolean existsDevice(String id) {
         return this.devices.containsKey(id);
     }
 
+    /**
+     * Método que adiciona um SmartDevice a uma determinada divisão da CasaInteligente.
+     * @param s SmartDevice que é adicionado.
+     * @param location Divisão da casa à qual é adicionado o SmartDevice.
+     */
     public void addDevice(SmartDevice s, String location) {
         this.devices.put(s.getID(), s);
         this.locations.get(location).add(s.getID());
     }
 
+    /**
+     * Método que devolve a morada da CasaInteligente.
+     * @return Morada da CasaInteligente.
+     */
     // gets e sets
     public String getMorada() {
         return this.morada;
     }
 
+    /**
+     * Método que devolve um determinado SmartDevice através de um código de identificação.
+     * @param s Código de identificação do SmartDevice.
+     * @return SmartDevice.
+     */
     public SmartDevice getDevice(String s) {
         return this.devices.get(s).clone();
     }
 
+    //DOCUMENTAR
     public Map<String, SmartDevice> getDevices() {
         Map<String, SmartDevice> new_devices = new HashMap<>();
         new_devices = this.devices.entrySet()
@@ -147,6 +219,10 @@ public class CasaInteligente {
     }
     */
 
+    /**
+     * Método que altera a morada da CasaInteligente.
+     * @param morada Morada atribuída à CasaInteligente.
+     */
     public void setMorada(String morada) {
         this.morada = morada;
     }
@@ -164,14 +240,28 @@ public class CasaInteligente {
                                   .collect(toMap(e-> e.getKey(), e->e.getValue()));
     }
     */
+
+    /**
+     * Método que liga um SmartDevice através do seu código de identificação.
+     * @param devCode Código de identificação do SmartDevice.
+     */
     public void setDeviceOn(String devCode) {
         this.devices.get(devCode).turnOn();
     }
 
+    /**
+     * Método que atribui um estado a um determinado SmartDevice através do código de identificação.
+     * @param s Código de identificação do SmartDevice.
+     * @param b Estado atribuído ao SmartDevice.
+     */
     public void setOn(String s, boolean b) {
         this.getDevice(s).setOn(b);
     }
 
+    /**
+     * Método que atribui um determinado estado a todos os SmartDevices da CasaInteligente.
+     * @param b Estado atribuído a todos os SmartDevices.
+     */
     public void setAllOn(boolean b) {
         this.devices.values().forEach(s -> s.setOn(b));
     }
