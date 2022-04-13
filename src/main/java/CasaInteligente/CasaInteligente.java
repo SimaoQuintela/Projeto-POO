@@ -250,6 +250,14 @@ public class CasaInteligente {
     }
 
     /**
+     * Método que desliga um SmartDevice através do seu código de identificação.
+     * @param devCode Código de indentificação do SmartDevice.
+     */
+    public void setDeviceOff(String devCode){
+        this.devices.get(devCode).turnOff();
+    }
+
+    /**
      * Método que atribui um estado a um determinado SmartDevice através do código de identificação.
      * @param s Código de identificação do SmartDevice.
      * @param b Estado atribuído ao SmartDevice.
