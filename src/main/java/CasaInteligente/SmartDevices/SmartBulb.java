@@ -9,13 +9,16 @@ package CasaInteligente.SmartDevices;
  * @version (a version number or a date)
  */
 public class SmartBulb extends SmartDevice {
-    public static final int WARM = 2;
-    public static final int NEUTRAL = 1;
-    public static final int COLD = 0;
-    
+    public static final int WARM = 4;
+    public static final int NEUTRAL = 2;
+    public static final int COLD = 1;
+
     private int tone;
     private int dimensions;
+
+    // falta adicionar esta var aos construtores e métodos
     private int dailyConsumption;
+    private int kwH = 6;
 
 
     /**
@@ -34,9 +37,9 @@ public class SmartBulb extends SmartDevice {
      * @param tone Tonalidade da lâmpada.
      * @param dimensions Dimensões da lâmpada.
      */
-    public SmartBulb(String id, int tone, int dimensions) {
+    public SmartBulb(String id, boolean status, int tone, int dimensions) {
         // initialise instance variables
-        super(id);
+        super(id, status);
         this.tone = tone;
         this.dimensions = dimensions;
     }

@@ -15,6 +15,7 @@ import static java.util.stream.Collectors.toMap;
  */
 public class CasaInteligente {
     private String morada;
+    private String fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
@@ -24,6 +25,7 @@ public class CasaInteligente {
     public CasaInteligente() {
         // initialise instance variables
         this.morada = "";
+        this.fornecedor = "";
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
@@ -32,9 +34,10 @@ public class CasaInteligente {
      * Construtor parametrizado de CasaInteligente.
      * @param morada Morada da CasaInteligente.
      */
-    public CasaInteligente(String morada) {
+    public CasaInteligente(String morada, String fornecedor) {
         // initialise instance variables
         this.morada = morada;
+        this.fornecedor = fornecedor;
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
@@ -45,8 +48,8 @@ public class CasaInteligente {
      * @param devices Dispositivos existentes na casa.
      * @param locations Divisões da CasaInteligente.
      */
-    public CasaInteligente(String morada, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
-        this(morada);
+    public CasaInteligente(String morada, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
+        this(morada, fornecedor);
         this.devices = devices.entrySet()
                               .stream()
                               .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
@@ -62,7 +65,7 @@ public class CasaInteligente {
      */
     // verificar se a composição está bem aplicada
     public CasaInteligente(CasaInteligente c){
-        this(c.morada, c.devices, c.locations);
+        this(c.morada, c.fornecedor, c.devices, c.locations);
     }
 
     /**
@@ -82,6 +85,7 @@ public class CasaInteligente {
 
         return(
             this.getMorada().equals(c.morada) &&
+            this.getFornecedor().equals(c.fornecedor) &&
             this.devices.equals(c.devices)    &&
             this.locations.equals(c.locations)
         );
@@ -103,6 +107,7 @@ public class CasaInteligente {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Morada: ").append(this.getMorada()).append("\n");
+        sb.append("Fornecedor: ").append(this.getFornecedor()).append("\n");
         sb.append("------------- Locations ------------- ");
         /*for(String device: this.devices.keySet()){
             sb.append(this.devices.get(device).toString());
@@ -187,6 +192,10 @@ public class CasaInteligente {
         return this.morada;
     }
 
+    public String getFornecedor() {
+        return this.fornecedor;
+    }
+
     /**
      * Método que devolve um determinado SmartDevice através de um código de identificação.
      * @param s Código de identificação do SmartDevice.
@@ -225,6 +234,10 @@ public class CasaInteligente {
      */
     public void setMorada(String morada) {
         this.morada = morada;
+    }
+
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     /* discutir com o grupo estes dois métodos

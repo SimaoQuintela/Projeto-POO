@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
 // importante!!! falta definir os métodos de clone e toString na classe comercializador para esta classe ficar bem definida
 public class Comunidade {
+    private String nomeDaComunidade;
     private Map<String, CasaInteligente> casas;
     private Map<String, Comercializador> mercado;
-    private String nomeDaComunidade;
 
     /**
      * Construtor que inicializa a classe Comunidade
@@ -95,6 +95,10 @@ public class Comunidade {
         sb.append("\n-------- Mercado: --------").append(this.mercado.toString());
 
         return sb.toString();
+    }
+
+    public void addCasa(String morada, CasaInteligente casa){
+        this.casas.put(morada, casa.clone());
     }
 
 

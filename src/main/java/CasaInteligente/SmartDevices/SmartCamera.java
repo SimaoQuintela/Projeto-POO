@@ -20,13 +20,13 @@ public class SmartCamera extends SmartDevice {
      * @param id Código que identifica a SmartCamera.
      * @param status Estado da SmartCamera.
      * @param res Resolução da SmartCamera.
-     * @param size Tamanho do ficheiro da SmartCamera.
+     * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
-    public SmartCamera(String id, boolean status, Resolution res, int size){
+    public SmartCamera(String id, boolean status, Resolution res, int fileSize){
         super(id, status);
         setResolution(res);
-        setFileSize(size);
-        setConsumption(res.getX() * res.getY() * size);
+        setFileSize(fileSize);
+        setConsumption(res.getX() * res.getY() * fileSize);
     }
 
     /**
@@ -108,7 +108,7 @@ public class SmartCamera extends SmartDevice {
      * @return Resolução da SmartCamera.
      */
     public Resolution getResolution(){
-        return this.resolution;
+        return this.resolution.clone();
     }
 
     /**
