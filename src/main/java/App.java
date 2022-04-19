@@ -12,7 +12,7 @@ public class App {
     static Scanner scan = new Scanner(System.in);
     static Comunidade comunidade = new Comunidade("Gualtar");
 
-    public static void main() throws InterruptedException {
+    public static void main(String args[]) throws InterruptedException {
         out.println("1- Criar casa");
         out.println("2- Criar fornecedor");
         out.println("3- Sair");
@@ -22,7 +22,7 @@ public class App {
                 criaCasa();
                 break;
             case 2:
-                criaFornecedor();
+           //     criaFornecedor();
             case 3:
                 System.exit(1);
                 break;
@@ -63,11 +63,11 @@ public class App {
                 String localizacao = scan.next();
                 out.print("\n");
                 limpaConsola();
-                adicionarDispositivos(localizacao);
+                adicionarDispositivos(casa, localizacao);
                 break;
             case 2:
                 limpaConsola();
-                main();
+            //    main();
                 break;
             default:
                 out.println("Opção inexistente");
@@ -77,7 +77,7 @@ public class App {
 
     }
 
-    public static void adicionarDispositivos(String localizacao) throws InterruptedException {
+    public static void adicionarDispositivos(CasaInteligente casa, String localizacao) throws InterruptedException {
         // opção de adicionar dispositivos
         out.println("Adicione dispositivos à casa");
         out.println("1- Smart Bulb");
@@ -125,6 +125,7 @@ public class App {
 
                 // criação de uma nova lâmpada
                 SmartBulb new_bulb = new SmartBulb(id, status, tonalidade, dimensoes);
+                casa.addDevice(new_bulb, localizacao);
                 out.println("Smart Bulb criada");
                 TimeUnit.SECONDS.sleep(2);
                 limpaConsola();
@@ -140,12 +141,14 @@ public class App {
                 int y = scan.nextInt();
                 out.print("\n");
 
-                Resolution res = new Resolution(x,y);
+                int x2 = 0;
+                int y2 = 0;
                 out.print("Tamanho do ficheiro: ");
                 int size = scan.nextInt();
                 out.print("\n");
 
-                SmartCamera new_camera = new SmartCamera(id, status, res, size);
+                SmartCamera new_camera = new SmartCamera(id, status, x2, y2, size);
+                casa.addDevice(new_camera, localizacao);
                 out.println("Smart Camera criada");
                 TimeUnit.SECONDS.sleep(2);
                 limpaConsola();
@@ -172,10 +175,14 @@ public class App {
                 } while(volume >= 0 && volume <= 20);
 
                 SmartSpeaker new_speaker = new SmartSpeaker(id, status, channel, volume, brand);
+                casa.addDevice(new_speaker, localizacao);
+                TimeUnit.SECONDS.sleep(2);
+                limpaConsola();
                 break;
             default:
-                out.println("Opção inexistente, tente de novo");
-                adicionarDispositivos(localizacao);
+                out.println("Opção inexistente");
+                TimeUnit.SECONDS.sleep(2);
+                limpaConsola();
                 break;
         }
     }
