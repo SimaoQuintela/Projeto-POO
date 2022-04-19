@@ -4,6 +4,7 @@ public class SmartCamera extends SmartDevice {
     private Resolution resolution;
     private int fileSize;
     private int consumption; //tamanho do ficheiro * resolução
+    //private float dailyConsumption;
 
     /**
      * Construtor por omissão de SmartCamera.
