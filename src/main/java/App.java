@@ -124,8 +124,8 @@ public class App {
                 out.print("\n");
 
                 // criação de uma nova lâmpada
-                SmartBulb new_bulb = new SmartBulb(id, status, tonalidade, dimensoes);
-                casa.addDevice(new_bulb, localizacao);
+            //    SmartBulb new_bulb = new SmartBulb(id, status, tonalidade, dimensoes);
+            //    casa.addDevice(new_bulb, localizacao);
                 out.println("Smart Bulb criada");
                 TimeUnit.SECONDS.sleep(2);
                 limpaConsola();
@@ -147,8 +147,8 @@ public class App {
                 int size = scan.nextInt();
                 out.print("\n");
 
-                SmartCamera new_camera = new SmartCamera(id, status, x2, y2, size);
-                casa.addDevice(new_camera, localizacao);
+            //    SmartCamera new_camera = new SmartCamera(id, status, x2, y2, size);
+            //    casa.addDevice(new_camera, localizacao);
                 out.println("Smart Camera criada");
                 TimeUnit.SECONDS.sleep(2);
                 limpaConsola();
