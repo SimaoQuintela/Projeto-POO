@@ -6,7 +6,7 @@ public class Comercializador{
     private int consumoDispositivo;
     private int imposto;
     private float PrecoDiaPorDispositivo = numeroDispositivos > 10?(valorBase ∗ consumoDispositivo * (1 + imposto)) ∗ 0.9 : (valorBase ∗ consumoDispositivo ∗ (1 + imposto)) ∗ 0.75
-
+    //acho que tem de ser double e não float
 
     /**
      * Construtor por omissão de Comercializador.
