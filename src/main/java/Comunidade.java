@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
-// importante!!! falta definir os métodos de clone e toString na classe comercializador para esta classe ficar bem definida
 public class Comunidade {
     private String nomeDaComunidade;
     private Map<String, CasaInteligente> casas;

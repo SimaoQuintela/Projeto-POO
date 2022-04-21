@@ -20,7 +20,7 @@ public class Comercializador{
     
     /**
      * Construtor parametrizado de CasaInteligente.
-     * @param morada Morada da CasaInteligente.
+     * !!! faltam parametros
      */
     public Comercializador(int numeroDispositivos, int valorBase, int consumoDispositivo, int imposto){
         this.numeroDispositivos = numeroDispositivos;
