@@ -287,4 +287,25 @@ public class CasaInteligente {
         this.devices.values().forEach(s -> s.setOn(b));
     }
 
+    /**
+     * Método que liga todos os SmartDevices de uma determinada divisão da CasaInteligente.
+     * @param location Divisão da CasaInteligente.
+     */
+    public void turnOnDevicesFromLocation(String location){
+        List<String> temp = this.locations.get(location);
+        for(String code: temp){
+            this.devices.get(code).turnOn();
+        }
+    }
+
+    /**
+     * Método que desliga todos os SmartDevices de uma determinada divisão da CasaInteligente.
+     * @param location Divisão da CasaInteligente.
+     */
+    public void turnOffDevicesFromLocation(String location){
+        List<String> temp = this.locations.get(location);
+        for(String code: temp){
+            this.devices.get(code).turnOff();
+        }
+    }
 }

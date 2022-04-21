@@ -2,9 +2,9 @@ package ComercializadoresEnergia;
 
 public class Comercializador{
     private int numeroDispositivos;
-    private int valorBase;
+    private int valorBase; //definir valor
     private int consumoDispositivo;
-    private int imposto;
+    private int imposto; //definir taxa de imposto
     private double PrecoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
 
@@ -13,7 +13,6 @@ public class Comercializador{
      */
     public Comercializador(){
         this.numeroDispositivos = 0;
-        this.valorBase = 0;
         this.consumoDispositivo = 0;
         this.imposto = 0;
     }
