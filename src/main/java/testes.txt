@@ -3,3 +3,5 @@ casa morada:rua_sem_nome fornecedor:Endesa devices locations
 devices morada:rua_da_ameixoeira SmartBulb id:1234 on/off:on tone:WARM dimensions:10 time:now
 devices morada:rua_da_ameixoeira SmartBulb id:123 on/off:off tone:NEUTRAL dimensions:5 time:now
 devices morada:rua_sem_nome SmartBulb id:12 on/off:on tone:COLD dimensions:15 time:now
+locations morada:rua_da_ameixoeira espaco:cozinha ids:1234:12310
+locations morada:rua_sem_nome espaco:sala ids:12345:123106

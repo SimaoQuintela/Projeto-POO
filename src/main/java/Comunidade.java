@@ -90,19 +90,32 @@ public class Comunidade {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Nome da comunidade: ").append(this.getNomeDaComunidade());
-        sb.append("\n-------- Casas: --------").append(this.casas.toString());
-        sb.append("\n-------- Mercado: --------").append(this.mercado.toString());
+        sb.append("\n-------- Casas: --------\n").append(this.casas.toString());
+        sb.append("\n-------- Mercado: --------\n").append(this.mercado.toString());
 
         return sb.toString();
     }
 
+    /**
+     * Devolve a casa correspondente à string passada como parâmetro
+     * @param morada Morada da casa que queremos localizar
+     * @return Casa cuja morada corresponde à passada como parâmetro
+     */
+    public CasaInteligente getCasa(String morada){
+        return this.casas.get(morada);
+    }
+
+    /**
+     * Adiciona uma casa à comunidade
+     * @param morada Morada da casa
+     * @param casa Objeto Casa Inteligente que vai ser adicionado à comunidade
+     */
     public void addCasa(String morada, CasaInteligente casa){
         this.casas.put(morada, casa.clone());
     }
 
 
     //gets e sets
-
     /**
      * Método que devolve o nome da Comunidade
      * @return Nome da comunidade
@@ -145,7 +158,6 @@ public class Comunidade {
         this.nomeDaComunidade = nomeDaComunidade;
     }
 
-    // discutir este método com o grupo
     /**
      * Método que adiciona uma casa à estrutura das casas
      * @param morada Morada da Casa
@@ -154,8 +166,6 @@ public class Comunidade {
     public void setCasas(String morada, CasaInteligente casa) {
         this.casas.put(morada, casa.clone());
     }
-
-    // discutir este método com o grupo e criar método clone na classe Comercializador
 
     /**
      * Método que adiciona uma companhia à estrutura dos comercializadores de energia

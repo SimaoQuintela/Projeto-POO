@@ -4,6 +4,7 @@ import CasaInteligente.SmartDevices.SmartDevice;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -106,18 +107,15 @@ public class CasaInteligente {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Morada: ").append(this.getMorada()).append("\n");
-        sb.append("Fornecedor: ").append(this.getFornecedor()).append("\n");
-        sb.append("------------- Locations ------------- ");
-        /*for(String device: this.devices.keySet()){
-            sb.append(this.devices.get(device).toString());
-        }*/
+        sb.append("Morada: ").append(this.getMorada());
+        sb.append("\nFornecedor: ").append(this.getFornecedor());
+        sb.append("\n------------- Locations -------------\n");
+
         for(String division: locations.keySet()){
-            sb.append(division).append(": ");
-            List<String> temp = this.locations.get(division);
-            for(String id: temp){
-                sb.append(this.devices.get(id).toString());
-                sb.append("; ");
+            sb.append("Divisao: ").append(division);
+            sb.append("\nIds dos dispositivos: ");
+            for(String id: this.locations.get(division)){
+                sb.append(id).append(" ");
             }
             sb.append("\n");
         }
@@ -181,6 +179,10 @@ public class CasaInteligente {
     public void addDevice(SmartDevice s, String location) {
         this.devices.put(s.getID(), s);
         this.locations.get(location).add(s.getID());
+    }
+
+    public void addLocation(String location, List<String> ids){
+        this.locations.put(location, ids);
     }
 
     /**

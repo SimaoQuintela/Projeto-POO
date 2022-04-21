@@ -30,20 +30,21 @@ public class ParseInit {
         }
 
         // prints the string splitted by space
+        /*
         for(String[] s: line_splitted_by_space){
             out.println(Arrays.toString(s));
         }
-
+        */
         for(String[] line: line_splitted_by_space){
             switch (line[0]){
                 case "casa":
                     parse_casa(line, comunidade);
                     break;
                 case "devices":
-                    parse_devices(line, comunidade);
+                //    parse_devices(line, comunidade);
                     break;
                 case "locations":
-                //    parse_locations(line, comunidade);
+                    parse_locations(line, comunidade);
                     break;
                 case "comercializador":
                 //    parse_comercializador(line, comunidade);
@@ -69,11 +70,12 @@ public class ParseInit {
         }
 
         //  Dar print ao array partido
+        /*
         out.println("Print ah String partida pelos :");
         for(String[] l : line_splitted_by_2dot){
             out.println(Arrays.toString(l));
         }
-
+        */
 
         for(String[] l: line_splitted_by_2dot){
             switch (l[0]){
@@ -91,7 +93,7 @@ public class ParseInit {
         CasaInteligente casa = new CasaInteligente(morada, fornecedor);
         comunidade.setCasas(morada, casa);
     }
-
+/*
     public static void parse_devices(String[] line, Comunidade comunidade){
         ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
 
@@ -104,18 +106,48 @@ public class ParseInit {
         for(String[] l : line_splitted_by_2dot){
             out.println(Arrays.toString(l));
         }
+    }
+*/
 
+
+    public static void parse_locations(String[] line, Comunidade comunidade){
+        ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
+        String morada = "";
+        String espaco = "";
+        List<String> ids = new ArrayList<>();
+
+        for(String l: line){
+            line_splitted_by_2dot.add(l.split(":"));
+        }
+
+        //  Dar print ao array partido
+        /*
+        out.println("Print ah String de locations partida pelos :");
+        for(String[] l : line_splitted_by_2dot){
+            out.println(Arrays.toString(l));
+        }
+        */
         for(String[] l: line_splitted_by_2dot){
             switch (l[0]){
                 case "morada":
                     morada = l[1];
                     break;
-                case "SmartBulb", "SmartSpeaker", "SmartCamera":
-                    deviceType = l[0];
+                case "espaco":
+                    espaco = l[1];
                     break;
-                default:
-                    break;
+                case "ids":
+                    for(int i = 1; i< l.length; i+=1){
+                        ids.add(l[i]);
+                    }
+
             }
+        }
+
+        //out.println("DEBUG");
+        //out.println(comunidade.getCasa(morada).toString());
+        comunidade.getCasa(morada).addRoom(espaco);
+        for(String id: ids){
+            comunidade.getCasa(morada).addToRoom(espaco, id);
         }
 
     }
