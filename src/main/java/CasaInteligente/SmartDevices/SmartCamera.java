@@ -1,7 +1,8 @@
 package CasaInteligente.SmartDevices;
 
 public class SmartCamera extends SmartDevice {
-    private Resolution resolution;
+    private int xRes;
+    private int yRes;
     private int fileSize;
     private int consumption; //tamanho do ficheiro * resolução
     //private float dailyConsumption;
@@ -11,7 +12,8 @@ public class SmartCamera extends SmartDevice {
      */
     public SmartCamera(){
         super();
-        this.resolution = new Resolution();
+        this.xRes = 0;
+        this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
     }
@@ -20,14 +22,16 @@ public class SmartCamera extends SmartDevice {
      * Construtor parametrizado.
      * @param id Código que identifica a SmartCamera.
      * @param status Estado da SmartCamera.
-     * @param res Resolução da SmartCamera.
+     * @param xRes Resolução da SmartCamera no eixo do x.
+     * @param yRes Resolução da SmartCamera no eixo do y
      * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
-    public SmartCamera(String id, boolean status, Resolution res, int fileSize){
+    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize){
         super(id, status);
-        setResolution(res);
+        setxRes(xRes);
+        setyRes(yRes);
         setFileSize(fileSize);
-        setConsumption(res.getX() * res.getY() * fileSize);
+        setConsumption(this.getxRes() * this.getyRes() * fileSize);
     }
 
     /**
@@ -37,7 +41,8 @@ public class SmartCamera extends SmartDevice {
      */
     public SmartCamera(String id, boolean status){
         super(id, status);
-        this.resolution = new Resolution();
+        this.xRes = 0;
+        this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
     }
@@ -48,9 +53,10 @@ public class SmartCamera extends SmartDevice {
      */
     public SmartCamera(SmartCamera s){
         super(s.getID(), s.getOn());
-        setResolution(s.getResolution());
+        setxRes(s.getxRes());
+        setyRes(s.getyRes());
         setFileSize(s.getFileSize());
-        setConsumption(s.getResolution().getX() * s.getResolution().getY() * s.getFileSize());
+        setConsumption(s.getxRes() * s.getyRes() * s.getFileSize());
     }
 
     /**
@@ -67,9 +73,12 @@ public class SmartCamera extends SmartDevice {
         }
 
         SmartCamera c = (SmartCamera) obj;
-        return (this.resolution.equals(c.getResolution()) &&
+        return (
+                this.xRes == c.xRes              &&
+                this.yRes == c.yRes              &&
                 this.fileSize == c.getFileSize() &&
-                this.consumption == c.getConsumption());
+                this.consumption == c.getConsumption()
+        );
     }
 
     /**
@@ -88,7 +97,8 @@ public class SmartCamera extends SmartDevice {
         StringBuilder sb = new StringBuilder();
         sb.append("------- Smart Bulb -------\n");
         sb.append("Resolução: ");
-        sb.append(this.resolution.toString());
+        sb.append("\nX: ").append(this.getxRes());
+        sb.append("\nY: ").append(this.getyRes());
         sb.append("\nTamanho do ficheiro gerado: ");
         sb.append(this.fileSize);
         sb.append("\nConsumo energético: ");
@@ -97,27 +107,19 @@ public class SmartCamera extends SmartDevice {
     }
 
     /**
-     * Método que altera a resolução da SmartCamera.
-     * @param res Nova resolução.
+     * Getter que nos dá a resolução no eixo do x
+     * @return resolução no eixo do x
      */
-    public void setResolution(Resolution res){
-        this.resolution = new Resolution(res);
+    public int getxRes() {
+        return this.xRes;
     }
 
     /**
-     * Método que devolve a resolução da SmartCamera.
-     * @return Resolução da SmartCamera.
+     * Getter que nos dá a resolução no eixo do y
+     * @return resolução no eixo do y
      */
-    public Resolution getResolution(){
-        return this.resolution.clone();
-    }
-
-    /**
-     * Método que altera o tamanho do ficheiro da SmartCamera.
-     * @param size Novo tamanho do ficheiro.
-     */
-    public void setFileSize(int size){
-        this.fileSize = size;
+    public int getyRes() {
+        return this.yRes;
     }
 
     /**
@@ -129,18 +131,42 @@ public class SmartCamera extends SmartDevice {
     }
 
     /**
-     * Método que altera o consumo energético da SmartCamera.
-     * @param consumption Novo consumo energético da SmartCamera.
-     */
-    public void setConsumption(int consumption){
-        this.consumption = consumption;
-    }
-
-    /**
      * Método que devolve o consumo energético da SmartCamera.
      * @return Consumo energético da SmartCamera.
      */
     public int getConsumption(){
         return this.consumption;
+    }
+
+    /**
+     * setter que nos coloca em xRes o valor passado como parâmetro
+     * @param xRes resolução no eixo do x
+     */
+    public void setxRes(int xRes) {
+        this.xRes = xRes;
+    }
+
+    /**
+     * setter que nos coloca em yRes o valor passado como parâmetro
+     * @param yRes resolução no eixo do y
+     */
+    public void setyRes(int yRes) {
+        this.yRes = yRes;
+    }
+
+    /**
+     * Método que altera o tamanho do ficheiro da SmartCamera.
+     * @param size Novo tamanho do ficheiro.
+     */
+    public void setFileSize(int size){
+        this.fileSize = size;
+    }
+
+    /**
+     * Método que altera o consumo energético da SmartCamera.
+     * @param consumption Novo consumo energético da SmartCamera.
+     */
+    public void setConsumption(int consumption){
+        this.consumption = consumption;
     }
 }
