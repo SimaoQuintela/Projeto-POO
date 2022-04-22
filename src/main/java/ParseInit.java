@@ -15,8 +15,7 @@ public class ParseInit {
         Scanner scan = new Scanner(file);
         ArrayList<String> lines = new ArrayList<>();
         Comunidade comunidade = new Comunidade("Lord Eder forever");
-//        Map<String, CasaInteligente> casas = new HashMap<>();
-//        Map<String, Comercializador> mercado = new HashMap<>();
+        ArrayList<String> global_data = new ArrayList<>();
 
         String line_readed;
         while(scan.hasNextLine()){
@@ -47,9 +46,10 @@ public class ParseInit {
                     parse_locations(line, comunidade);
                     break;
                 case "comercializador":
-                //    parse_comercializador(line, comunidade);
+                    parse_comercializador(global_data, line, comunidade);
                     break;
                 default:
+                    global_data.add(line[0]);
                     out.print("Something went wrong at line: ");
                     out.println(Arrays.toString(line));
             }
@@ -143,14 +143,68 @@ public class ParseInit {
             }
         }
 
-        //out.println("DEBUG");
-        //out.println(comunidade.getCasa(morada).toString());
+        //Adicionar uma divisão à casa
         comunidade.getCasa(morada).addRoom(espaco);
+        //Adicionar os ids dos dispositivos associados à divisão que foi criada
         for(String id: ids){
             comunidade.getCasa(morada).addToRoom(espaco, id);
         }
 
     }
+
+    /**
+     * Pode fazer falta adicionar a parte correspondente à fórmula
+     * @param global_data Array de dados globais pré-definidos
+     * @param line Linha a ser interpretada
+     * @param comunidade Comunidade ao qual estamos a adicionar o comercializador
+     */
+    public static void parse_comercializador(ArrayList<String> global_data, String[] line, Comunidade comunidade){
+        ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
+        String nomeEmpresa = "";
+        int numeroDispositivos = 0;
+        int valorBase = 0;
+        int imposto = 0;
+
+
+        for(String l: line){
+            line_splitted_by_2dot.add(l.split(":"));
+        }
+
+        for(String l: global_data){
+            line_splitted_by_2dot.add(l.split(":"));
+        }
+
+        //  Dar print ao array partido
+
+        out.println("Print ah String de Comercializador partida pelos :");
+        for(String[] l : line_splitted_by_2dot){
+            out.println(Arrays.toString(l));
+        }
+
+        for(String[] l : line_splitted_by_2dot){
+            switch (l[0]){
+                case "nomeEmpresa":
+                    nomeEmpresa = l[1];
+                    break;
+                case "numeroDispositivos":
+                    numeroDispositivos = Integer.parseInt(l[1]);
+                    break;
+                case "valorBase":
+                    valorBase = Integer.parseInt(l[1]);
+                    break;
+                case "imposto":
+                    imposto = Integer.parseInt(l[1]);
+                    break;
+                default:
+                    break;
+
+            }
+        }
+        Comercializador comercializador = new Comercializador(nomeEmpresa, numeroDispositivos, valorBase, imposto);
+        comunidade.setMercado(nomeEmpresa, comercializador);
+    }
+
+
 
 
 

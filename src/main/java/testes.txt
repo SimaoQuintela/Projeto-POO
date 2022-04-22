@@ -1,3 +1,7 @@
+valorBase:10
+imposto:5
+comercializador nomeEmpresa:EDP numeroDispositivos:20
+comercializador nomeEmpresa:Endesa numeroDispositivos:10
 casa morada:rua_da_ameixoeira fornecedor:EDP devices locations
 casa morada:rua_sem_nome fornecedor:Endesa devices locations
 devices morada:rua_da_ameixoeira SmartBulb id:1234 on/off:on tone:WARM dimensions:10 time:now
