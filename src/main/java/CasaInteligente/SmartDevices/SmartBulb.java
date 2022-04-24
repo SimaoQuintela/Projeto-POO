@@ -19,8 +19,6 @@ public class SmartBulb extends SmartDevice {
     private int tone;
     private int dimensions;
     private LocalDateTime time;
-
-    // falta adicionar esta var aos construtores e métodos
     private float dailyConsumption;
 
 
@@ -28,7 +26,6 @@ public class SmartBulb extends SmartDevice {
      * Construtor por omissão de uma SmartBulb
      */
     public SmartBulb() {
-        // initialise instance variables
         super();
         this.tone = NEUTRAL;
         this.time = LocalDateTime.now();
@@ -41,11 +38,9 @@ public class SmartBulb extends SmartDevice {
      * @param id Código que identifica a SmartBulb.
      * @param tone Tonalidade da lâmpada.
      * @param dimensions Dimensões da lâmpada.
-     * @param time
+     * @param time Tempo correspondente ao último reset
      */
-    //COMPLETAR DOCUMENTAÇAO
     public SmartBulb(String id, boolean status, int tone, int dimensions, LocalDateTime time) {
-        // initialise instance variables
         super(id, status);
         this.tone = tone;
         this.dimensions = dimensions;
@@ -58,7 +53,6 @@ public class SmartBulb extends SmartDevice {
      * @param id Código que identifica a SmartBulb.
      */
     public SmartBulb(String id) {
-        // initialise instance variables
         super(id);
         this.tone = NEUTRAL;
         this.dimensions = 0;
@@ -91,7 +85,6 @@ public class SmartBulb extends SmartDevice {
      * @param o Objeto comparado com a SmartBulb.
      * @return Booleano que indica se são iguais.
      */
-    // dúvidas aqui, devo comparar com a class SmartDevice?
     public boolean equals(Object o){
         if(o == this)
             return true;
@@ -101,15 +94,19 @@ public class SmartBulb extends SmartDevice {
 
         SmartBulb s = (SmartBulb) o;
 
-        return (this.tone == s.getTone() &&
-                this.dimensions == s.getDimensions());
+        return (
+                this.tone == s.getTone()             &&
+                this.dimensions == s.getDimensions() &&
+                this.time == s.time                  &&
+                this.dailyConsumption == s.dailyConsumption
+        );
     }
 
     /**
      * Método que produz uma string na qual está representada a SmartBulb.
      * @return string que representa a SmartBulb.
      */
-    // dúvidas aqui, devo invocar o toString da classe SmartDevice ?
+    // COMPLETAR O TOSTRING
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
@@ -180,6 +177,7 @@ public class SmartBulb extends SmartDevice {
     /**
      * Método que atualiza a referência base de tempo.
      */
+    // DEBATER ISTO COM O GRUPO
     public void resetTime(){
         LocalDateTime temp = this.time;
         setTime(LocalDateTime.now());

@@ -11,6 +11,8 @@ public class SmartDevice {
 
     private String id;
     private boolean on;
+    // Apresentar sugestão sobre adicionar uma variável consumo em SmartDevice por causa da abstração
+    // Apresentar sugestão sobre adicionar uma variável abstrata custoInstalacao
 
     /**
      * Construtor por omissão de um SmartDevice.
@@ -22,21 +24,21 @@ public class SmartDevice {
 
     /**
      * Construtor parametrizado de um SmartDevice.
-     * @param s Código que identifica o SmartDevice.
+     * @param id Código que identifica o SmartDevice.
      */
-    public SmartDevice(String s) {
-        this.id = s;
+    public SmartDevice(String id) {
+        this.id = id;
         this.on = false;
     }
 
     /**
      * Construtor parametrizado de um SmartDevice.
-     * @param s Código que identifica o SmartDevice.
-     * @param on Estado (ligado ou desligado) do SmartDevice.
+     * @param id Código que identifica o SmartDevice.
+     * @param status Estado (ligado ou desligado) do SmartDevice.
      */
-    public SmartDevice(String s, boolean on){
-        this.id = s;
-        this.on = on;
+    public SmartDevice(String id, boolean status){
+        this.id = id;
+        this.on = status;
     }
 
     /**
@@ -90,6 +92,7 @@ public class SmartDevice {
         return sb.toString();
     }
 
+
     /**
      * Método que devolve o estado do SmartDevice.
      * @return Estado do SmartDevice.
@@ -101,6 +104,7 @@ public class SmartDevice {
      * @return Código que identifica o SmartDevice.
      */
     public String getID() {return this.id;}
+
 
     /**
      * Método que liga o SmartDevice.

@@ -16,9 +16,9 @@ public class SmartDeviceTest {
     /**
      * Default constructor for test class SmartDeviceTest
      */
-    public SmartDeviceTest()
-    {
-    }
+ //   public SmartDeviceTest()
+ //   {
+ //   }
 
     /**
      * Sets up the test fixture.
@@ -39,7 +39,7 @@ public class SmartDeviceTest {
     public void tearDown()
     {
     }
-    
+    /*
     @Test
     public void testContructor() {
         SmartDevice smartDev1 = new SmartDevice();
@@ -76,4 +76,6 @@ public class SmartDeviceTest {
         smartDev1.setOn(false);
         assertFalse(smartDev1.getOn());
     }
+
+     */
 }

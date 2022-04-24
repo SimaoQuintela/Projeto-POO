@@ -39,12 +39,13 @@ public class ParseInit {
                 case "casa":
                     parse_casa(line, comunidade);
                     break;
-                case "devices":
+                //case "devices":  PROVAVELMENTE VOU TROCAR "DEVICES" POR "SMARTBULB", "SMARTSPEAKER" E "SMARTCAMERA"
                 //    parse_devices(line, comunidade);
-                    break;
-                case "locations":
-                    parse_locations(line, comunidade);
-                    break;
+                //    break;
+
+                // case "locations":     PROVAVELMENTE VOU REMOVER ISTO
+                //    parse_locations(line, comunidade);
+                //    break;
                 case "comercializador":
                     parse_comercializador(global_data, line, comunidade);
                     break;
@@ -62,6 +63,9 @@ public class ParseInit {
     // Classe 100% bem interpretada em ficheiro, conseguimos inicializar uma casa "vazia" até
     public static void parse_casa(String[] line, Comunidade comunidade){
         ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
+        String proprietario = "";
+        int numeroPorta = 0;
+        long NIF = 0;
         String morada = "";
         String fornecedor = "";
 
@@ -69,16 +73,17 @@ public class ParseInit {
             line_splitted_by_2dot.add(l.split(":"));
         }
 
-        //  Dar print ao array partido
-        /*
-        out.println("Print ah String partida pelos :");
-        for(String[] l : line_splitted_by_2dot){
-            out.println(Arrays.toString(l));
-        }
-        */
-
         for(String[] l: line_splitted_by_2dot){
             switch (l[0]){
+                case "proprietario":
+                    proprietario = l[1].replace("_", " ");
+                    break;
+                case "porta":
+                    numeroPorta = Integer.parseInt(l[1]);
+                    break;
+                case "NIF":
+                    NIF = Long.parseLong(l[1]);
+                    break;
                 case "morada":
                     morada = l[1];
                     break;
@@ -90,10 +95,10 @@ public class ParseInit {
             }
         }
 
-        CasaInteligente casa = new CasaInteligente(morada, fornecedor);
+        CasaInteligente casa = new CasaInteligente(proprietario, numeroPorta, NIF, morada, fornecedor);
         comunidade.setCasas(morada, casa);
     }
-/*
+
     public static void parse_devices(String[] line, Comunidade comunidade){
         ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
 
@@ -107,9 +112,9 @@ public class ParseInit {
             out.println(Arrays.toString(l));
         }
     }
-*/
 
 
+/* PROVAVELMENTE VOU REMOVER ESTA FUNÇÃO
     public static void parse_locations(String[] line, Comunidade comunidade){
         ArrayList<String[]> line_splitted_by_2dot = new ArrayList<>();
         String morada = "";
@@ -121,12 +126,12 @@ public class ParseInit {
         }
 
         //  Dar print ao array partido
-        /*
+
         out.println("Print ah String de locations partida pelos :");
         for(String[] l : line_splitted_by_2dot){
             out.println(Arrays.toString(l));
         }
-        */
+
         for(String[] l: line_splitted_by_2dot){
             switch (l[0]){
                 case "morada":
@@ -151,6 +156,7 @@ public class ParseInit {
         }
 
     }
+    */
 
     /**
      * Pode fazer falta adicionar a parte correspondente à fórmula
@@ -175,11 +181,12 @@ public class ParseInit {
         }
 
         //  Dar print ao array partido
-
+        /*
         out.println("Print ah String de Comercializador partida pelos :");
         for(String[] l : line_splitted_by_2dot){
             out.println(Arrays.toString(l));
         }
+         */
 
         for(String[] l : line_splitted_by_2dot){
             switch (l[0]){
@@ -210,7 +217,7 @@ public class ParseInit {
 
 
     public static void testa_programa(Comunidade comunidade){
-        out.println("---- Comunidade para String ----");
+        out.println("---- Inicio dos testes ----");
         out.println(comunidade.toString());
 
     }

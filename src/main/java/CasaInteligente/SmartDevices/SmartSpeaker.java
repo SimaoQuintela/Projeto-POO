@@ -16,6 +16,7 @@ public class SmartSpeaker extends SmartDevice {
     private String channel;
     private String brand;
     private int dailyConsumption; //configurar o consumo nos métodos da classe
+    // falta adicionar os métodos correspondentes a esta variável caso seja para ser implementada
 
 
     /**

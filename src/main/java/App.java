@@ -1,7 +1,5 @@
 import CasaInteligente.CasaInteligente;
-import CasaInteligente.SmartDevices.Resolution;
 import CasaInteligente.SmartDevices.SmartBulb;
-import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartSpeaker;
 
 import java.util.Scanner;

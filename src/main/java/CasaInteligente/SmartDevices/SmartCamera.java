@@ -4,8 +4,9 @@ public class SmartCamera extends SmartDevice {
     private int xRes;
     private int yRes;
     private int fileSize;
-    private int consumption; //tamanho do ficheiro * resolução
-    //private float dailyConsumption;
+    private float consumption; //tamanho do ficheiro * resolução
+
+    // Falar sobre coerência no uso de this..... ou get/set methods
 
     /**
      * Construtor por omissão de SmartCamera.
@@ -134,7 +135,7 @@ public class SmartCamera extends SmartDevice {
      * Método que devolve o consumo energético da SmartCamera.
      * @return Consumo energético da SmartCamera.
      */
-    public int getConsumption(){
+    public float getConsumption(){
         return this.consumption;
     }
 

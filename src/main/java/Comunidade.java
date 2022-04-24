@@ -90,8 +90,17 @@ public class Comunidade {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Nome da comunidade: ").append(this.getNomeDaComunidade());
-        sb.append("\n-------- Casas: --------\n").append(this.casas.toString());
-        sb.append("\n-------- Mercado: --------\n").append(this.mercado.toString());
+        for(CasaInteligente c : this.casas.values()){
+            sb.append("\nCasa cuja morada e: ").append(c.getMorada());
+            sb.append(c.toString());
+            sb.append("\n\n");
+        }
+
+        for(Comercializador c : this.mercado.values()){
+            sb.append("\nComercializador: ").append(c.getNomeEmpresa());
+            sb.append(c.toString());
+            sb.append("\n\n");
+        }
 
         return sb.toString();
     }
