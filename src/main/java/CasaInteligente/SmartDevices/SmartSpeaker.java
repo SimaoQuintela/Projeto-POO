@@ -17,6 +17,7 @@ public class SmartSpeaker extends SmartDevice {
     private String brand;
     private float consumption; //configurar o consumo nos métodos da classe
     private LocalDateTime time;
+    private float custoInstalacao;
 
 
     /**
@@ -30,6 +31,7 @@ public class SmartSpeaker extends SmartDevice {
         this.brand = "";
         this.consumption = 0;
         this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -47,6 +49,7 @@ public class SmartSpeaker extends SmartDevice {
         this.brand = brand;
         this.consumption = 0;
         this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -56,7 +59,7 @@ public class SmartSpeaker extends SmartDevice {
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand) {
+    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float custoInstalacao) {
         // initialise instance variables
         super(cod, on);
         this.channel = channel;
@@ -64,6 +67,7 @@ public class SmartSpeaker extends SmartDevice {
         this.brand = brand;
         this.consumption = 0;
         this.time = LocalDateTime.now();
+        this.custoInstalacao = custoInstalacao;
     }
 
     /**
@@ -71,7 +75,7 @@ public class SmartSpeaker extends SmartDevice {
      * @param s SmartSpeaker que é copiada.
      */
     public SmartSpeaker(SmartSpeaker s){
-        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand());
+        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getCustoInstalacao());
     }
 
     /**
@@ -101,7 +105,8 @@ public class SmartSpeaker extends SmartDevice {
                 this.getChannel().equals(s.getChannel()) &&
                 this.brand.equals(s.getBrand())          &&
                 this.consumption == s.getConsumption()   &&
-                this.time.equals(s.getTime())
+                this.time.equals(s.getTime())            &&
+                this.custoInstalacao == s.getCustoInstalacao()
         );
     }
 
@@ -116,17 +121,26 @@ public class SmartSpeaker extends SmartDevice {
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");
-        sb.append("Consumo").append(this.getConsumption()).append("\n");
+        sb.append("Consumo: ").append(this.getConsumption()).append("\n");
+        sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
 
         return sb.toString();
     }
 
+    /**
+     * Método que liga um SmartDevice
+     */
     public void turnOn() {
-
+        super.setOn(true);
+        this.time = LocalDateTime.now();
     }
 
+    /**
+     * Método que desliga um SmartDevice
+     */
     public void turnOff() {
-
+        super.setOn(false);
+        resetTime();
     }
 
     /**
@@ -196,6 +210,13 @@ public class SmartSpeaker extends SmartDevice {
     }
 
     /**
+     * Método que devolve o custo de instalação de um Smart Device
+     */
+    private float getCustoInstalacao() {
+        return this.custoInstalacao;
+    }
+
+    /**
      * Método que altera o canal de rádio que toca na SmartSpeaker.
      * @param c Novo canal de rádio que toca na SmartSpeaker.
      */
@@ -232,6 +253,14 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void setConsumption(float consumption){
         this.consumption = consumption;
+    }
+
+    /**
+     * Método que devolve o custo de instalação de um Smart Device
+     * @param custoInstalacao Custo de instalação do Smart Device
+     */
+    public void setCustoInstalacao(float custoInstalacao) {
+        this.custoInstalacao = custoInstalacao;
     }
 
 }

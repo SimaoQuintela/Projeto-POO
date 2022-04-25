@@ -8,6 +8,7 @@ public class SmartCamera extends SmartDevice {
     private int yRes;
     private int fileSize;
     private float consumption; //tamanho do ficheiro * resolução
+    private float custoInstalacao;
     private LocalDateTime time;
 
     /**
@@ -19,6 +20,7 @@ public class SmartCamera extends SmartDevice {
         this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
+        this.custoInstalacao = 0;
         this.time = LocalDateTime.now();
     }
 
@@ -30,12 +32,13 @@ public class SmartCamera extends SmartDevice {
      * @param yRes Resolução da SmartCamera no eixo do y
      * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
-    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize){
+    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float custoInstalacao){
         super(id, status);
         this.xRes = xRes;
         this.yRes = yRes;
         this.fileSize = fileSize;
         this.consumption = this.xRes * this.yRes * this.fileSize;
+        this.custoInstalacao = custoInstalacao;
         this.time = LocalDateTime.now();
     }
 
@@ -50,6 +53,7 @@ public class SmartCamera extends SmartDevice {
         this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
+        this.custoInstalacao = 0;
         this.time = LocalDateTime.now();
     }
 
@@ -63,6 +67,7 @@ public class SmartCamera extends SmartDevice {
         this.yRes = s.getyRes();
         this.fileSize = s.getFileSize();
         this.consumption = s.getxRes() * s.getyRes() * s.getFileSize();
+        this.custoInstalacao = s.getCustoInstalacao();
         this.time = s.getTime();
     }
 
@@ -81,11 +86,12 @@ public class SmartCamera extends SmartDevice {
 
         SmartCamera c = (SmartCamera) obj;
         return (
-                this.xRes == c.xRes              &&
-                this.yRes == c.yRes              &&
-                this.fileSize == c.getFileSize() &&
+                this.xRes == c.xRes                    &&
+                this.yRes == c.yRes                    &&
+                this.fileSize == c.getFileSize()       &&
                 this.consumption == c.getConsumption() &&
-                this.time.equals(c.getTime())
+                this.time.equals(c.getTime())          &&
+                this.custoInstalacao == c.getCustoInstalacao()
         );
     }
 
@@ -103,13 +109,12 @@ public class SmartCamera extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("\n------- Smart Bulb -------\n");
-        sb.append("Resolução: ").append("\n");
+        sb.append("Resolucao: ").append("\n");
         sb.append("X: ").append(this.getxRes()).append("\n");
         sb.append("Y: ").append(this.getyRes()).append("\n");
         sb.append("Tamanho do ficheiro gerado: ").append(this.fileSize).append("\n");
-        sb.append("Consumo energético: ").append(this.consumption).append("\n");
-
+        sb.append("Consumo energetico: ").append(this.consumption).append("\n");
+        sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
         return sb.toString();
     }
 
@@ -177,6 +182,13 @@ public class SmartCamera extends SmartDevice {
     }
 
     /**
+     * Método que devolve o custo de instalação de um Smart Device
+     */
+    private float getCustoInstalacao() {
+        return this.custoInstalacao;
+    }
+
+    /**
      * Método que devolve o tempo desde o último reset
      * @return Tempo em que ocorreu o último reset
      */
@@ -223,4 +235,13 @@ public class SmartCamera extends SmartDevice {
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
+
+    /**
+     * Método que devolve o custo de instalação de um Smart Device
+     * @param custoInstalacao Custo de instalação do Smart Device
+     */
+    public void setCustoInstalacao(float custoInstalacao) {
+        this.custoInstalacao = custoInstalacao;
+    }
+
 }

@@ -4,7 +4,7 @@ comercializador nomeEmpresa:EDP numeroDispositivos:20
 comercializador nomeEmpresa:Endesa numeroDispositivos:10
 casa proprietario:Simao_Quintela porta:1186 NIF:1234563123 morada:rua_da_ameixoeira fornecedor:EDP
 casa proprietario:Jonny_Depp porta:2000 NIF:932123313 morada:rua_sem_nome fornecedor:Endesa
-SmartBulb morada:rua_da_ameixoeira espaco:sala id:1234 on/off:on tone:WARM dimensions:10 time:now
-SmartSpeaker morada:rua_da_ameixoeira espaco:sala id:123 on/off:off tone:NEUTRAL dimensions:5 time:now
-SmartCamera morada:rua_sem_nome espaco:cozinha id:12 on/off:on tone:COLD dimensions:15 time:now
+SmartBulb morada:rua_da_ameixoeira porta:1186 espaco:sala id:1234 on/off:on tone:WARM dimensions:10 custo:4
+SmartSpeaker morada:rua_da_ameixoeira porta:1186 espaco:cozinha id:123 on/off:off volume:10 channel:RFM brand:Sony custo:5
+SmartCamera morada:rua_sem_nome porta:2000 espaco:cozinha id:12 on/off:on xRes:1080 yRes:720 fileSize:1000 custo:6
 

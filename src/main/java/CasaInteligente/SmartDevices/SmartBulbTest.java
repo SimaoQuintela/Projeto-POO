@@ -39,7 +39,7 @@ public class SmartBulbTest {
     public void tearDown()
     {
     }
-
+/*
     @Test
     public void testContructor() {
         SmartBulb smartBul1 = new SmartBulb();
@@ -72,7 +72,7 @@ public class SmartBulbTest {
         smartBul1.setTone(-10);
         assertEquals(SmartBulb.COLD, smartBul1.getTone());
     }
-
+*/
 }
 
 

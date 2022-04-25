@@ -91,15 +91,14 @@ public class Comunidade {
 
         sb.append("Nome da comunidade: ").append(this.getNomeDaComunidade());
         for(CasaInteligente c : this.casas.values()){
-            sb.append("\nCasa cuja morada e: ").append(c.getMorada());
             sb.append(c.toString());
             sb.append("\n\n");
         }
 
+        sb.append("\n------------- Comercializador -------------\n");
         for(Comercializador c : this.mercado.values()){
-            sb.append("\nComercializador: ").append(c.getNomeEmpresa());
             sb.append(c.toString());
-            sb.append("\n\n");
+            sb.append("\n");
         }
 
         return sb.toString();

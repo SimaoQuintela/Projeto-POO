@@ -112,7 +112,6 @@ public class SmartBulb extends SmartDevice {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("------- Smart Bulb -------\n");
         sb.append("Tonalidade: ").append(this.getTone()).append("\n");
         sb.append("Dimensoes: ").append(this.getDimensions()).append("\n");
         sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");

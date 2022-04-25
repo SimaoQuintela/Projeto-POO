@@ -172,7 +172,7 @@ public class App {
                     out.print("\n");
                 } while(volume >= 0 && volume <= 20);
 
-                SmartSpeaker new_speaker = new SmartSpeaker(id, status, channel, volume, brand);
+                //SmartSpeaker new_speaker = new SmartSpeaker(id, status, channel, volume, brand);
                 casa.addDevice(new_speaker, localizacao);
                 TimeUnit.SECONDS.sleep(2);
                 limpaConsola();

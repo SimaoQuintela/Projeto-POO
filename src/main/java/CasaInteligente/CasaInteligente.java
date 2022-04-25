@@ -1,4 +1,6 @@
 package CasaInteligente;
+import CasaInteligente.SmartDevices.SmartBulb;
+import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartDevice;
 
 import java.util.*;
@@ -116,15 +118,30 @@ public class CasaInteligente {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("\n--- Casa Inteligente ---\n");
+        sb.append("\n------------- Casa Inteligente -------------\n");
         sb.append("Proprietario: ").append(this.proprietario).append("\n");
         sb.append("NIF: ").append(this.NIF).append("\n");
         sb.append("Numero de porta: ").append(this.numeroDePorta).append("\n");
         sb.append("Morada: ").append(this.getMorada()).append("\n");
         sb.append("Fornecedor: ").append(this.getFornecedor()).append("\n");
-        sb.append("------------- Locations -------------\n");
 
-        for(String division: locations.keySet()){
+        sb.append("------------- Devices -------------\n");
+        for(String id: this.devices.keySet()){
+            if(this.devices.get(id) instanceof SmartBulb){
+                sb.append("Smart Bulb\n");
+            } else if(this.devices.get(id) instanceof SmartCamera){
+                sb.append("Smart Camera\n");
+            } else {
+                sb.append("Smart Speaker\n");
+            }
+
+            // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
+            sb.append(this.devices.get(id).toString());
+            sb.append("id: ").append(id).append("\n");
+        }
+
+        sb.append("------------- Locations -------------\n");
+        for(String division: this.locations.keySet()){
             sb.append("Divisao: ").append(division);
             sb.append("\nIds dos dispositivos: ");
             for(String id: this.locations.get(division)){
@@ -191,7 +208,14 @@ public class CasaInteligente {
      */
     public void addDevice(SmartDevice s, String location) {
         this.devices.put(s.getID(), s);
-        this.locations.get(location).add(s.getID());
+
+        if (hasRoom(location)) {
+            this.locations.get(location).add(s.getID());
+        } else {
+            List<String> ids = new ArrayList<>();
+            ids.add(s.getID());
+            this.locations.put(location, ids);
+        }
     }
 
     public void addLocation(String location, List<String> ids){
