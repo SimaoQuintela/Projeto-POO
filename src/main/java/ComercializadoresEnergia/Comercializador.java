@@ -1,12 +1,16 @@
 package ComercializadoresEnergia;
 
+/**
+ * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
+ */
+
 public class Comercializador{
     private String nomeEmpresa;
     private int numeroDispositivos;
-    private int valorBase; //definir valor
+    private int valorBase;
     private int consumoDispositivo;
-    private int imposto; //definir taxa de imposto
-    private double PrecoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
+    private int imposto;
+    private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
 
     /**
@@ -15,6 +19,7 @@ public class Comercializador{
     public Comercializador(){
         this.nomeEmpresa = "";
         this.numeroDispositivos = 0;
+        this.valorBase = 0;
         this.consumoDispositivo = 0;
         this.imposto = 0;
     }
@@ -38,7 +43,8 @@ public class Comercializador{
     public Comercializador(Comercializador c){
         this(c.nomeEmpresa, c.numeroDispositivos, c.valorBase,/* c.consumoDispositivo,*/ c.imposto);
     }
-    
+
+    // falta documentar
     public boolean equals(Object o){
         if (o == this)
             return true;

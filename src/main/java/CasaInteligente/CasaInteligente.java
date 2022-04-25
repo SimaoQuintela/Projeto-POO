@@ -2,9 +2,6 @@ package CasaInteligente;
 import CasaInteligente.SmartDevices.SmartDevice;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -84,7 +81,6 @@ public class CasaInteligente {
      * @param o Objeto que é compara com a CasaInteligente.
      * @return Booleano que indica o resultado da comparação.
      */
-    // importante verificar se o equals está bem construído
     public boolean equals(Object o){
         if (o ==this)
             return true;

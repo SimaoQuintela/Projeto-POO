@@ -42,10 +42,6 @@ public class ParseInit {
                 //case "devices":  PROVAVELMENTE VOU TROCAR "DEVICES" POR "SMARTBULB", "SMARTSPEAKER" E "SMARTCAMERA"
                 //    parse_devices(line, comunidade);
                 //    break;
-
-                // case "locations":     PROVAVELMENTE VOU REMOVER ISTO
-                //    parse_locations(line, comunidade);
-                //    break;
                 case "comercializador":
                     parse_comercializador(global_data, line, comunidade);
                     break;
@@ -179,14 +175,6 @@ public class ParseInit {
         for(String l: global_data){
             line_splitted_by_2dot.add(l.split(":"));
         }
-
-        //  Dar print ao array partido
-        /*
-        out.println("Print ah String de Comercializador partida pelos :");
-        for(String[] l : line_splitted_by_2dot){
-            out.println(Arrays.toString(l));
-        }
-         */
 
         for(String[] l : line_splitted_by_2dot){
             switch (l[0]){

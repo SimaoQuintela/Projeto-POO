@@ -1,12 +1,14 @@
 package CasaInteligente.SmartDevices;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class SmartCamera extends SmartDevice {
     private int xRes;
     private int yRes;
     private int fileSize;
     private float consumption; //tamanho do ficheiro * resolução
-
-    // Falar sobre coerência no uso de this..... ou get/set methods
+    private LocalDateTime time;
 
     /**
      * Construtor por omissão de SmartCamera.
@@ -17,6 +19,7 @@ public class SmartCamera extends SmartDevice {
         this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
+        this.time = LocalDateTime.now();
     }
 
     /**
@@ -29,10 +32,11 @@ public class SmartCamera extends SmartDevice {
      */
     public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize){
         super(id, status);
-        setxRes(xRes);
-        setyRes(yRes);
-        setFileSize(fileSize);
-        setConsumption(this.getxRes() * this.getyRes() * fileSize);
+        this.xRes = xRes;
+        this.yRes = yRes;
+        this.fileSize = fileSize;
+        this.consumption = this.xRes * this.yRes * this.fileSize;
+        this.time = LocalDateTime.now();
     }
 
     /**
@@ -46,6 +50,7 @@ public class SmartCamera extends SmartDevice {
         this.yRes = 0;
         this.fileSize = 0;
         this.consumption = 0;
+        this.time = LocalDateTime.now();
     }
 
     /**
@@ -54,10 +59,11 @@ public class SmartCamera extends SmartDevice {
      */
     public SmartCamera(SmartCamera s){
         super(s.getID(), s.getOn());
-        setxRes(s.getxRes());
-        setyRes(s.getyRes());
-        setFileSize(s.getFileSize());
-        setConsumption(s.getxRes() * s.getyRes() * s.getFileSize());
+        this.xRes = s.getxRes();
+        this.yRes = s.getyRes();
+        this.fileSize = s.getFileSize();
+        this.consumption = s.getxRes() * s.getyRes() * s.getFileSize();
+        this.time = s.getTime();
     }
 
     /**
@@ -78,7 +84,8 @@ public class SmartCamera extends SmartDevice {
                 this.xRes == c.xRes              &&
                 this.yRes == c.yRes              &&
                 this.fileSize == c.getFileSize() &&
-                this.consumption == c.getConsumption()
+                this.consumption == c.getConsumption() &&
+                this.time.equals(c.getTime())
         );
     }
 
@@ -96,16 +103,46 @@ public class SmartCamera extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("------- Smart Bulb -------\n");
-        sb.append("Resolução: ");
-        sb.append("\nX: ").append(this.getxRes());
-        sb.append("\nY: ").append(this.getyRes());
-        sb.append("\nTamanho do ficheiro gerado: ");
-        sb.append(this.fileSize);
-        sb.append("\nConsumo energético: ");
-        sb.append(this.consumption);
+        sb.append("\n------- Smart Bulb -------\n");
+        sb.append("Resolução: ").append("\n");
+        sb.append("X: ").append(this.getxRes()).append("\n");
+        sb.append("Y: ").append(this.getyRes()).append("\n");
+        sb.append("Tamanho do ficheiro gerado: ").append(this.fileSize).append("\n");
+        sb.append("Consumo energético: ").append(this.consumption).append("\n");
+
         return sb.toString();
     }
+
+    /**
+     * Método que liga um SmartDevice
+     */
+    public void turnOn() {
+        super.setOn(true);
+        this.time = LocalDateTime.now();
+    }
+    /**
+     * Método que desliga um SmartDevice
+     */
+    public void turnOff() {
+        super.setOn(false);
+        resetTime();
+    }
+
+    /**
+     * Método que atualiza a referência base de tempo.
+     */
+    public void resetTime(){
+        LocalDateTime temp = this.time;
+        setTime(LocalDateTime.now());
+        Duration duration = Duration.between(temp, this.time);
+        long interval = duration.toHours();
+
+        if(this.getOn()){
+            float temp_consumption = (float)((long) this.getxRes() * this.getyRes() * this.getFileSize() * interval) / 1000;
+            this.consumption = this.consumption + temp_consumption;
+        }
+    }
+
 
     /**
      * Getter que nos dá a resolução no eixo do x
@@ -140,6 +177,14 @@ public class SmartCamera extends SmartDevice {
     }
 
     /**
+     * Método que devolve o tempo desde o último reset
+     * @return Tempo em que ocorreu o último reset
+     */
+    public LocalDateTime getTime() {
+        return this.time;
+    }
+
+    /**
      * setter que nos coloca em xRes o valor passado como parâmetro
      * @param xRes resolução no eixo do x
      */
@@ -169,5 +214,13 @@ public class SmartCamera extends SmartDevice {
      */
     public void setConsumption(int consumption){
         this.consumption = consumption;
+    }
+
+    /**
+     * Método que coloca na variável time o tempo passado como parâmetro
+     * @param time Valor que corresponde a um tempo de reset
+     */
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 }

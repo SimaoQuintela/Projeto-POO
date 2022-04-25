@@ -7,9 +7,6 @@ import java.time.LocalDateTime;
  * Uma SmartBulb é uma lâmpada inteligente que além de ligar e desligar (já que
  * é subclasse de SmartDevice) também permite escolher a intensidade da iluminação 
  * (a cor da mesma).
- *
- * @author (your name)
- * @version (a version number or a date)
  */
 public class SmartBulb extends SmartDevice {
     public static final int WARM = 80;
@@ -19,7 +16,8 @@ public class SmartBulb extends SmartDevice {
     private int tone;
     private int dimensions;
     private LocalDateTime time;
-    private float dailyConsumption;
+    private float consumption;
+    private float custoInstalacao;
 
 
     /**
@@ -30,7 +28,8 @@ public class SmartBulb extends SmartDevice {
         this.tone = NEUTRAL;
         this.time = LocalDateTime.now();
         this.dimensions = 0;
-        this.dailyConsumption = 0;
+        this.consumption = 0;
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -40,12 +39,13 @@ public class SmartBulb extends SmartDevice {
      * @param dimensions Dimensões da lâmpada.
      * @param time Tempo correspondente ao último reset
      */
-    public SmartBulb(String id, boolean status, int tone, int dimensions, LocalDateTime time) {
+    public SmartBulb(String id, boolean status, int tone, int dimensions, LocalDateTime time, float custoInstalacao) {
         super(id, status);
         this.tone = tone;
         this.dimensions = dimensions;
-        this.dailyConsumption = 0;
+        this.consumption = 0;
         this.time = time;
+        this.custoInstalacao = custoInstalacao;
     }
 
     /**
@@ -56,8 +56,9 @@ public class SmartBulb extends SmartDevice {
         super(id);
         this.tone = NEUTRAL;
         this.dimensions = 0;
-        this.dailyConsumption = 0;
+        this.consumption = 0;
         this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -68,8 +69,9 @@ public class SmartBulb extends SmartDevice {
         super(s.getID());
         this.tone = s.getTone();
         this.dimensions = s.getDimensions();
-        this.dailyConsumption = 0;
+        this.consumption = 0;
         this.time = LocalDateTime.now();
+        this.custoInstalacao = s.getCustoInstalacao();
     }
 
     /**
@@ -95,10 +97,11 @@ public class SmartBulb extends SmartDevice {
         SmartBulb s = (SmartBulb) o;
 
         return (
-                this.tone == s.getTone()             &&
-                this.dimensions == s.getDimensions() &&
-                this.time == s.time                  &&
-                this.dailyConsumption == s.dailyConsumption
+                this.tone == s.getTone()                  &&
+                this.dimensions == s.getDimensions()      &&
+                this.time == s.getTime()                  &&
+                this.consumption == s.getConsumption()    &&
+                this.custoInstalacao == s.getCustoInstalacao()
         );
     }
 
@@ -106,24 +109,54 @@ public class SmartBulb extends SmartDevice {
      * Método que produz uma string na qual está representada a SmartBulb.
      * @return string que representa a SmartBulb.
      */
-    // COMPLETAR O TOSTRING
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
         sb.append("------- Smart Bulb -------\n");
         sb.append("Tonalidade: ").append(this.getTone()).append("\n");
+        sb.append("Dimensoes: ").append(this.getDimensions()).append("\n");
+        sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
+        sb.append("Consumo ").append(this.getConsumption()).append("\n");
 
         return sb.toString();
     }
 
     /**
-     * Método que altera a tonalidade da SmartBulb.
-     * @param t Nova tonalidade da SmartBulb.
+     * Método que liga um SmartDevice
      */
-    public void setTone(int t) {
-        if (t>WARM) this.tone = WARM;
-        else if (t<COLD) this.tone = COLD;
-        else this.tone = t;
+    public void turnOn() {
+        super.setOn(true);
+        this.time = LocalDateTime.now();
+    }
+
+    /**
+     * Método que desliga um SmartDevice
+     */
+    public void turnOff() {
+        super.setOn(false);
+        resetTime();
+    }
+
+    /**
+     * Método que atualiza a referência base de tempo.
+     */
+    public void resetTime(){
+        LocalDateTime temp = this.time;
+        setTime(LocalDateTime.now());
+        Duration duration = Duration.between(temp, this.time);
+        long interval = duration.toHours();
+
+        if(this.getOn()){
+            float temp_consumption = (float)(this.tone * interval) / 1000;
+            this.consumption = this.consumption + temp_consumption;
+        }
+    }
+
+    /**
+     * Método que devolve o custo de instalação de um Smart Device
+     */
+    private float getCustoInstalacao() {
+        return this.custoInstalacao;
     }
 
     /**
@@ -143,6 +176,22 @@ public class SmartBulb extends SmartDevice {
     }
 
     /**
+     * Método que devolve a referência base de tempo.
+     * @return Referência de tempo.
+     */
+    public LocalDateTime getTime(){
+        return this.time;
+    }
+
+    /**
+     * Método que devolve o consumo diário de energia da SmartBulb.
+     * @return Consumo diário da SmartBulb.
+     */
+    public float getConsumption(){
+        return this.consumption;
+    }
+
+    /**
      * Método que altera as dimensões da SmartBulb.
      * @param dim Novas dimensões da SmartBulb.
      */
@@ -159,36 +208,29 @@ public class SmartBulb extends SmartDevice {
     }
 
     /**
-     * Método que devolve a referência base de tempo.
-     * @return Referência de tempo.
+     * Método que altera a tonalidade da SmartBulb.
+     * @param t Nova tonalidade da SmartBulb.
      */
-    public LocalDateTime getTime(){
-        return this.time;
+    public void setTone(int t) {
+        if (t>WARM) this.tone = WARM;
+        else if (t<COLD) this.tone = COLD;
+        else this.tone = t;
     }
 
     /**
-     * Método que devolve o consumo diário de energia da SmartBulb.
-     * @return Consumo diário da SmartBulb.
+     * Método que altera o consumo energético da SmartCamera.
+     * @param consumption Novo consumo energético da SmartCamera.
      */
-    public float getDailyConsumption(){
-        return this.dailyConsumption;
+    public void setConsumption(int consumption){
+        this.consumption = consumption;
     }
 
     /**
-     * Método que atualiza a referência base de tempo.
+     * Método que devolve o custo de instalação de um Smart Device
+     * @param custoInstalacao Custo de instalação do Smart Device
      */
-    // DEBATER ISTO COM O GRUPO
-    public void resetTime(){
-        LocalDateTime temp = this.time;
-        setTime(LocalDateTime.now());
-        Duration duration = Duration.between(temp, this.time);
-        long interval = duration.toHours();
-
-        if(this.getOn()){
-            float consumption = (float)(this.tone * interval) / 1000;
-            this.dailyConsumption = (this.dailyConsumption + consumption) / 2;
-        }
+    public void setCustoInstalacao(float custoInstalacao) {
+        this.custoInstalacao = custoInstalacao;
     }
-
 }
 
