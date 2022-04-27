@@ -72,7 +72,12 @@ public abstract class SmartDevice {
      */
     public abstract void turnOff();
 
-    public abstract void resetTime();
+    //public abstract void resetTime();
+
+    /**
+     * Método que calcula o consumo do SmartDevice.
+     */
+    public abstract void consumo();
 
     /**
      * Método que devolve o estado do SmartDevice.

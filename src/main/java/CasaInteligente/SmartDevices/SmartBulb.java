@@ -125,7 +125,7 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        this.time = LocalDateTime.now();
+        //this.time = LocalDateTime.now();
     }
 
     /**
@@ -133,13 +133,10 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        resetTime();
+        //resetTime();
     }
 
-    /**
-     * Método que atualiza a referência base de tempo.
-     */
-    public void resetTime(){
+    /*public void resetTime(){
         LocalDateTime temp = this.time;
         setTime(LocalDateTime.now());
         Duration duration = Duration.between(temp, this.time);
@@ -148,6 +145,17 @@ public class SmartBulb extends SmartDevice {
         if(this.getOn()){
             float temp_consumption = (float)(this.tone * interval) / 1000;
             this.consumption = this.consumption + temp_consumption;
+        }
+    }*/
+
+    /**
+     * Método que calcula o consumo da SmartBulb.
+     */
+    public void consumo() {
+        if(this.getOn()){
+            this.consumption = (float)(this.tone * 24)/1000;
+        }else{
+            this.consumption = 0;
         }
     }
 

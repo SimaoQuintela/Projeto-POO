@@ -132,7 +132,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        this.time = LocalDateTime.now();
+        //this.time = LocalDateTime.now();
     }
 
     /**
@@ -140,13 +140,11 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        resetTime();
+        //resetTime();
     }
 
-    /**
-     * Método que atualiza a referência base de tempo.
-     */
-    public void resetTime(){
+
+    /*public void resetTime(){
         LocalDateTime temp = this.time;
         setTime(LocalDateTime.now());
         Duration duration = Duration.between(temp, this.time);
@@ -156,8 +154,18 @@ public class SmartSpeaker extends SmartDevice {
             float temp_consumption = (float)(this.getVolume() * this.getBrand().length() * interval) / 1000;
             this.consumption = this.consumption + temp_consumption;
         }
-    }
+    }*/
 
+    /**
+     * Método que calcula o consumo da SmartSpeaker.
+     */
+    public void consumo(){
+        if(this.getOn()){
+            this.consumption = (float)(this.volume * this.brand.length());
+        }else{
+            this.consumption = 0;
+        }
+    }
 
     /**
      * Método que aumenta uma unidade no volume da SmartSpeaker.

@@ -123,20 +123,18 @@ public class SmartCamera extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        this.time = LocalDateTime.now();
+        //this.time = LocalDateTime.now();
     }
     /**
      * Método que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
-        resetTime();
+        //resetTime();
     }
 
-    /**
-     * Método que atualiza a referência base de tempo.
-     */
-    public void resetTime(){
+
+    /*public void resetTime(){
         LocalDateTime temp = this.time;
         setTime(LocalDateTime.now());
         Duration duration = Duration.between(temp, this.time);
@@ -146,8 +144,18 @@ public class SmartCamera extends SmartDevice {
             float temp_consumption = (float)((long) this.getxRes() * this.getyRes() * this.getFileSize() * interval) / 1000;
             this.consumption = this.consumption + temp_consumption;
         }
-    }
+    }*/
 
+    /**
+     * Método que calcula o consumo da SmartCamera.
+     */
+    public void consumo(){
+        if(this.getOn()){
+            this.consumption = (this.xRes * this.yRes * this.fileSize);
+        }else{
+            this.consumption = 0;
+        }
+    }
 
     /**
      * Getter que nos dá a resolução no eixo do x
