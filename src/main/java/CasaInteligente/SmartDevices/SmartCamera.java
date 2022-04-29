@@ -66,7 +66,7 @@ public class SmartCamera extends SmartDevice {
         this.xRes = s.getxRes();
         this.yRes = s.getyRes();
         this.fileSize = s.getFileSize();
-        this.consumption = s.getxRes() * s.getyRes() * s.getFileSize();
+        this.consumption = s.getxRes() * s.getyRes() * s.getFileSize() * s.getConsumption();
         this.custoInstalacao = s.getCustoInstalacao();
         this.time = s.getTime();
     }
@@ -152,7 +152,7 @@ public class SmartCamera extends SmartDevice {
      */
     public void consumo(){
         if(this.getOn()){
-            this.consumption = (this.xRes * this.yRes * this.fileSize);
+            this.consumption = (this.xRes * this.yRes * this.fileSize*this.consumption);
         }else{
             this.consumption = 0;
         }

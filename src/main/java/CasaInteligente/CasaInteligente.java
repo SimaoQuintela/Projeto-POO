@@ -4,6 +4,8 @@ import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartDevice;
 
 import java.util.*;
+
+import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
