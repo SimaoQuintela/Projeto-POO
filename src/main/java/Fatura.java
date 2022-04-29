@@ -5,12 +5,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class Fatura {
+import static java.util.stream.Collectors.toMap;
 
+// FALTA FAZER EQUALS, TOSTRING, ETC.
+public class Fatura {
     private int codigo;
     private String nome;
     private int nif;
-    private Map<Integer, SmartDevice> consumoDevice; //Consumo -> Device
+    private Map<String, Float> consumoDevice; //id -> consumo
     private Comercializador empresa;
     private float total;
 
@@ -33,12 +35,8 @@ public class Fatura {
 
     }
 
-    /**
-     * Método que altera o código identificador da Fatura.
-     * @param codigo Código identificador da Fatura.
-     */
-    public void setCodigo(int codigo){
-        this.codigo = codigo;
+    public void valorFinal(){
+
     }
 
     /**
@@ -50,19 +48,44 @@ public class Fatura {
     }
 
     /**
-     * Método que altera o nome do cliente na fatura.
-     * @param nome Nome do cliente.
-     */
-    public void setNome(String nome){
-        this.nome = nome;
-    }
-
-    /**
      * Método que devolve o nome do cliente na fatura.
      * @return Nome do cliente.
      */
     public String getNome(){
         return this.nome;
+    }
+
+    /**
+     * Método que devolve o número de identificação fiscal do cliente.
+     * @return Número de identificação fiscal.
+     */
+    public int getNif(){
+        return this.nif;
+    }
+
+    public Map<Integer, SmartDevice> getConsumoDevices(){
+        Map<String, Float> new_consumos = new HashMap<>();
+        new_consumos = this.consumoDevice.entrySet()
+                .stream()
+                .collect(toMap(e->e.getKey(), e->e.getValue()));
+
+        return getConsumoDevices();
+    }
+
+    /**
+     * Método que altera o código identificador da Fatura.
+     * @param codigo Código identificador da Fatura.
+     */
+    public void setCodigo(int codigo){
+        this.codigo = codigo;
+    }
+
+    /**
+     * Método que altera o nome do cliente na fatura.
+     * @param nome Nome do cliente.
+     */
+    public void setNome(String nome){
+        this.nome = nome;
     }
 
     /**
@@ -74,26 +97,17 @@ public class Fatura {
     }
 
     /**
-     * Método que devolve o número de identificação fiscal do cliente.
-     * @return Número de identificação fiscal.
-     */
-    public int getNif(){
-        return this.nif;
-    }
-
-    /**
      * Método que altera o Map com os consumos associados aos respetivos dispositivos.
      * @param consumoDevice Map com os consumos associados aos respetivos dispositivos.
      */
-    public void setConsumoDevice(Map<Integer, SmartDevice> consumoDevice){
-        for(Integer c: consumoDevice.keySet()){
-            this.consumoDevice.put(c, consumoDevice.get(c).clone());
-        }
+    public void setConsumoDevice(Map<String, Float> consumoDevice){
+        this.consumoDevice = consumoDevice.entrySet()
+                .stream()
+                .collect(toMap(e->e.getKey(), e->e.getValue() ));
+
     }
 
-    public Map<Integer, SmartDevice> getConsumoDevice(){
-        return this.consumoDevice;
-    }
+
 
 
     /**
@@ -110,9 +124,5 @@ public class Fatura {
      */
     public Comercializador getEmpresa(){
         return this.empresa;
-    }
-
-    public void valorFinal(){
-
     }
 }

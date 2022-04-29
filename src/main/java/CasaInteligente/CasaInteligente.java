@@ -36,6 +36,21 @@ public class CasaInteligente {
     }
 
     /**
+     * ESTE CONSTRUTOR É O CORRETO
+     * @param proprietario
+     * @param NIF
+     * @param fornecedor
+     */
+    public CasaInteligente(String proprietario, long NIF, String fornecedor){
+        this.proprietario = proprietario;
+        this.NIF = NIF;
+        this.fornecedor = fornecedor;
+        this.devices = new HashMap<>();
+        this.locations = new HashMap<>();
+    }
+
+
+    /**
      * Construtor parametrizado de CasaInteligente.
      * @param proprietario Proprietário da casa
      * @param numeroDePorta Número de porta da casa
@@ -128,11 +143,11 @@ public class CasaInteligente {
         sb.append("------------- Devices -------------\n");
         for(String id: this.devices.keySet()){
             if(this.devices.get(id) instanceof SmartBulb){
-                sb.append("Smart Bulb\n");
+                sb.append("     Smart Bulb\n");
             } else if(this.devices.get(id) instanceof SmartCamera){
-                sb.append("Smart Camera\n");
+                sb.append("     Smart Camera\n");
             } else {
-                sb.append("Smart Speaker\n");
+                sb.append("     Smart Speaker\n");
             }
 
             // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
@@ -171,17 +186,17 @@ public class CasaInteligente {
     public boolean hasRoom(String s) {
         return this.locations.containsKey(s);
     }
-
+/* Método redundante
     /**
      * Método que adiciona o identificador de um SmartDevice a uma divisão da CasaInteligente.
      * @param s1 Divisão da CasaInteligente.
      * @param s2 Código de identificação do SmartDevice.
-     */
+
     public void addToRoom(String s1, String s2) {
         if (hasRoom(s1))
             this.locations.get(s1).add(s2);
     }
-
+*/
     /**
      * Método que verifica se um determinado SmartDevice existe numa determinada divisão da CasaInteligente.
      * @param s1 Divisão da CasaInteligente.

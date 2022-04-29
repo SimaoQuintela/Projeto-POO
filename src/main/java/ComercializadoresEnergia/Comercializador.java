@@ -23,7 +23,15 @@ public class Comercializador{
         this.consumoDispositivo = 0;
         this.imposto = 0;
     }
-    
+
+    public Comercializador(String nomeEmpresa){
+        this.nomeEmpresa = nomeEmpresa;
+        this.numeroDispositivos = 0;
+        this.valorBase = 0;
+        this.consumoDispositivo = 0;
+        this.imposto = 0;
+    }
+
     /**
      * Construtor parametrizado de CasaInteligente.
      * !!! faltam parametros

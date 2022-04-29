@@ -59,13 +59,13 @@ public class SmartSpeaker extends SmartDevice {
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float custoInstalacao) {
+    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float consumption, float custoInstalacao) {
         // initialise instance variables
         super(cod, on);
         this.channel = channel;
         this.volume = volume;
         this.brand = brand;
-        this.consumption = 0;
+        this.consumption = consumption;
         this.time = LocalDateTime.now();
         this.custoInstalacao = custoInstalacao;
     }
@@ -75,7 +75,7 @@ public class SmartSpeaker extends SmartDevice {
      * @param s SmartSpeaker que é copiada.
      */
     public SmartSpeaker(SmartSpeaker s){
-        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getCustoInstalacao());
+        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getConsumption(), s.getCustoInstalacao());
     }
 
     /**
@@ -117,7 +117,7 @@ public class SmartSpeaker extends SmartDevice {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("------- Smart Speaker -------\n");
+        sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");

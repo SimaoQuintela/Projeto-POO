@@ -37,14 +37,13 @@ public class SmartBulb extends SmartDevice {
      * @param id Código que identifica a SmartBulb.
      * @param tone Tonalidade da lâmpada.
      * @param dimensions Dimensões da lâmpada.
-     * @param time Tempo correspondente ao último reset
      */
-    public SmartBulb(String id, boolean status, int tone, int dimensions, LocalDateTime time, float custoInstalacao) {
+    public SmartBulb(String id, boolean status, int tone, int dimensions, float consumption, float custoInstalacao) {
         super(id, status);
         this.tone = tone;
         this.dimensions = dimensions;
-        this.consumption = 0;
-        this.time = time;
+        this.consumption = consumption;
+        this.time = LocalDateTime.now();
         this.custoInstalacao = custoInstalacao;
     }
 
@@ -112,6 +111,7 @@ public class SmartBulb extends SmartDevice {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Tonalidade: ").append(this.getTone()).append("\n");
         sb.append("Dimensoes: ").append(this.getDimensions()).append("\n");
         sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");

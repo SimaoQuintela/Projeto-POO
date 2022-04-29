@@ -32,12 +32,12 @@ public class SmartCamera extends SmartDevice {
      * @param yRes Resolução da SmartCamera no eixo do y
      * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
-    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float custoInstalacao){
+    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float consumption,  float custoInstalacao){
         super(id, status);
         this.xRes = xRes;
         this.yRes = yRes;
         this.fileSize = fileSize;
-        this.consumption = this.xRes * this.yRes * this.fileSize;
+        this.consumption = consumption *this.xRes * this.yRes * this.fileSize;
         this.custoInstalacao = custoInstalacao;
         this.time = LocalDateTime.now();
     }
@@ -109,6 +109,7 @@ public class SmartCamera extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
+        sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Resolucao: ").append("\n");
         sb.append("X: ").append(this.getxRes()).append("\n");
         sb.append("Y: ").append(this.getyRes()).append("\n");

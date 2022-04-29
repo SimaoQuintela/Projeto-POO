@@ -11,6 +11,7 @@ import java.util.*;
 
 import static java.lang.System.out;
 
+//PROVAVELMENTE POSSO APAGAR ESTA CLASSE
 public class ParseInit {
 
     public static void main(String[] args) throws FileNotFoundException {

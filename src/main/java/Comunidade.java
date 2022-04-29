@@ -106,20 +106,20 @@ public class Comunidade {
 
     /**
      * Devolve a casa correspondente à string passada como parâmetro
-     * @param morada Morada da casa que queremos localizar
+     * @param proprietario Proprietário da casa
      * @return Casa cuja morada corresponde à passada como parâmetro
      */
-    public CasaInteligente getCasa(String morada){
-        return this.casas.get(morada);
+    public CasaInteligente getCasa(String proprietario){
+        return this.casas.get(proprietario);
     }
 
     /**
      * Adiciona uma casa à comunidade
-     * @param morada Morada da casa
+     * @param proprietario Proprietário da casa
      * @param casa Objeto Casa Inteligente que vai ser adicionado à comunidade
      */
-    public void addCasa(String morada, CasaInteligente casa){
-        this.casas.put(morada, casa.clone());
+    public void addCasa(String proprietario, CasaInteligente casa){
+        this.casas.put(proprietario, casa.clone());
     }
 
 
@@ -168,11 +168,11 @@ public class Comunidade {
 
     /**
      * Método que adiciona uma casa à estrutura das casas
-     * @param morada Morada da Casa
+     * @param proprietario Proprietario da casa
      * @param casa Objeto Casa qeu vai ser associado à morada passada como parâmetro
      */
-    public void setCasas(String morada, CasaInteligente casa) {
-        this.casas.put(morada, casa.clone());
+    public void setCasas(String proprietario, CasaInteligente casa) {
+        this.casas.put(proprietario, casa.clone());
     }
 
     /**
