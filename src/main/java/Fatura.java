@@ -191,6 +191,7 @@ public class Fatura {
         sb.append("Número de identificação fiscal: ").append(this.nif).append("\n");
 
         for(String id: this.consumoDevice.keySet()){
+            // sb.append("Id: ").append(this.devices.get(id)).append("    Consumo: ").append(this.devices.get(id).get ALTERAR ISTO, PROVAVELMENTE METER VAR CONSUMO NA CLASSE ABSTRATA
             sb.append(this.devices.get(id).toString()).append(this.consumoDevice.get(id)).append("\n\n");
         }
 
