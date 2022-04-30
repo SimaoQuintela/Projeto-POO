@@ -2,6 +2,7 @@ package CasaInteligente.SmartDevices;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Um SmartSpeaker é um SmartDevice que além de ligar e desligar permite também
@@ -10,11 +11,12 @@ import java.time.LocalDateTime;
  * a regulação do seu nível de volume.
  */
 public class SmartSpeaker extends SmartDevice {
-    public static final int MAX = 20; //volume máximo
+    public static final int MAX = 100; //volume máximo
 
     private int volume;
     private String channel;
     private String brand;
+    private float consumptionPerDay;
     private float consumption; //configurar o consumo nos métodos da classe
     private LocalDateTime time;
     private float custoInstalacao;
@@ -29,6 +31,7 @@ public class SmartSpeaker extends SmartDevice {
         this.channel = "";
         this.volume = 0;
         this.brand = "";
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = 0;
@@ -47,6 +50,7 @@ public class SmartSpeaker extends SmartDevice {
         this.channel = s;
         this.volume = volume;
         this.brand = brand;
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = 0;
@@ -59,13 +63,14 @@ public class SmartSpeaker extends SmartDevice {
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float consumption, float custoInstalacao) {
+    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float consumptionPerDay, float custoInstalacao) {
         // initialise instance variables
         super(cod, on);
         this.channel = channel;
         this.volume = volume;
         this.brand = brand;
-        this.consumption = consumption;
+        this.consumptionPerDay = consumptionPerDay;
+        this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = custoInstalacao;
     }
@@ -75,7 +80,7 @@ public class SmartSpeaker extends SmartDevice {
      * @param s SmartSpeaker que é copiada.
      */
     public SmartSpeaker(SmartSpeaker s){
-        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getConsumption(), s.getCustoInstalacao());
+        this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getConsumptionPerDay(), s.getCustoInstalacao());
     }
 
     /**
@@ -101,11 +106,12 @@ public class SmartSpeaker extends SmartDevice {
         SmartSpeaker s = (SmartSpeaker) o;
 
         return(
-                this.volume == s.getVolume()             &&
-                this.getChannel().equals(s.getChannel()) &&
-                this.brand.equals(s.getBrand())          &&
-                this.consumption == s.getConsumption()   &&
-                this.time.equals(s.getTime())            &&
+                this.volume == s.getVolume()                       &&
+                this.getChannel().equals(s.getChannel())           &&
+                this.brand.equals(s.getBrand())                    &&
+                this.consumptionPerDay == s.getConsumptionPerDay() &&
+                this.consumption == s.getConsumption()             &&
+                this.time.equals(s.getTime())                      &&
                 this.custoInstalacao == s.getCustoInstalacao()
         );
     }
@@ -121,7 +127,8 @@ public class SmartSpeaker extends SmartDevice {
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");
-        sb.append("Consumo: ").append(this.getConsumption()).append("\n");
+        sb.append("Consumo por dia em Kw/H").append(this.getConsumptionPerDay()).append("\n");
+        sb.append("Consumo total: ").append(this.getConsumption()).append("\n");
         sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
 
         return sb.toString();
@@ -132,7 +139,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        //this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now();
     }
 
     /**
@@ -140,30 +147,19 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        //resetTime();
+        this.time = LocalDateTime.now();
+        this.consumo(this.time);
     }
 
-
-    /*public void resetTime(){
-        LocalDateTime temp = this.time;
-        setTime(LocalDateTime.now());
-        Duration duration = Duration.between(temp, this.time);
-        long interval = duration.toHours();
-
-        if(this.getOn()){
-            float temp_consumption = (float)(this.getVolume() * this.getBrand().length() * interval) / 1000;
-            this.consumption = this.consumption + temp_consumption;
-        }
-    }*/
 
     /**
      * Método que calcula o consumo da SmartSpeaker.
      */
-    public void consumo(){
+    public void consumo(LocalDateTime anyTime){
         if(this.getOn()){
-            this.consumption = (float)(this.volume * this.brand.length());
-        }else{
-            this.consumption = 0;
+            float between = ChronoUnit.DAYS.between(this.getTime(), anyTime);
+            this.consumption = this.getVolume() * this.getConsumptionPerDay() * between;
+            this.time = anyTime;
         }
     }
 
@@ -207,6 +203,10 @@ public class SmartSpeaker extends SmartDevice {
      */
     public String getBrand(){
         return this.brand;
+    }
+
+    public float getConsumptionPerDay() {
+        return this.consumptionPerDay;
     }
 
     /**
@@ -253,6 +253,10 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public void setConsumptionPerDay(float consumptionPerDay) {
+        this.consumptionPerDay = consumptionPerDay;
     }
 
     /**

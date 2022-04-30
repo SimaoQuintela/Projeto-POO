@@ -17,9 +17,9 @@ import static java.util.stream.Collectors.toMap;
  */
 public class CasaInteligente {
     private String proprietario;
-    private int numeroDePorta;
+    //private int numeroDePorta;
     private long NIF;
-    private String morada;
+    //private String morada;
     private String fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
@@ -29,9 +29,7 @@ public class CasaInteligente {
      */
     public CasaInteligente() {
         this.proprietario = "";
-        this.numeroDePorta = 0;
         this.NIF = 0;
-        this.morada = "";
         this.fornecedor = "";
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
@@ -54,30 +52,11 @@ public class CasaInteligente {
 
     /**
      * Construtor parametrizado de CasaInteligente.
-     * @param proprietario Proprietário da casa
-     * @param numeroDePorta Número de porta da casa
-     * @param NIF NIF do proprietário da casa
-     * @param fornecedor Fornecedor de energia da casa
-     * @param morada Morada da casa.
-     */
-    public CasaInteligente(String proprietario, int numeroDePorta, long NIF, String morada, String fornecedor) {
-        this.proprietario = proprietario;
-        this.numeroDePorta = numeroDePorta;
-        this.NIF = NIF;
-        this.morada = morada;
-        this.fornecedor = fornecedor;
-        this.devices = new HashMap<>();
-        this.locations = new HashMap<>();
-    }
-
-    /**
-     * Construtor parametrizado de CasaInteligente.
-     * @param morada Morada da CasaInteligente.
      * @param devices Dispositivos existentes na casa.
      * @param locations Divisões da CasaInteligente.
      */
-    public CasaInteligente(String proprietario, int numeroDePorta, long NIF, String morada, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
-        this(proprietario, numeroDePorta, NIF, morada, fornecedor);
+    public CasaInteligente(String proprietario, long NIF, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
+        this(proprietario, NIF, fornecedor);
         this.devices = devices.entrySet()
                               .stream()
                               .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
@@ -92,7 +71,7 @@ public class CasaInteligente {
      * @param c CasaInteligente que é copiada.
      */
     public CasaInteligente(CasaInteligente c){
-        this(c.proprietario, c.numeroDePorta, c.NIF, c.morada, c.fornecedor, c.devices, c.locations);
+        this(c.proprietario, c.NIF, c.fornecedor, c.devices, c.locations);
     }
 
     /**
@@ -111,9 +90,7 @@ public class CasaInteligente {
 
         return(
             this.proprietario.equals(c.proprietario)  &&
-            this.numeroDePorta == c.numeroDePorta     &&
             this.NIF == c.NIF                         &&
-            this.getMorada().equals(c.morada)         &&
             this.getFornecedor().equals(c.fornecedor) &&
             this.devices.equals(c.devices)            &&
             this.locations.equals(c.locations)
@@ -138,8 +115,6 @@ public class CasaInteligente {
         sb.append("\n------------- Casa Inteligente -------------\n");
         sb.append("Proprietario: ").append(this.proprietario).append("\n");
         sb.append("NIF: ").append(this.NIF).append("\n");
-        sb.append("Numero de porta: ").append(this.numeroDePorta).append("\n");
-        sb.append("Morada: ").append(this.getMorada()).append("\n");
         sb.append("Fornecedor: ").append(this.getFornecedor()).append("\n");
 
         sb.append("------------- Devices -------------\n");
@@ -188,17 +163,7 @@ public class CasaInteligente {
     public boolean hasRoom(String s) {
         return this.locations.containsKey(s);
     }
-/* Método redundante
-    /**
-     * Método que adiciona o identificador de um SmartDevice a uma divisão da CasaInteligente.
-     * @param s1 Divisão da CasaInteligente.
-     * @param s2 Código de identificação do SmartDevice.
 
-    public void addToRoom(String s1, String s2) {
-        if (hasRoom(s1))
-            this.locations.get(s1).add(s2);
-    }
-*/
     /**
      * Método que verifica se um determinado SmartDevice existe numa determinada divisão da CasaInteligente.
      * @param s1 Divisão da CasaInteligente.
@@ -231,7 +196,7 @@ public class CasaInteligente {
         } else {
             List<String> ids = new ArrayList<>();
             ids.add(s.getID());
-            this.locations.put(location, ids);
+            this.addLocation(location, ids);
         }
     }
 
@@ -249,27 +214,11 @@ public class CasaInteligente {
     }
 
     /**
-     * Método que devolve o número da porta da casa
-     * @return Número da porta
-     */
-    public int getNumeroDePorta() {
-        return this.numeroDePorta;
-    }
-
-    /**
      * Método que devolve o NIF do proprietário da casa
      * @return NIF do proprietário da casa
      */
     public double getNIF() {
         return this.NIF;
-    }
-
-    /**
-     * Método que devolve a morada da CasaInteligente.
-     * @return Morada da CasaInteligente.
-     */
-    public String getMorada() {
-        return this.morada;
     }
 
     /**
@@ -324,27 +273,11 @@ public class CasaInteligente {
     }
 
     /**
-     * Método que coloca na variável numeroDePorta o inteiro passado como parâmetro
-     * @param numeroDePorta Inteiro passado como parâmetro que vai ser colocado na variável numeroDePorta
-     */
-    public void setNumeroDePorta(int numeroDePorta) {
-        this.numeroDePorta = numeroDePorta;
-    }
-
-    /**
      * Método que coloca na variável NIF o double passado como parâmetro
      * @param NIF Double passado como parâmetro que vai ser colocado na variável NIF
      */
     public void setNIF(long NIF) {
         this.NIF = NIF;
-    }
-
-    /**
-     * Método que altera a morada da CasaInteligente.
-     * @param morada Morada atribuída à CasaInteligente.
-     */
-    public void setMorada(String morada) {
-        this.morada = morada;
     }
 
     /**
@@ -355,7 +288,7 @@ public class CasaInteligente {
         this.fornecedor = fornecedor;
     }
 
-    /* discutir com o grupo estes dois métodos
+    // discutir com o grupo estes dois métodos
     public void setDevices(Map<String, SmartDevice> devices) {
         this.devices = devices.entrySet()
                               .stream()
@@ -367,7 +300,6 @@ public class CasaInteligente {
                                   .stream()
                                   .collect(toMap(e-> e.getKey(), e->e.getValue()));
     }
-    */
 
     /**
      * Método que liga um SmartDevice através do seu código de identificação.

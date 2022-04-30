@@ -2,11 +2,13 @@ package CasaInteligente.SmartDevices;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class SmartCamera extends SmartDevice {
     private int xRes;
     private int yRes;
     private int fileSize;
+    private float consumptionPerDay;
     private float consumption; //tamanho do ficheiro * resolução
     private float custoInstalacao;
     private LocalDateTime time;
@@ -19,6 +21,7 @@ public class SmartCamera extends SmartDevice {
         this.xRes = 0;
         this.yRes = 0;
         this.fileSize = 0;
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.custoInstalacao = 0;
         this.time = LocalDateTime.now();
@@ -32,12 +35,13 @@ public class SmartCamera extends SmartDevice {
      * @param yRes Resolução da SmartCamera no eixo do y
      * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
-    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float consumption,  float custoInstalacao){
+    public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float consumptionPerDay,  float custoInstalacao){
         super(id, status);
         this.xRes = xRes;
         this.yRes = yRes;
         this.fileSize = fileSize;
-        this.consumption = consumption *this.xRes * this.yRes * this.fileSize;
+        this.consumptionPerDay = consumptionPerDay;
+        this.consumption = 0;
         this.custoInstalacao = custoInstalacao;
         this.time = LocalDateTime.now();
     }
@@ -52,6 +56,7 @@ public class SmartCamera extends SmartDevice {
         this.xRes = 0;
         this.yRes = 0;
         this.fileSize = 0;
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.custoInstalacao = 0;
         this.time = LocalDateTime.now();
@@ -86,11 +91,12 @@ public class SmartCamera extends SmartDevice {
 
         SmartCamera c = (SmartCamera) obj;
         return (
-                this.xRes == c.xRes                    &&
-                this.yRes == c.yRes                    &&
-                this.fileSize == c.getFileSize()       &&
-                this.consumption == c.getConsumption() &&
-                this.time.equals(c.getTime())          &&
+                this.xRes == c.xRes                                &&
+                this.yRes == c.yRes                                &&
+                this.fileSize == c.getFileSize()                   &&
+                this.consumptionPerDay == c.getConsumptionPerDay() &&
+                this.consumption == c.getConsumption()             &&
+                this.time.equals(c.getTime())                      &&
                 this.custoInstalacao == c.getCustoInstalacao()
         );
     }
@@ -109,13 +115,16 @@ public class SmartCamera extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
+
         sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Resolucao: ").append("\n");
         sb.append("X: ").append(this.getxRes()).append("\n");
         sb.append("Y: ").append(this.getyRes()).append("\n");
-        sb.append("Tamanho do ficheiro gerado: ").append(this.fileSize).append("\n");
-        sb.append("Consumo energetico: ").append(this.consumption).append("\n");
+        sb.append("Tamanho do ficheiro gerado: ").append(this.getFileSize()).append("\n");
+        sb.append("Consumo por dia em Kw/H").append(this.getConsumptionPerDay()).append("\n");
+        sb.append("Consumo total: ").append(this.getConsumption()).append("\n");
         sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
+
         return sb.toString();
     }
 
@@ -124,37 +133,25 @@ public class SmartCamera extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        //this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now();
     }
     /**
      * Método que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
-        //resetTime();
+        this.time = LocalDateTime.now();
+        this.consumo(this.time);
     }
-
-
-    /*public void resetTime(){
-        LocalDateTime temp = this.time;
-        setTime(LocalDateTime.now());
-        Duration duration = Duration.between(temp, this.time);
-        long interval = duration.toHours();
-
-        if(this.getOn()){
-            float temp_consumption = (float)((long) this.getxRes() * this.getyRes() * this.getFileSize() * interval) / 1000;
-            this.consumption = this.consumption + temp_consumption;
-        }
-    }*/
 
     /**
      * Método que calcula o consumo da SmartCamera.
      */
-    public void consumo(){
+    public void consumo(LocalDateTime anyTime){
         if(this.getOn()){
-            this.consumption = (this.xRes * this.yRes * this.fileSize*this.consumption);
-        }else{
-            this.consumption = 0;
+            float between = ChronoUnit.DAYS.between(this.getTime(), anyTime);
+            this.consumption += ( ((float)this.getxRes() *this.getyRes())/1000) * this.getFileSize() * this.getConsumptionPerDay() * between;
+            this.time = anyTime;
         }
     }
 
@@ -180,6 +177,10 @@ public class SmartCamera extends SmartDevice {
      */
     public int getFileSize(){
         return this.fileSize;
+    }
+
+    public float getConsumptionPerDay() {
+        return this.consumptionPerDay;
     }
 
     /**
@@ -227,6 +228,10 @@ public class SmartCamera extends SmartDevice {
      */
     public void setFileSize(int size){
         this.fileSize = size;
+    }
+
+    public void setConsumptionPerDay(float consumptionPerDay) {
+        this.consumptionPerDay = consumptionPerDay;
     }
 
     /**

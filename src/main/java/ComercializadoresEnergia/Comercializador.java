@@ -6,11 +6,10 @@ package ComercializadoresEnergia;
 
 public class Comercializador{
     private String nomeEmpresa;
-    private int numeroDispositivos;
+    private int numeroDispositivos; // ????
     private int valorBase;
-    private int consumoDispositivo;
     private int imposto;
-    private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
+    //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
 
     /**
@@ -20,7 +19,6 @@ public class Comercializador{
         this.nomeEmpresa = "";
         this.numeroDispositivos = 0;
         this.valorBase = 0;
-        this.consumoDispositivo = 0;
         this.imposto = 0;
     }
 
@@ -28,7 +26,6 @@ public class Comercializador{
         this.nomeEmpresa = nomeEmpresa;
         this.numeroDispositivos = 0;
         this.valorBase = 0;
-        this.consumoDispositivo = 0;
         this.imposto = 0;
     }
 
@@ -36,11 +33,10 @@ public class Comercializador{
      * Construtor parametrizado de CasaInteligente.
      * !!! faltam parametros
      */
-    public Comercializador(String nomeEmpresa, int numeroDispositivos, int valorBase,/* int consumoDispositivo,*/ int imposto){
+    public Comercializador(String nomeEmpresa, int numeroDispositivos, int valorBase, int imposto){
         this.nomeEmpresa = nomeEmpresa;
         this.numeroDispositivos = numeroDispositivos;
         this.valorBase = valorBase;
-        this.consumoDispositivo = 0;
         this.imposto = imposto;
     }
     
@@ -66,7 +62,6 @@ public class Comercializador{
             this.nomeEmpresa.equals(c.nomeEmpresa)                 &&
             this.getNumeroDispositivos() == (c.numeroDispositivos) &&
             this.getValorBase() == (c.valorBase)                   &&
-            this.consumoDispositivo == (c.consumoDispositivo)      &&
             this.imposto == (c.imposto)
         );
     }
@@ -89,10 +84,13 @@ public class Comercializador{
         sb.append("Nome do comercializador: ").append(this.getNomeEmpresa()).append("\n");
         sb.append("Numero de Dispositivos: ").append(this.getNumeroDispositivos()).append("\n");
         sb.append("Valor Base: ").append(this.getValorBase()).append("\n");
-        sb.append("Consumo de Dispositivo: ").append(this.getConsumoDispositivo()).append("\n");
         sb.append("Imposto: ").append(this.getImposto()).append("\n");
 
         return sb.toString();
+    }
+
+    public float calculaConsumo(int consumoDispositivo){
+        return this.getValorBase() * consumoDispositivo * (1+ (float)(this.getImposto())/100);
     }
 
     /**
@@ -117,14 +115,6 @@ public class Comercializador{
      */
     public String getNomeEmpresa() {
         return this.nomeEmpresa;
-    }
-
-    /**
-     * Método que devolve o consumo do dispositivo.
-     * @return Consumo do dispositivo.
-     */
-    public int getConsumoDispositivo(){
-        return this.consumoDispositivo;
     }
 
     /**
@@ -157,14 +147,6 @@ public class Comercializador{
      */
     public void setValorBase(int valor){
         this.valorBase = valor;
-    }
-
-    /**
-     * Método que altera o consumo do dispositivo.
-     * @param consumo Consumo do dispositivo
-     */
-    public void setConsumoDispositivo(int consumo){
-        this.consumoDispositivo = consumo;
     }
 
     /**

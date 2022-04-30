@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.time.LocalDateTime;
+
 /**
  * A classe SmartDevice é um contactor simples.
  * Permite ligar ou desligar circuitos.
@@ -77,7 +79,7 @@ public abstract class SmartDevice {
     /**
      * Método que calcula o consumo do SmartDevice.
      */
-    public abstract void consumo();
+    public abstract void consumo(LocalDateTime reset_time);
 
     /**
      * Método que devolve o estado do SmartDevice.

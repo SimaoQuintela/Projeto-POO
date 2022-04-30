@@ -40,12 +40,12 @@ public class Fatura {
      * @param total Valor final.
      */
     public Fatura(int codigo, String nome, int nif, Map<String, Float> consumoDevice, Comercializador empresa, int total){
-        setCodigo(codigo);
-        setNome(nome);
-        setNif(nif);
-        setConsumoDevice(consumoDevice);
-        setEmpresa(empresa);
-        valorFinal();
+        this.setCodigo(codigo);
+        this.setNome(nome);
+        this.setNif(nif);
+        this.setConsumoDevice(consumoDevice);
+        this.setEmpresa(empresa);
+        this.valorFinal();
     }
 
     /**
@@ -53,13 +53,13 @@ public class Fatura {
      * @param f Fatura que é copiada.
      */
     public Fatura(Fatura f){
-        setCodigo(f.getCodigo());
-        setNome(f.getNome());
-        setNif(f.getNif());
-        setConsumoDevice(f.getConsumoDevices());
-        setDevices(f.getDevices());
-        setEmpresa(f.getEmpresa());
-        valorFinal();
+        this.setCodigo(f.getCodigo());
+        this.setNome(f.getNome());
+        this.setNif(f.getNif());
+        this.setConsumoDevice(f.getConsumoDevices());
+        this.setDevices(f.getDevices());
+        this.setEmpresa(f.getEmpresa());
+        this.valorFinal();
     }
 
     /**

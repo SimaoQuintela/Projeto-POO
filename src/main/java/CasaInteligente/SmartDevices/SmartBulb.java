@@ -1,7 +1,9 @@
 package CasaInteligente.SmartDevices;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Uma SmartBulb é uma lâmpada inteligente que além de ligar e desligar (já que
@@ -16,6 +18,7 @@ public class SmartBulb extends SmartDevice {
     private int tone;
     private int dimensions;
     private LocalDateTime time;
+    private float consumptionPerDay;
     private float consumption;
     private float custoInstalacao;
 
@@ -28,6 +31,7 @@ public class SmartBulb extends SmartDevice {
         this.tone = NEUTRAL;
         this.time = LocalDateTime.now();
         this.dimensions = 0;
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.custoInstalacao = 0;
     }
@@ -38,11 +42,12 @@ public class SmartBulb extends SmartDevice {
      * @param tone Tonalidade da lâmpada.
      * @param dimensions Dimensões da lâmpada.
      */
-    public SmartBulb(String id, boolean status, int tone, int dimensions, float consumption, float custoInstalacao) {
+    public SmartBulb(String id, boolean status, int tone, int dimensions, float consumptionPerDay, float custoInstalacao) {
         super(id, status);
         this.tone = tone;
         this.dimensions = dimensions;
-        this.consumption = consumption;
+        this.consumptionPerDay = consumptionPerDay;
+        this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = custoInstalacao;
     }
@@ -55,6 +60,7 @@ public class SmartBulb extends SmartDevice {
         super(id);
         this.tone = NEUTRAL;
         this.dimensions = 0;
+        this.consumptionPerDay = 0;
         this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = 0;
@@ -68,6 +74,7 @@ public class SmartBulb extends SmartDevice {
         super(s.getID());
         this.tone = s.getTone();
         this.dimensions = s.getDimensions();
+        this.consumptionPerDay = s.getConsumptionPerDay();
         this.consumption = 0;
         this.time = LocalDateTime.now();
         this.custoInstalacao = s.getCustoInstalacao();
@@ -96,10 +103,11 @@ public class SmartBulb extends SmartDevice {
         SmartBulb s = (SmartBulb) o;
 
         return (
-                this.tone == s.getTone()                  &&
-                this.dimensions == s.getDimensions()      &&
-                this.time == s.getTime()                  &&
-                this.consumption == s.getConsumption()    &&
+                this.tone == s.getTone()                           &&
+                this.dimensions == s.getDimensions()               &&
+                this.time == s.getTime()                           &&
+                this.consumptionPerDay == s.getConsumptionPerDay() &&
+                this.consumption == s.getConsumption()             &&
                 this.custoInstalacao == s.getCustoInstalacao()
         );
     }
@@ -115,7 +123,9 @@ public class SmartBulb extends SmartDevice {
         sb.append("Tonalidade: ").append(this.getTone()).append("\n");
         sb.append("Dimensoes: ").append(this.getDimensions()).append("\n");
         sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
-        sb.append("Consumo ").append(this.getConsumption()).append("\n");
+        sb.append("Consumo por dia em Kw/H").append(this.getConsumptionPerDay()).append("\n");
+        sb.append("Consumo total: ").append(this.getConsumption());
+        sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
 
         return sb.toString();
     }
@@ -125,7 +135,7 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        //this.time = LocalDateTime.now();
+        this.time = LocalDateTime.now();
     }
 
     /**
@@ -133,29 +143,20 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        //resetTime();
+        this.time = LocalDateTime.now();
+        this.consumo(this.time);
     }
 
-    /*public void resetTime(){
-        LocalDateTime temp = this.time;
-        setTime(LocalDateTime.now());
-        Duration duration = Duration.between(temp, this.time);
-        long interval = duration.toHours();
-
-        if(this.getOn()){
-            float temp_consumption = (float)(this.tone * interval) / 1000;
-            this.consumption = this.consumption + temp_consumption;
-        }
-    }*/
 
     /**
      * Método que calcula o consumo da SmartBulb.
      */
-    public void consumo() {
+    public void consumo(LocalDateTime anyTime) {
         if(this.getOn()){
-            this.consumption = (float)(this.tone * 24)/1000;
-        }else{
-            this.consumption = 0;
+            // escolhemos dias porque a variável consumptionPerDay representa 1 dia, em KwH
+            float between = ChronoUnit.DAYS.between(this.getTime(), anyTime);
+            this.consumption += this.getTone() * this.getConsumptionPerDay() * between;
+            this.setTime(anyTime);
         }
     }
 
@@ -190,6 +191,10 @@ public class SmartBulb extends SmartDevice {
         return this.time;
     }
 
+    public float getConsumptionPerDay() {
+        return this.consumptionPerDay;
+    }
+
     /**
      * Método que devolve o consumo diário de energia da SmartBulb.
      * @return Consumo diário da SmartBulb.
@@ -222,6 +227,10 @@ public class SmartBulb extends SmartDevice {
         if (t>WARM) this.tone = WARM;
         else if (t<COLD) this.tone = COLD;
         else this.tone = t;
+    }
+
+    public void setConsumptionPerDay(float consumptionPerDay) {
+        this.consumptionPerDay = consumptionPerDay;
     }
 
     /**
