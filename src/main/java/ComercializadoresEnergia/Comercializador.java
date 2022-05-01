@@ -3,6 +3,11 @@ package ComercializadoresEnergia;
 import CasaInteligente.CasaInteligente;
 import CasaInteligente.SmartDevices.SmartDevice;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
  */
@@ -12,6 +17,7 @@ public class Comercializador{
     private int numeroDispositivos;
     private int valorBase;
     private int imposto;
+    private Map<String, List<Fatura>> faturas;
     //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
     /**
@@ -58,6 +64,7 @@ public class Comercializador{
         this.numeroDispositivos = 0;
         this.valorBase = 0;
         this.imposto = 0;
+        this.faturas = new HashMap<>();
     }
 
     public Comercializador(String nomeEmpresa){
@@ -65,6 +72,7 @@ public class Comercializador{
         this.numeroDispositivos = 0;
         this.valorBase = 0;
         this.imposto = 0;
+        this.faturas = new HashMap<>();
     }
 
     /**
@@ -76,6 +84,7 @@ public class Comercializador{
         this.numeroDispositivos = numeroDispositivos;
         this.valorBase = valorBase;
         this.imposto = imposto;
+        this.faturas = new HashMap<>();
     }
     
     /**
@@ -125,10 +134,6 @@ public class Comercializador{
         sb.append("Imposto: ").append(this.getImposto()).append("\n");
 
         return sb.toString();
-    }
-
-    public float calculaConsumo(int consumoDispositivo){
-        return this.getValorBase() * consumoDispositivo * (1+ (float)(this.getImposto())/100);
     }
 
     /**
@@ -193,5 +198,24 @@ public class Comercializador{
      */
     public void setImposto(int imposto){
         this.imposto = imposto;
+    }
+
+    public void geraFatura(int codigo, CasaInteligente c) {
+        Map<String, Float> consumos = new HashMap<>();
+
+        double consumoDisp;
+        for (String s : c.getDevices().keySet()) {
+            consumoDisp = this.contaConsumoDispositivo(c, c.getDevice(s));
+            consumos.put(s, (float)consumoDisp);
+        }
+        Fatura f = new Fatura(codigo, consumos, c);
+
+        if(this.faturas.keySet().contains(c.getProprietario())) {
+            this.faturas.get(c.getProprietario()).add(f);
+        }else{
+            List<Fatura> listaFaturas = new ArrayList<Fatura>();
+            this.faturas.put(c.getProprietario(), listaFaturas);
+            this.faturas.get(c.getProprietario()).add(f);
+        }
     }
 }

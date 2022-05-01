@@ -2,10 +2,11 @@ package CasaInteligente;
 import CasaInteligente.SmartDevices.SmartBulb;
 import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartDevice;
+import ComercializadoresEnergia.Comercializador;
+import ComercializadoresEnergia.Fatura;
 
 import java.util.*;
 
-import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -18,9 +19,9 @@ import static java.util.stream.Collectors.toMap;
 public class CasaInteligente {
     private String proprietario;
     //private int numeroDePorta;
-    private long NIF;
+    private int NIF;
     //private String morada;
-    private String fornecedor;
+    private Comercializador fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
@@ -30,21 +31,21 @@ public class CasaInteligente {
     public CasaInteligente() {
         this.proprietario = "";
         this.NIF = 0;
-        this.fornecedor = "";
+        this.fornecedor = new Comercializador();
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
 
     /**
      * ESTE CONSTRUTOR É O CORRETO
-     * @param proprietario
-     * @param NIF
-     * @param fornecedor
+     * @param proprietario Nome do proprietário
+     * @param NIF Número de identificação fiscal do proprietário.
+     * @param fornecedor Fornecedor.
      */
-    public CasaInteligente(String proprietario, long NIF, String fornecedor){
+    public CasaInteligente(String proprietario, int NIF, Comercializador fornecedor){
         this.proprietario = proprietario;
         this.NIF = NIF;
-        this.fornecedor = fornecedor;
+        this.fornecedor = new Comercializador(fornecedor);
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
@@ -55,7 +56,7 @@ public class CasaInteligente {
      * @param devices Dispositivos existentes na casa.
      * @param locations Divisões da CasaInteligente.
      */
-    public CasaInteligente(String proprietario, long NIF, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
+    public CasaInteligente(String proprietario, int NIF, Comercializador fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
         this(proprietario, NIF, fornecedor);
         this.devices = devices.entrySet()
                               .stream()
@@ -217,7 +218,7 @@ public class CasaInteligente {
      * Método que devolve o NIF do proprietário da casa
      * @return NIF do proprietário da casa
      */
-    public double getNIF() {
+    public int getNIF() {
         return this.NIF;
     }
 
@@ -225,7 +226,7 @@ public class CasaInteligente {
      * Método que devolve o nome do fornecedor de energia
      * @return
      */
-    public String getFornecedor() {
+    public Comercializador getFornecedor() {
         return this.fornecedor;
     }
 
@@ -276,7 +277,7 @@ public class CasaInteligente {
      * Método que coloca na variável NIF o double passado como parâmetro
      * @param NIF Double passado como parâmetro que vai ser colocado na variável NIF
      */
-    public void setNIF(long NIF) {
+    public void setNIF(int NIF) {
         this.NIF = NIF;
     }
 
@@ -284,8 +285,8 @@ public class CasaInteligente {
      * Método que coloca na variável fornecedor o valor passado como parâmetro
      * @param fornecedor Nome do fornecedor
      */
-    public void setFornecedor(String fornecedor) {
-        this.fornecedor = fornecedor;
+    public void setFornecedor(Comercializador fornecedor) {
+        this.fornecedor = new Comercializador(fornecedor);
     }
 
     // discutir com o grupo estes dois métodos
@@ -355,4 +356,5 @@ public class CasaInteligente {
             this.devices.get(code).turnOff();
         }
     }
+
 }
