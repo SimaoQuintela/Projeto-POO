@@ -2,7 +2,6 @@ import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
@@ -169,7 +168,7 @@ public class Fatura {
      * @param empresa Comercializador.
      */
     public void setEmpresa(Comercializador empresa){
-        this.empresa = new Comercializador(empresa);
+        this.empresa = new Comercializador(empresa.clone());
     }
 
     /**
@@ -177,7 +176,7 @@ public class Fatura {
      * @return Comercializador.
      */
     public Comercializador getEmpresa(){
-        return this.empresa;
+        return this.empresa.clone();
     }
 
     /**
@@ -192,7 +191,7 @@ public class Fatura {
 
         for(String id: this.consumoDevice.keySet()){
             // sb.append("Id: ").append(this.devices.get(id)).append("    Consumo: ").append(this.devices.get(id).get ALTERAR ISTO, PROVAVELMENTE METER VAR CONSUMO NA CLASSE ABSTRATA
-            sb.append(this.devices.get(id).toString()).append(this.consumoDevice.get(id)).append("\n\n");
+            sb.append("Id: ").append(this.devices.get(id).toString()).append(this.consumoDevice.get(id)).append("\n\n");
         }
 
         sb.append(this.empresa.toString());

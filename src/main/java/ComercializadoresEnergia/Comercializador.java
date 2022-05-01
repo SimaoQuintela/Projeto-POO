@@ -1,16 +1,54 @@
 package ComercializadoresEnergia;
 
+import CasaInteligente.CasaInteligente;
+import CasaInteligente.SmartDevices.SmartDevice;
+
 /**
  * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
  */
 
 public class Comercializador{
     private String nomeEmpresa;
-    private int numeroDispositivos; // ????
+    private int numeroDispositivos;
     private int valorBase;
     private int imposto;
     //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
+    /**
+     * Método que calcula o consumo de um Dispositivo
+     */
+    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s){
+        double r = 0;
+        if(c.getDevices().keySet().size() > this.numeroDispositivos) {
+            r = s.getConsumption() * (1 + ((float)this.imposto)/100) * 0.9;
+        } else {
+            r = s.getConsumption() * (1 + ((float)this.imposto)/100) * 0.75;
+        }
+
+        return r;
+    }
+
+    /**
+     * Método que calcula o consumo duma divisão da casa
+     */
+    public double contaConsumoDivisao(CasaInteligente c, String location){
+        double r = 0;
+        for(String id : c.getLocations().get(location)){
+            r += contaConsumoDispositivo(c, c.getDevice(id));
+        }
+        return r;
+    }
+
+    /**
+     * Método que calcula o consumo duma casa
+     */
+    public double contaConsumoCasa(CasaInteligente c){
+        double r = 0;
+        for(String location: c.getLocations().keySet()){
+            r += contaConsumoDivisao(c, location);
+        }
+        return r;
+    }
 
     /**
      * Construtor por omissão de Comercializador.

@@ -252,17 +252,17 @@ public class CasaInteligente {
         return new_devices;
     }
 
-    /* dúvidas aqui ao adicionar os values
+    // dúvidas aqui ao adicionar os values
     public Map<String, List<String>> getLocations() {
-        Map<String, SmartDevice> new_locations = new HashMap<>();
+        Map<String, List<String>> new_locations = new HashMap<>();
         new_locations = this.locations.entrySet()
                                       .stream()
-                                      .collect(toMap(e->e.getKey(),    ));
+                                      .collect(toMap(e->e.getKey(),  e->e.getValue()));
 
 
         return new_locations;
     }
-    */
+
 
     /**
      * Método que coloca na variável proprietário o nome passado como parâmetro

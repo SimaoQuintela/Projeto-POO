@@ -1,6 +1,5 @@
 package CasaInteligente.SmartDevices;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -16,10 +15,6 @@ public class SmartSpeaker extends SmartDevice {
     private int volume;
     private String channel;
     private String brand;
-    private float consumptionPerDay;
-    private float consumption; //configurar o consumo nos métodos da classe
-    private LocalDateTime time;
-    private float custoInstalacao;
 
 
     /**
@@ -31,10 +26,6 @@ public class SmartSpeaker extends SmartDevice {
         this.channel = "";
         this.volume = 0;
         this.brand = "";
-        this.consumptionPerDay = 0;
-        this.consumption = 0;
-        this.time = LocalDateTime.now();
-        this.custoInstalacao = 0;
     }
 
     /**
@@ -50,10 +41,6 @@ public class SmartSpeaker extends SmartDevice {
         this.channel = s;
         this.volume = volume;
         this.brand = brand;
-        this.consumptionPerDay = 0;
-        this.consumption = 0;
-        this.time = LocalDateTime.now();
-        this.custoInstalacao = 0;
     }
 
     /**
@@ -63,16 +50,12 @@ public class SmartSpeaker extends SmartDevice {
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float consumptionPerDay, float custoInstalacao) {
+    public SmartSpeaker(String cod, boolean on, String channel, int volume, String brand, float consumptionPerDay, int custoInstalacao) {
         // initialise instance variables
-        super(cod, on);
+        super(cod, on, consumptionPerDay, custoInstalacao);
         this.channel = channel;
         this.volume = volume;
         this.brand = brand;
-        this.consumptionPerDay = consumptionPerDay;
-        this.consumption = 0;
-        this.time = LocalDateTime.now();
-        this.custoInstalacao = custoInstalacao;
     }
 
     /**
@@ -108,11 +91,7 @@ public class SmartSpeaker extends SmartDevice {
         return(
                 this.volume == s.getVolume()                       &&
                 this.getChannel().equals(s.getChannel())           &&
-                this.brand.equals(s.getBrand())                    &&
-                this.consumptionPerDay == s.getConsumptionPerDay() &&
-                this.consumption == s.getConsumption()             &&
-                this.time.equals(s.getTime())                      &&
-                this.custoInstalacao == s.getCustoInstalacao()
+                this.brand.equals(s.getBrand())
         );
     }
 
@@ -127,9 +106,9 @@ public class SmartSpeaker extends SmartDevice {
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");
-        sb.append("Consumo por dia em Kw/H").append(this.getConsumptionPerDay()).append("\n");
-        sb.append("Consumo total: ").append(this.getConsumption()).append("\n");
-        sb.append("Custo de instalacao: ").append(this.getCustoInstalacao()).append("\n");
+        sb.append("Consumo por dia em Kw/H: ").append(super.getConsumptionPerDay()).append("\n");
+        sb.append("Consumo total: ").append(super.getConsumption()).append("\n");
+        sb.append("Custo de instalacao: ").append(super.getCustoInstalacao()).append("\n");
 
         return sb.toString();
     }
@@ -139,7 +118,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        this.time = LocalDateTime.now();
+        super.setTime(LocalDateTime.now());
     }
 
     /**
@@ -147,8 +126,8 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        this.time = LocalDateTime.now();
-        this.consumo(this.time);
+        super.setTime(LocalDateTime.now());
+        consumo(super.getTime());
     }
 
 
@@ -157,9 +136,9 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void consumo(LocalDateTime anyTime){
         if(this.getOn()){
-            float between = ChronoUnit.DAYS.between(this.getTime(), anyTime);
-            this.consumption = this.getVolume() * this.getConsumptionPerDay() * between;
-            this.time = anyTime;
+            float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
+            super.setConsumption(this.getVolume() * super.getConsumptionPerDay() * between);
+            super.setTime(anyTime);
         }
     }
 
@@ -184,14 +163,6 @@ public class SmartSpeaker extends SmartDevice {
     public int getVolume() {return this.volume;}
 
     /**
-     * Método que devolve o tempo desde o último reset
-     * @return Tempo em que ocorreu o último reset
-     */
-    public LocalDateTime getTime() {
-        return this.time;
-    }
-
-    /**
      * Método que devolve o canal de rádio que está a tocar na SmartSpeaker.
      * @return Canal de rádio que está a tocar na SmartSpeaker.
      */
@@ -205,24 +176,6 @@ public class SmartSpeaker extends SmartDevice {
         return this.brand;
     }
 
-    public float getConsumptionPerDay() {
-        return this.consumptionPerDay;
-    }
-
-    /**
-     * Método que devolve o consumo energético da SmartCamera.
-     * @return Consumo energético da SmartCamera.
-     */
-    public float getConsumption(){
-        return this.consumption;
-    }
-
-    /**
-     * Método que devolve o custo de instalação de um Smart Device
-     */
-    private float getCustoInstalacao() {
-        return this.custoInstalacao;
-    }
 
     /**
      * Método que altera o canal de rádio que toca na SmartSpeaker.
@@ -247,32 +200,5 @@ public class SmartSpeaker extends SmartDevice {
             this.volume = i;
     }
 
-    /**
-     * Método que coloca na variável time o tempo passado como parâmetro
-     * @param time Valor que corresponde a um tempo de reset
-     */
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public void setConsumptionPerDay(float consumptionPerDay) {
-        this.consumptionPerDay = consumptionPerDay;
-    }
-
-    /**
-     * Método que altera o consumo energético da SmartCamera.
-     * @param consumption Novo consumo energético da SmartCamera.
-     */
-    public void setConsumption(float consumption){
-        this.consumption = consumption;
-    }
-
-    /**
-     * Método que devolve o custo de instalação de um Smart Device
-     * @param custoInstalacao Custo de instalação do Smart Device
-     */
-    public void setCustoInstalacao(float custoInstalacao) {
-        this.custoInstalacao = custoInstalacao;
-    }
 
 }

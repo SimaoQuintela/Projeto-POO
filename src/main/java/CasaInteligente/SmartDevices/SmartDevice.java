@@ -9,6 +9,10 @@ import java.time.LocalDateTime;
 public abstract class SmartDevice {
     private String id;
     private boolean on;
+    private LocalDateTime time;
+    private float consumption;
+    private float consumptionPerDay;
+    private int custoInstalacao;
 
     /**
      * Construtor por omissão de um SmartDevice.
@@ -16,6 +20,10 @@ public abstract class SmartDevice {
     public SmartDevice() {
         this.id = "";
         this.on = false;
+        this.consumption = 0;
+        this.consumptionPerDay = 0;
+        this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -25,6 +33,19 @@ public abstract class SmartDevice {
     public SmartDevice(String id) {
         this.id = id;
         this.on = false;
+        this.consumption = 0;
+        this.consumptionPerDay = 0;
+        this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
+    }
+
+    public SmartDevice(String id, boolean status) {
+        this.id = id;
+        this.on = status;
+        this.consumption = 0;
+        this.consumptionPerDay = 0;
+        this.time = LocalDateTime.now();
+        this.custoInstalacao = 0;
     }
 
     /**
@@ -32,9 +53,13 @@ public abstract class SmartDevice {
      * @param id Código que identifica o SmartDevice.
      * @param status Estado (ligado ou desligado) do SmartDevice.
      */
-    public SmartDevice(String id, boolean status){
+    public SmartDevice(String id, boolean status, float consumptionPerDay, int custoInstalacao){
         this.id = id;
         this.on = status;
+        this.consumption = 0;
+        this.consumptionPerDay = consumptionPerDay;
+        this.time = LocalDateTime.now();
+        this.custoInstalacao = custoInstalacao;
     }
 
     /**
@@ -42,7 +67,7 @@ public abstract class SmartDevice {
      * @param s SmartDevice utilizado no processo de cópia para o novo SmartDevice.
      */
     public SmartDevice(SmartDevice s) {
-        this(s.getID(), s.getOn());
+        this(s.getID(), s.getOn(), s.getConsumptionPerDay(), s.getCustoInstalacao());
     }
 
     /**
@@ -74,8 +99,6 @@ public abstract class SmartDevice {
      */
     public abstract void turnOff();
 
-    //public abstract void resetTime();
-
     /**
      * Método que calcula o consumo do SmartDevice.
      */
@@ -94,6 +117,26 @@ public abstract class SmartDevice {
     public String getID() {return this.id;}
 
     /**
+     * Método que devolve o consumo diário de energia da SmartBulb.
+     * @return Consumo diário da SmartBulb.
+     */
+    public float getConsumption(){
+        return this.consumption;
+    }
+
+    public float getConsumptionPerDay() {
+        return this.consumptionPerDay;
+    }
+
+    public int getCustoInstalacao() {
+        return this.custoInstalacao;
+    }
+
+    public LocalDateTime getTime() {
+        return this.time;
+    }
+
+    /**
      * Método que altera o estado do SmartDevice.
      * @param b Novo estado do SmartDevice.
      */
@@ -105,5 +148,25 @@ public abstract class SmartDevice {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    /**
+     * Método que altera o consumo energético da SmartCamera.
+     * @param consumption Novo consumo energético da SmartCamera.
+     */
+    public void setConsumption(float consumption){
+        this.consumption = consumption;
+    }
+
+    public void setCustoInstalacao(int custoInstalacao) {
+        this.custoInstalacao = custoInstalacao;
+    }
+
+    public void setConsumptionPerDay(float consumptionPerDay) {
+        this.consumptionPerDay = consumptionPerDay;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 }
