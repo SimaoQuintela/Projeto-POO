@@ -21,7 +21,7 @@ public class CasaInteligente {
     //private int numeroDePorta;
     private int NIF;
     //private String morada;
-    private Comercializador fornecedor;
+    private String fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
@@ -31,7 +31,7 @@ public class CasaInteligente {
     public CasaInteligente() {
         this.proprietario = "";
         this.NIF = 0;
-        this.fornecedor = new Comercializador();
+        this.fornecedor = "";
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
@@ -42,10 +42,10 @@ public class CasaInteligente {
      * @param NIF Número de identificação fiscal do proprietário.
      * @param fornecedor Fornecedor.
      */
-    public CasaInteligente(String proprietario, int NIF, Comercializador fornecedor){
+    public CasaInteligente(String proprietario, int NIF, String fornecedor){
         this.proprietario = proprietario;
         this.NIF = NIF;
-        this.fornecedor = new Comercializador(fornecedor);
+        this.fornecedor = fornecedor;
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
     }
@@ -56,7 +56,7 @@ public class CasaInteligente {
      * @param devices Dispositivos existentes na casa.
      * @param locations Divisões da CasaInteligente.
      */
-    public CasaInteligente(String proprietario, int NIF, Comercializador fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
+    public CasaInteligente(String proprietario, int NIF, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
         this(proprietario, NIF, fornecedor);
         this.devices = devices.entrySet()
                               .stream()
@@ -226,7 +226,7 @@ public class CasaInteligente {
      * Método que devolve o nome do fornecedor de energia
      * @return
      */
-    public Comercializador getFornecedor() {
+    public String getFornecedor() {
         return this.fornecedor;
     }
 
@@ -285,8 +285,8 @@ public class CasaInteligente {
      * Método que coloca na variável fornecedor o valor passado como parâmetro
      * @param fornecedor Nome do fornecedor
      */
-    public void setFornecedor(Comercializador fornecedor) {
-        this.fornecedor = new Comercializador(fornecedor);
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     // discutir com o grupo estes dois métodos

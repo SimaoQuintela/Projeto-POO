@@ -14,8 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
-        public static void main(String[] args){
-            Comunidade comunidade = new Comunidade("Rumo ao 20");
+        public static void parse(Comunidade comunidade){
             List<String> linhas = lerFicheiro("dados.txt");
             int id_generator = 0;
             int imposto = 0;
@@ -77,10 +76,6 @@ public class Parser {
                     default -> System.out.println("Linha inválida.");
                 }
             }
-
-            out.println("Done!");
-            out.println(comunidade);
-
         }
 
     public static List<String> lerFicheiro(String nomeFich) {
@@ -140,7 +135,7 @@ public class Parser {
     }
     public static CasaInteligente parseCasa(String[] input){
             String nome = input[0];
-            long NIF = Long.parseLong(input[1]);
+            int NIF = Integer.parseInt(input[1]);
             String comercializador = input[2];
 
             return new CasaInteligente(nome, NIF, comercializador);

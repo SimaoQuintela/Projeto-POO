@@ -15,7 +15,7 @@ public class Fatura {
     private int nif;
     private Map<String, Float> consumoDevice; //id -> consumo
     private Map<String, SmartDevice> devices; //id -> SmartDevice
-    private Comercializador empresa;
+    private String empresa;
     private float total;
 
     /**
@@ -26,7 +26,7 @@ public class Fatura {
         this.nome = "";
         this.nif = 0;
         this.consumoDevice = new HashMap<>();
-        this.empresa = new Comercializador();
+        this.empresa = "";
         this.total = 0;
         this.devices = new HashMap<>();
     }
@@ -34,10 +34,7 @@ public class Fatura {
     /**
      * Construtor parametrizado de ComercializadoresEnergia.Fatura.
      * @param codigo Código da ComercializadoresEnergia.Fatura.
-     * @param nome Nome do cliente.
-     * @param nif Número de identificação fiscal.
      * @param consumoDevice Id's dos devices associados aos respetivos consumos.
-     * @param empresa Comercializador da ComercializadoresEnergia.Fatura.
      * @param c CasaInteligente.
      */
     public Fatura(int codigo, Map<String, Float> consumoDevice, CasaInteligente c){
@@ -47,7 +44,7 @@ public class Fatura {
         this.setEmpresa(c.getFornecedor());
         this.setConsumoDevice(consumoDevice);
         this.setDevices(c.getDevices());
-        calculaValores(c);
+    //    calculaValores(c);
     }
 
     /**
@@ -61,12 +58,13 @@ public class Fatura {
         this.setConsumoDevice(f.getConsumoDevices());
         this.setDevices(f.getDevices());
         this.setEmpresa(f.getEmpresa());
-        calculaValores(c);
+    //    calculaValores(c);
     }
 
-    /**
+    /*
+
      * Método que calcula o custo energético de cada dispositivo assim como o valor final da ComercializadoresEnergia.Fatura.
-     */
+
     public void calculaValores(CasaInteligente c){
         float valor = 0;
         for(String id: this.devices.keySet()){
@@ -77,7 +75,7 @@ public class Fatura {
 
         this.total = valor;
     }
-
+*/
     /**
      * Método que devolve o código identificador da ComercializadoresEnergia.Fatura.
      * @return Código identificador da ComercializadoresEnergia.Fatura.
@@ -177,16 +175,16 @@ public class Fatura {
      * Método que altera o Comercializador.
      * @param empresa Comercializador.
      */
-    public void setEmpresa(Comercializador empresa){
-        this.empresa = new Comercializador(empresa.clone());
+    public void setEmpresa(String empresa){
+        this.empresa = empresa;
     }
 
     /**
      * Método que devolve o Comercializador.
      * @return Comercializador.
      */
-    public Comercializador getEmpresa(){
-        return this.empresa.clone();
+    public String getEmpresa(){
+        return this.empresa;
     }
 
     /**
