@@ -253,6 +253,10 @@ public class CasaInteligente {
         return new_devices;
     }
 
+    /**
+     * Método que devolve o Map com as divisões da casa associadas à lista de ID's de devices presentes nas respetivas divisões.
+     * @return Map com as divisões da casa.
+     */
     // dúvidas aqui ao adicionar os values
     public Map<String, List<String>> getLocations() {
         Map<String, List<String>> new_locations = new HashMap<>();
@@ -289,6 +293,10 @@ public class CasaInteligente {
         this.fornecedor = fornecedor;
     }
 
+    /**
+     * Método que altera o Map com os ID's associados aos respetivos dispositivos.
+     * @param devices Map com os dispositivos.
+     */
     // discutir com o grupo estes dois métodos
     public void setDevices(Map<String, SmartDevice> devices) {
         this.devices = devices.entrySet()
@@ -296,6 +304,10 @@ public class CasaInteligente {
                               .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
     }
 
+    /**
+     * Método que altera o Map com as divisões da casa associadas à lista de dispositivos presentes nas respetivas divisões.
+     * @param locations Map com as divisões da casa.
+     */
     public void setLocations(Map<String, List<String>> locations) {
         this.locations = locations.entrySet()
                                   .stream()

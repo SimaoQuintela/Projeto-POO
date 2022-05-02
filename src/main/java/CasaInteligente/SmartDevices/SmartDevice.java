@@ -191,6 +191,10 @@ public abstract class SmartDevice {
         this.consumptionPerDay = consumptionPerDay;
     }
 
+    /**
+     * Método que altera o momento em que o estado do SmartDevice foi alterado pela última vez.
+     * @param time Momento em que o estado do SmartDevice foi alterado pela última vez.
+     */
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
