@@ -21,7 +21,7 @@ public class Comercializador{
     //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
     /**
-     * Método que calcula o consumo de um Dispositivo
+     * Método que calcula o consumo de um Dispositivo.
      */
     public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s){
         double r = 0;
@@ -35,7 +35,7 @@ public class Comercializador{
     }
 
     /**
-     * Método que calcula o consumo duma divisão da casa
+     * Método que calcula o consumo duma divisão da casa.
      */
     public double contaConsumoDivisao(CasaInteligente c, String location){
         double r = 0;
@@ -46,7 +46,7 @@ public class Comercializador{
     }
 
     /**
-     * Método que calcula o consumo duma casa
+     * Método que calcula o consumo duma casa.
      */
     public double contaConsumoCasa(CasaInteligente c){
         double r = 0;
@@ -67,6 +67,10 @@ public class Comercializador{
         this.faturas = new HashMap<>();
     }
 
+    /**
+     * Construtor parametrizado de Comercializador.
+     * @param nomeEmpresa Nome do Comercializador.
+     */
     public Comercializador(String nomeEmpresa){
         this.nomeEmpresa = nomeEmpresa;
         this.numeroDispositivos = 0;
@@ -76,8 +80,11 @@ public class Comercializador{
     }
 
     /**
-     * Construtor parametrizado de CasaInteligente.
-     * !!! faltam parametros
+     * Construtor parametrizado de Comercializador.
+     * @param nomeEmpresa Nome do Comercializador.
+     * @param numeroDispositivos Número de dispositivos.
+     * @param valorBase Valor mínimo do custo do serviço.
+     * @param imposto Imposto aplicado no calculo do custo final.
      */
     public Comercializador(String nomeEmpresa, int numeroDispositivos, int valorBase, int imposto){
         this.nomeEmpresa = nomeEmpresa;
@@ -95,7 +102,11 @@ public class Comercializador{
         this(c.nomeEmpresa, c.numeroDispositivos, c.valorBase,/* c.consumoDispositivo,*/ c.imposto);
     }
 
-    // falta documentar
+    /**
+     * Método que verifica a igualdade entre o Comercializador e um outro objeto.
+     * @param o Objeto que é comparado com o Comercializador.
+     * @return Booleano que indica o resultado da comparação.
+     */
     public boolean equals(Object o){
         if (o == this)
             return true;
@@ -200,6 +211,11 @@ public class Comercializador{
         this.imposto = imposto;
     }
 
+    /**
+     * Método que gera as Faturas de uma casa.
+     * @param codigo Número da Fatura.
+     * @param c CasaInteligente.
+     */
     public void geraFatura(int codigo, CasaInteligente c) {
         Map<String, Float> consumos = new HashMap<>();
 

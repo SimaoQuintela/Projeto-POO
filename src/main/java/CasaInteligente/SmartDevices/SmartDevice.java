@@ -39,6 +39,11 @@ public abstract class SmartDevice {
         this.custoInstalacao = 0;
     }
 
+    /**
+     * Construtor parametrizado de um SmartDevice.
+     * @param id Código que identifica o SmartDevice.
+     * @param status Estado do SmartDevice.
+     */
     public SmartDevice(String id, boolean status) {
         this.id = id;
         this.on = status;
@@ -117,21 +122,33 @@ public abstract class SmartDevice {
     public String getID() {return this.id;}
 
     /**
-     * Método que devolve o consumo diário de energia da SmartBulb.
-     * @return Consumo diário da SmartBulb.
+     * Método que devolve o consumo de energia do SmartDevice.
+     * @return Consumo do SmartDevice.
      */
     public float getConsumption(){
         return this.consumption;
     }
 
+    /**
+     * Método que devolve o consumo diário do SmartDevice.
+     * @return Consumo diário do SmartDevice.
+     */
     public float getConsumptionPerDay() {
         return this.consumptionPerDay;
     }
 
+    /**
+     * Método que devolve o custo de instalação do SmartDevice.
+     * @return Custo de instalação do SmartDevice.
+     */
     public int getCustoInstalacao() {
         return this.custoInstalacao;
     }
 
+    /**
+     * Método que devolve o momento em que o estado do SmartDevice foi alterado pela última vez.
+     * @return Momento em que o estado do SmartDevice foi alterado pela última vez.
+     */
     public LocalDateTime getTime() {
         return this.time;
     }
@@ -158,10 +175,18 @@ public abstract class SmartDevice {
         this.consumption = consumption;
     }
 
+    /**
+     * Método que altera o custo de instalação do SmartDevice.
+     * @param custoInstalacao Custo de instalação do SmartDevice.
+     */
     public void setCustoInstalacao(int custoInstalacao) {
         this.custoInstalacao = custoInstalacao;
     }
 
+    /**
+     * Método que altera o consumo diário do SmartDevice.
+     * @param consumptionPerDay Consumo diário do SmartDevice.
+     */
     public void setConsumptionPerDay(float consumptionPerDay) {
         this.consumptionPerDay = consumptionPerDay;
     }
