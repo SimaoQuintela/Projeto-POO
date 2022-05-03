@@ -1,0 +1,8 @@
+2022.04.10.12.50,Vicente de Carvalho Castro,22,setOn
+2022.04.10.12.50,Vicente de Carvalho Castro,23,setOn
+2022.04.10.12.30,Vicente de Carvalho Castro,22,setOff
+2022.04.10.12.30,Vicente de Carvalho Castro,23,setOff
+2022.04.11.22.30,Vicente de Carvalho Castro,Endesa,mudar
+2022.04.11.22.30,EDP Comercial,5,mudarNumDisp
+2022.04.12.20.45,Vicente de Carvalho Castro,22,novaLoc,Garagem
+2022.04.12.20.45,Vicente de Carvalho Castro,23,remover
