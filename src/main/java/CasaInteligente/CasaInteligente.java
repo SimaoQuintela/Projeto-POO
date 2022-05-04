@@ -209,7 +209,7 @@ public class CasaInteligente {
     public void removeDevice(String id){
         this.devices.remove(id);
         for(String s : this.locations.keySet()){
-            if(this.locations.get(s).contains(s)){
+            if(this.locations.get(s).contains(id)){
                 for(int i = 0; i<this.locations.get(s).size(); i+=1){
                     if(this.locations.get(s).get(i).equals(id)){
                         this.locations.get(s).remove(i);

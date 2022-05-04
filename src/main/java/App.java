@@ -49,38 +49,40 @@ public class App {
                 idFatura += 1;
 
             }
+            for(Fatura f: faturas){
+                out.println(f.toString());
+            }
             for(List<String> l : actions.get(k)){
-                out.println(l);
                 switch(l.get(2)){
-                    case "turnOff" -> { // ESTE TÁ A FUNCIONAR BEM
+                    case "turnOff" -> {
                         String proprietario = l.get(0);
                         String id = l.get(1);
                         comunidade.getCasa(proprietario).getDevice(id).turnOff();
                     }
-                    case "turnOn" -> { // ESTE TÁ A FUNCIONAR BEM
+                    case "turnOn" -> {
                         String proprietario = l.get(0);
                         String id = l.get(1);
                         comunidade.getCasa(proprietario).getDevice(id).turnOn();
                     }
-                    case "mudar" -> {  // ESTE TÁ A FUNCIONAR BEM
+                    case "mudar" -> {
                         String proprietario = l.get(0);
                         String novoFornecedor = l.get(1);
                         comunidade.getCasa(proprietario).setFornecedor(novoFornecedor);
                     }
-                    case "mudarNumDisp" -> { // ESTE TÁ A FUNCIONAR BEM
+                    case "mudarNumDisp" -> {
                         String proprietario = l.get(0);
                         int numDisps = Integer.parseInt(l.get(1));
                         comunidade.getFornecedor(proprietario).setNumeroDispositivos(numDisps);
                     }
-                    case "novaLoc" -> { // Não está a funcionar bem
+                    case "novaLoc" -> {
                         String proprietario = l.get(0);
                         String id = l.get(1);
                         String novaLoc = l.get(3);
-                        SmartDevice device = comunidade.getCasa(proprietario).getDevice(id);
+                        SmartDevice device = comunidade.getCasa(proprietario).getDevice(id).clone();
                         comunidade.getCasa(proprietario).removeDevice(id);
                         comunidade.getCasa(proprietario).addDevice(device, novaLoc);
                     }
-                    case "remover" -> { // Não está a funcionar bem, tem a ver com localizações
+                    case "remover" -> {
                         String proprietario = l.get(0);
                         String id = l.get(1);
                         comunidade.getCasa(proprietario).removeDevice(id);
@@ -88,9 +90,6 @@ public class App {
                 }
             }
 
-           // for(Fatura f: faturas){
-           //     out.println(f.toString());
-           // }
         }
         out.println(" SIMULAÇÃO EFETUADA ");
 
