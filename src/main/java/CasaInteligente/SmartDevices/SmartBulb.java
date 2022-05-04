@@ -141,9 +141,10 @@ public class SmartBulb extends SmartDevice {
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(this.getTone() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
-        } else {
+        }/* else {
             super.setConsumption(0);
         }
+        */
     }
 
     /**
