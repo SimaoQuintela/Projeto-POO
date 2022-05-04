@@ -113,6 +113,10 @@ public class Comunidade {
         return this.casas.get(proprietario);
     }
 
+    public Comercializador getFornecedor(String fornecedor){
+        return this.mercado.get(fornecedor);
+    }
+
     /**
      * Adiciona uma casa à comunidade
      * @param proprietario Proprietário da casa

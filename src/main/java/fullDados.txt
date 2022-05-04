@@ -1,5 +1,5 @@
 Imposto:23
-Base:2
+ValorBase:2
 Fornecedor:EDP Comercial,10
 Fornecedor:Galp Energia,20
 Fornecedor:Iberdrola,10

@@ -1,9 +1,0 @@
-imposto:10
-valorBase:2
-casa morada:rua_da_ameixoeira fornecedor:EDP devices locations
-casa morada:rua_sem_nome fornecedor:Endesa devices locations
-devices morada:rua_da_ameixoeira SmartBulb id:1234 on/off:on  tone:WARM dimensions:10
-devices morada:rua_da_ameixoeira SmartBulb id:12310 on/off:off  tone:COLD dimensions:8
-devices morada:rua_sem_nome SmartSpeaker id:4321 on/off:off  volume:10 channel:RFM brand:Marshall
-locations morada:rua_da_ameixoeira espaco:cozinha ids:1234:12310
-locations morada:rua_da_ameixoeira espaco:sala ids:12345:123102

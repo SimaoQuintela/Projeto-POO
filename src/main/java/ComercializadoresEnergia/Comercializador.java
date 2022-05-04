@@ -1,12 +1,15 @@
 package ComercializadoresEnergia;
 
 import CasaInteligente.CasaInteligente;
-import CasaInteligente.SmartDevices.SmartDevice;
+import CasaInteligente.SmartDevices.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
@@ -17,44 +20,8 @@ public class Comercializador{
     private int numeroDispositivos;
     private int valorBase;
     private int imposto;
-    private Map<String, List<Fatura>> faturas;
+    private Map<String, List<Fatura>> faturas;  // Proprietário -> Lista de Faturas
     //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
-
-    /**
-     * Método que calcula o consumo de um Dispositivo.
-     */
-    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s){
-        double r = 0;
-        if(c.getDevices().keySet().size() > this.numeroDispositivos) {
-            r = s.getConsumption() * (1 + ((float)this.imposto)/100) * 0.9;
-        } else {
-            r = s.getConsumption() * (1 + ((float)this.imposto)/100) * 0.75;
-        }
-
-        return r;
-    }
-
-    /**
-     * Método que calcula o consumo duma divisão da casa.
-     */
-    public double contaConsumoDivisao(CasaInteligente c, String location){
-        double r = 0;
-        for(String id : c.getLocations().get(location)){
-            r += contaConsumoDispositivo(c, c.getDevice(id));
-        }
-        return r;
-    }
-
-    /**
-     * Método que calcula o consumo duma casa.
-     */
-    public double contaConsumoCasa(CasaInteligente c){
-        double r = 0;
-        for(String location: c.getLocations().keySet()){
-            r += contaConsumoDivisao(c, location);
-        }
-        return r;
-    }
 
     /**
      * Construtor por omissão de Comercializador.
@@ -93,7 +60,7 @@ public class Comercializador{
         this.imposto = imposto;
         this.faturas = new HashMap<>();
     }
-    
+
     /**
      * Construtor de cópia de Comercializador.
      * @param c Comercializador que é copiada.
@@ -123,7 +90,7 @@ public class Comercializador{
             this.imposto == (c.imposto)
         );
     }
-    
+
     /**
      * Método que devolve uma cópia da Comercializador recetora da mensagem.
      * @return Cópia do comercializador.
@@ -131,7 +98,7 @@ public class Comercializador{
     public Comercializador clone(){
         return new Comercializador(this);
     }
-    
+
     /**
      * Método que produz uma string na qual está representado o Comercializador.
      * @return String que representa o comercializador.
@@ -180,6 +147,23 @@ public class Comercializador{
     }
 
     /**
+     * FALTA DOCUMENTAR
+     * @return
+     */
+    public Map<String, List<Fatura>> getFaturas() {
+        Map<String, List<Fatura>> new_faturas = new HashMap<>();
+        new_faturas = this.faturas.entrySet()
+                                  .stream()
+                                  .collect(toMap(e->e.getKey(), e->e.getValue()));
+
+        return new_faturas;
+    }
+
+    public List<Fatura> getListaFaturas(String prop){
+        return this.faturas.get(prop);
+    }
+
+    /**
      * Coloca na variável de instância nomeEmpresa a string passada como parâmetro
      * @param nomeEmpresa Nome do comercializador
      */
@@ -216,22 +200,62 @@ public class Comercializador{
      * @param codigo Número da Fatura.
      * @param c CasaInteligente.
      */
-    public void geraFatura(int codigo, CasaInteligente c) {
+    public void geraFatura(int codigo, CasaInteligente c, LocalDateTime anyTime) {
         Map<String, Float> consumos = new HashMap<>();
 
         double consumoDisp;
+        double total = 0;
         for (String s : c.getDevices().keySet()) {
-            consumoDisp = this.contaConsumoDispositivo(c, c.getDevice(s));
+            consumoDisp = this.contaConsumoDispositivo(c, c.getDevice(s), anyTime);
+            total += consumoDisp;
             consumos.put(s, (float)consumoDisp);
         }
-        Fatura f = new Fatura(codigo, consumos, c);
+        Fatura f = new Fatura(codigo, consumos, c, total, anyTime);
 
-        if(this.faturas.keySet().contains(c.getProprietario())) {
+        if(this.faturas.containsKey(c.getProprietario())) {
             this.faturas.get(c.getProprietario()).add(f);
-        }else{
-            List<Fatura> listaFaturas = new ArrayList<Fatura>();
+        } else {
+            List<Fatura> listaFaturas = new ArrayList<>();
+            listaFaturas.add(f);
             this.faturas.put(c.getProprietario(), listaFaturas);
-            this.faturas.get(c.getProprietario()).add(f);
         }
+    }
+
+    /**
+     * Método que calcula o consumo de um Dispositivo.
+     */
+    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s, LocalDateTime anyTime){
+        double r = 0;
+        s.consumo(anyTime);
+        if(c.getDevices().keySet().size() > this.numeroDispositivos) {
+            r = s.getConsumption()/1000000 * (1 + ((float)this.imposto)/100) * 0.9;
+        } else {
+            r = s.getConsumption()/1000000 * (1 + ((float)this.imposto)/100) * 0.75;
+        }
+        r = Math.round(r*100)/100;
+
+        return r;
+    }
+
+    /**
+     * Método que calcula o consumo duma divisão da casa.
+     */
+    public double contaConsumoDivisao(CasaInteligente c, String location, LocalDateTime anyTime){
+        double r = 0;
+        for(String id : c.getLocations().get(location)){
+            r += contaConsumoDispositivo(c, c.getDevice(id), anyTime);
+        }
+        return r;
+    }
+
+    /**
+     * Método que calcula o consumo duma casa.
+     */
+    public double contaConsumoCasa(CasaInteligente c, LocalDateTime anyTime){
+        double r = 0;
+        for(String location: c.getLocations().keySet()){
+            r += contaConsumoDivisao(c, location, anyTime);
+        }
+        return r;
     }
 }

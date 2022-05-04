@@ -3,6 +3,8 @@ package CasaInteligente.SmartDevices;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static java.lang.System.out;
+
 /**
  * Uma SmartBulb é uma lâmpada inteligente que além de ligar e desligar (já que
  * é subclasse de SmartDevice) também permite escolher a intensidade da iluminação 
@@ -136,10 +138,11 @@ public class SmartBulb extends SmartDevice {
      */
     public void consumo(LocalDateTime anyTime) {
         if(this.getOn()){
-            // escolhemos dias porque a variável consumptionPerDay representa 1 dia, em KwH
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(this.getTone() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
+        } else {
+            super.setConsumption(0);
         }
     }
 

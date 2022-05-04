@@ -139,6 +139,8 @@ public class SmartSpeaker extends SmartDevice {
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(this.getVolume() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
+        } else {
+            super.setConsumption(0);
         }
     }
 

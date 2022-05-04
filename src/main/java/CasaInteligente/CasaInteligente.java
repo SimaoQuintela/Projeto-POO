@@ -1,6 +1,7 @@
 package CasaInteligente;
 import CasaInteligente.SmartDevices.SmartBulb;
 import CasaInteligente.SmartDevices.SmartCamera;
+import CasaInteligente.SmartDevices.SmartSpeaker;
 import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
@@ -201,6 +202,23 @@ public class CasaInteligente {
         }
     }
 
+    /**
+     * Método que remove um device da casa
+     * @param id
+     */
+    public void removeDevice(String id){
+        this.devices.remove(id);
+        for(String s : this.locations.keySet()){
+            if(this.locations.get(s).contains(s)){
+                for(int i = 0; i<this.locations.get(s).size(); i+=1){
+                    if(this.locations.get(s).get(i).equals(id)){
+                        this.locations.get(s).remove(i);
+                    }
+                }
+            }
+        }
+    }
+
     public void addLocation(String location, List<String> ids){
         this.locations.put(location, ids);
     }
@@ -236,7 +254,7 @@ public class CasaInteligente {
      * @return SmartDevice.
      */
     public SmartDevice getDevice(String s) {
-        return this.devices.get(s).clone();
+        return this.devices.get(s);
     }
 
     /**

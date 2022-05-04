@@ -133,6 +133,8 @@ public class SmartCamera extends SmartDevice {
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(( ((float)this.getxRes() *this.getyRes())/1000) * this.getFileSize() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
+        } else {
+            super.setConsumption(0);
         }
     }
 

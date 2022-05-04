@@ -101,7 +101,7 @@ public class Parser {
             consumo = valorBase;
         }
 
-        SmartBulb new_bulb = new SmartBulb(id, false, tone, diametro, consumo, 5);
+        SmartBulb new_bulb = new SmartBulb(id, true, tone, diametro, consumo, 5);
         return new_bulb.clone();
     }
 
@@ -117,7 +117,7 @@ public class Parser {
             if(consumo < valorBase){
                 consumo = valorBase;
             }
-            SmartCamera new_camera = new SmartCamera(id, false, Integer.parseInt(xRes), Integer.parseInt(yRes), tamanho, consumo, 10);
+            SmartCamera new_camera = new SmartCamera(id, true, Integer.parseInt(xRes), Integer.parseInt(yRes), tamanho, consumo, 10);
             return new_camera.clone();
     }
 
@@ -130,7 +130,7 @@ public class Parser {
             if(consumo < valorBase){
                 consumo = valorBase;
             }
-            SmartSpeaker new_speaker = new SmartSpeaker(id, false, channel, volume, brand, consumo, 7);
+            SmartSpeaker new_speaker = new SmartSpeaker(id, true, channel, volume, brand, consumo, 7);
             return new_speaker.clone();
     }
     public static CasaInteligente parseCasa(String[] input){
