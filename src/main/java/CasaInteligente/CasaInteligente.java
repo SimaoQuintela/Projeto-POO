@@ -154,7 +154,7 @@ public class CasaInteligente {
      */
     public void addRoom(String s) {
         List<String> roomDevices = new ArrayList<>();
-        this.locations.put(s, roomDevices);
+        this.locations.putIfAbsent(s, roomDevices);
     }
 
     /**
@@ -191,7 +191,7 @@ public class CasaInteligente {
      * @param location Divisão da casa à qual é adicionado o SmartDevice.
      */
     public void addDevice(SmartDevice s, String location) {
-        this.devices.put(s.getID(), s);
+        this.devices.putIfAbsent(s.getID(), s);
 
         if (hasRoom(location)) {
             this.locations.get(location).add(s.getID());
@@ -220,7 +220,7 @@ public class CasaInteligente {
     }
 
     public void addLocation(String location, List<String> ids){
-        this.locations.put(location, ids);
+        this.locations.putIfAbsent(location, ids);
     }
 
     // gets e sets

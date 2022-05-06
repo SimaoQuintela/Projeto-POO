@@ -31,14 +31,15 @@ public class SmartSpeaker extends SmartDevice {
     /**
      * ACABAR DOCUMENTAÇAO
      * Construtor parametrizado de SmartSpeaker.
-     * @param s Canal de rádio.
+     * @param id ID do dispositivo.
+     * @param channel Canal de rádio.
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
-    public SmartSpeaker(String s, String brand, int volume) {
+    public SmartSpeaker(String id, String channel, String brand, int volume) {
         // initialise instance variables
-        super();
-        this.channel = s;
+        super(id);
+        this.channel = channel;
         this.volume = volume;
         this.brand = brand;
     }
@@ -101,8 +102,9 @@ public class SmartSpeaker extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-
+        sb.append("ID: ").append(super.getID()).append("\n");
         sb.append("Estado: ").append(super.getOn()).append("\n");
+        sb.append("Momento da última atualização do estado: ").append(super.getTime()).append("\n");
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");
