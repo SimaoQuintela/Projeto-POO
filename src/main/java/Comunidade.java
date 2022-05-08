@@ -51,7 +51,7 @@ public class Comunidade {
      * @param c Objeto Comunidade
      */
     public Comunidade(Comunidade c){
-        this(c.nomeDaComunidade, c.casas, c.mercado);
+        this(c.getNomeDaComunidade(), c.getCasas(), c.getMercado());
     }
 
     /**
@@ -69,8 +69,8 @@ public class Comunidade {
         Comunidade c = (Comunidade) o;
 
         return(this.nomeDaComunidade.equals(c.nomeDaComunidade) &&
-               this.casas.equals(c.casas)                       &&
-               this.mercado.equals(c.casas)
+               this.casas.equals(c.getCasas())                       &&
+               this.mercado.equals(c.getMercado())
         );
     }
 
