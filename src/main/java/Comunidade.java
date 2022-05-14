@@ -1,11 +1,12 @@
 import CasaInteligente.CasaInteligente;
 import ComercializadoresEnergia.Comercializador;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
-public class Comunidade {
+public class Comunidade implements Serializable {
     private String nomeDaComunidade;
     private Map<String, CasaInteligente> casas;
     private Map<String, Comercializador> mercado;

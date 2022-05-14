@@ -4,13 +4,11 @@ import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartSpeaker;
 import ComercializadoresEnergia.Comercializador;
 
-import static java.lang.System.out;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Parser {

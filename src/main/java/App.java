@@ -4,6 +4,7 @@ import ComercializadoresEnergia.*;
 
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.SocketImpl;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -16,12 +17,19 @@ public class App {
     static Scanner scan = new Scanner(System.in);
     static Comunidade comunidade = new Comunidade("Gualtar");
 
-    public static void main(String args[]) throws InterruptedException, FileNotFoundException {
+    public static void main(String args[]) throws InterruptedException, IOException, ClassNotFoundException {
         Comunidade comunidade = new Comunidade("Jackson");
-        Parser.parse(comunidade);
-        TreeMap<String, List<List<String>>> actions = new TreeMap<>();
+    //    Parser.parse(comunidade);   // dá parse aos dados da comunidade
+
+        Controller controller = new Controller(comunidade);
+        View view = new View(controller, scan);
+        view.run();
+
         out.println("---- Inicio dos testes ----");
-    //    out.println(comunidade);
+        out.println(comunidade);
+
+        /*
+        TreeMap<String, List<List<String>>> actions = new TreeMap<>();
         actions = SimulParser.simulParser();
         simulacao(comunidade, actions);
 
@@ -31,8 +39,7 @@ public class App {
         out.println(ChronoUnit.HOURS.between(novo, teste));
     }
 
-    /**
-     */
+
     public static void simulacao(Comunidade comunidade, TreeMap<String, List<List<String>>> actions){
         LocalDateTime simulDate;
         int idFatura = 1;
@@ -94,7 +101,7 @@ public class App {
         out.println(" SIMULAÇÃO EFETUADA ");
 
     //    out.println(comunidade);
-
+*/
     }
 
 

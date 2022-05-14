@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -10,7 +12,7 @@ import static java.lang.System.out;
  * é subclasse de SmartDevice) também permite escolher a intensidade da iluminação 
  * (a cor da mesma).
  */
-public class SmartBulb extends SmartDevice {
+public class SmartBulb extends SmartDevice implements Serializable {
     public static final int WARM = 80;
     public static final int NEUTRAL = 60;
     public static final int COLD = 40;
@@ -105,6 +107,7 @@ public class SmartBulb extends SmartDevice {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        sb.append("Id: ").append(super.getID()).append("\n");
         sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Tonalidade: ").append(this.getTone()).append("\n");
         sb.append("Dimensoes: ").append(this.getDimensions()).append("\n");
@@ -120,7 +123,7 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
     }
 
     /**
@@ -128,7 +131,7 @@ public class SmartBulb extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
         consumo(super.getTime());
     }
 
@@ -136,15 +139,15 @@ public class SmartBulb extends SmartDevice {
     /**
      * Método que calcula o consumo da SmartBulb.
      */
-    public void consumo(LocalDateTime anyTime) {
+    public void consumo(LocalDate anyTime) {
         if(this.getOn()){
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(this.getTone() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
-        }/* else {
+        } else {
             super.setConsumption(0);
         }
-        */
+
     }
 
     /**

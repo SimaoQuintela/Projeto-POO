@@ -3,6 +3,8 @@ package ComercializadoresEnergia;
 import CasaInteligente.CasaInteligente;
 import CasaInteligente.SmartDevices.SmartDevice;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +12,10 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 // FALTA FAZER EQUALS, TOSTRING, ETC.
-public class Fatura {
+public class Fatura implements Serializable {
     private int codigo;
     private int nif;
-    LocalDateTime dataEmissao;
+    LocalDate dataEmissao;
     private Map<String, Float> consumoDevice; //id -> consumo
     private Map<String, SmartDevice> devices; //id -> SmartDevice
     private String empresa;
@@ -29,7 +31,7 @@ public class Fatura {
         this.empresa = "";
         this.total = 0;
         this.devices = new HashMap<>();
-        this.dataEmissao = LocalDateTime.now();
+        this.dataEmissao = LocalDate.now();
     }
 
     /**
@@ -38,7 +40,7 @@ public class Fatura {
      * @param consumoDevice Id's dos devices associados aos respetivos consumos.
      * @param c CasaInteligente.
      */
-    public Fatura(int codigo, Map<String, Float> consumoDevice, CasaInteligente c, double total, LocalDateTime anyTime){
+    public Fatura(int codigo, Map<String, Float> consumoDevice, CasaInteligente c, double total, LocalDate anyTime){
         this.codigo = codigo;
         this.nif = c.getNIF();
         this.empresa = c.getFornecedor();
@@ -173,7 +175,7 @@ public class Fatura {
         return new_devices;
     }
 
-    public LocalDateTime getDataEmissao() {
+    public LocalDate getDataEmissao() {
         return this.dataEmissao;
     }
 
@@ -222,7 +224,7 @@ public class Fatura {
         this.empresa = empresa;
     }
 
-    public void setDataEmissao(LocalDateTime dataEmissao) {
+    public void setDataEmissao(LocalDate dataEmissao) {
         this.dataEmissao = dataEmissao;
     }
 }

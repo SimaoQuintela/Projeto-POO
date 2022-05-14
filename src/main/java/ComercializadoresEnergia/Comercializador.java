@@ -3,6 +3,8 @@ package ComercializadoresEnergia;
 import CasaInteligente.CasaInteligente;
 import CasaInteligente.SmartDevices.*;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +17,7 @@ import static java.util.stream.Collectors.toMap;
  * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
  */
 
-public class Comercializador{
+public class Comercializador implements Serializable {
     private String nomeEmpresa;
     private int numeroDispositivos;
     private int valorBase;
@@ -200,7 +202,7 @@ public class Comercializador{
      * @param codigo Número da Fatura.
      * @param c CasaInteligente.
      */
-    public void geraFatura(int codigo, CasaInteligente c, LocalDateTime anyTime) {
+    public void geraFatura(int codigo, CasaInteligente c, LocalDate anyTime) {
         Map<String, Float> consumos = new HashMap<>();
 
         double consumoDisp;
@@ -211,6 +213,7 @@ public class Comercializador{
             consumos.put(s, (float)consumoDisp);
         }
         Fatura f = new Fatura(codigo, consumos, c, total, anyTime);
+        c.addFatura(f);
 
         if(this.faturas.containsKey(c.getProprietario())) {
             this.faturas.get(c.getProprietario()).add(f);
@@ -224,13 +227,13 @@ public class Comercializador{
     /**
      * Método que calcula o consumo de um Dispositivo.
      */
-    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s, LocalDateTime anyTime){
+    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s, LocalDate anyTime){
         double r = 0;
         s.consumo(anyTime);
         if(c.getDevices().keySet().size() > this.numeroDispositivos) {
-            r = s.getConsumption()/1000000 * (1 + ((float)this.imposto)/100) * 0.9;
+            r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.9;
         } else {
-            r = s.getConsumption()/1000000 * (1 + ((float)this.imposto)/100) * 0.75;
+            r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.75;
         }
         r = Math.round(r*100)/100;
 
@@ -240,7 +243,7 @@ public class Comercializador{
     /**
      * Método que calcula o consumo duma divisão da casa.
      */
-    public double contaConsumoDivisao(CasaInteligente c, String location, LocalDateTime anyTime){
+    public double contaConsumoDivisao(CasaInteligente c, String location, LocalDate anyTime){
         double r = 0;
         for(String id : c.getLocations().get(location)){
             r += contaConsumoDispositivo(c, c.getDevice(id), anyTime);
@@ -251,7 +254,7 @@ public class Comercializador{
     /**
      * Método que calcula o consumo duma casa.
      */
-    public double contaConsumoCasa(CasaInteligente c, LocalDateTime anyTime){
+    public double contaConsumoCasa(CasaInteligente c, LocalDate anyTime){
         double r = 0;
         for(String location: c.getLocations().keySet()){
             r += contaConsumoDivisao(c, location, anyTime);

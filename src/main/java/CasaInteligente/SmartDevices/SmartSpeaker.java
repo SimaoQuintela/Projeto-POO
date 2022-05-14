@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -9,7 +11,7 @@ import java.time.temporal.ChronoUnit;
  * Consegue ligar-se a um canal (por simplificação uma rádio online) e permite
  * a regulação do seu nível de volume.
  */
-public class SmartSpeaker extends SmartDevice {
+public class SmartSpeaker extends SmartDevice implements Serializable {
     public static final int MAX = 100; //volume máximo
 
     private int volume;
@@ -102,7 +104,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("ID: ").append(super.getID()).append("\n");
+        sb.append("Id: ").append(super.getID()).append("\n");
         sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Momento da última atualização do estado: ").append(super.getTime()).append("\n");
         sb.append("Canal: ").append(this.getChannel()).append("\n");
@@ -120,7 +122,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
     }
 
     /**
@@ -128,7 +130,7 @@ public class SmartSpeaker extends SmartDevice {
      */
     public void turnOff() {
         super.setOn(false);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
         consumo(super.getTime());
     }
 
@@ -136,15 +138,15 @@ public class SmartSpeaker extends SmartDevice {
     /**
      * Método que calcula o consumo da SmartSpeaker.
      */
-    public void consumo(LocalDateTime anyTime){
+    public void consumo(LocalDate anyTime){
         if(this.getOn()){
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(this.getVolume() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
-        }/* else {
+        } else {
             super.setConsumption(0);
         }
-        */
+
     }
 
     /**

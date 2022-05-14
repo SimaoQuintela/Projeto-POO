@@ -1,9 +1,11 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class SmartCamera extends SmartDevice {
+public class SmartCamera extends SmartDevice implements Serializable {
     private int xRes;
     private int yRes;
     private int fileSize;
@@ -97,6 +99,7 @@ public class SmartCamera extends SmartDevice {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
+        sb.append("Id: ").append(super.getID()).append("\n");
         sb.append("Estado: ").append(super.getOn()).append("\n");
         sb.append("Resolucao: ").append("\n");
         sb.append("X: ").append(this.getxRes()).append("\n");
@@ -114,29 +117,29 @@ public class SmartCamera extends SmartDevice {
      */
     public void turnOn() {
         super.setOn(true);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
     }
     /**
      * Método que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
-        super.setTime(LocalDateTime.now());
+        super.setTime(LocalDate.now());
         consumo(super.getTime());
     }
 
     /**
      * Método que calcula o consumo da SmartCamera.
      */
-    public void consumo(LocalDateTime anyTime){
+    public void consumo(LocalDate anyTime){
         if(this.getOn()){
             float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
             super.setConsumption(( ((float)this.getxRes() *this.getyRes())/1000) * this.getFileSize() * super.getConsumptionPerDay() * between);
             super.setTime(anyTime);
-        }/* else {
+        } else {
             super.setConsumption(0);
         }
-        */
+
     }
 
     /**

@@ -1,15 +1,17 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  * A classe SmartDevice é um contactor simples.
  * Permite ligar ou desligar circuitos.
  */
-public abstract class SmartDevice {
+public abstract class SmartDevice implements Serializable {
     private String id;
     private boolean on;
-    private LocalDateTime time;
+    private LocalDate time;
     private float consumption;
     private float consumptionPerDay;
     private int custoInstalacao;
@@ -22,7 +24,7 @@ public abstract class SmartDevice {
         this.on = false;
         this.consumption = 0;
         this.consumptionPerDay = 0;
-        this.time = LocalDateTime.now();
+        this.time = LocalDate.now();
         this.custoInstalacao = 0;
     }
 
@@ -35,7 +37,7 @@ public abstract class SmartDevice {
         this.on = false;
         this.consumption = 0;
         this.consumptionPerDay = 0;
-        this.time = LocalDateTime.now();
+        this.time = LocalDate.now();
         this.custoInstalacao = 0;
     }
 
@@ -49,7 +51,7 @@ public abstract class SmartDevice {
         this.on = status;
         this.consumption = 0;
         this.consumptionPerDay = 0;
-        this.time = LocalDateTime.now();
+        this.time = LocalDate.now();
         this.custoInstalacao = 0;
     }
 
@@ -63,7 +65,7 @@ public abstract class SmartDevice {
         this.on = status;
         this.consumption = 0;
         this.consumptionPerDay = consumptionPerDay;
-        this.time = LocalDateTime.now();
+        this.time = LocalDate.now();
         this.custoInstalacao = custoInstalacao;
     }
 
@@ -107,7 +109,7 @@ public abstract class SmartDevice {
     /**
      * Método que calcula o consumo do SmartDevice.
      */
-    public abstract void consumo(LocalDateTime reset_time);
+    public abstract void consumo(LocalDate reset_time);
 
     /**
      * Método que devolve o estado do SmartDevice.
@@ -149,7 +151,7 @@ public abstract class SmartDevice {
      * Método que devolve o momento em que o estado do SmartDevice foi alterado pela última vez.
      * @return Momento em que o estado do SmartDevice foi alterado pela última vez.
      */
-    public LocalDateTime getTime() {
+    public LocalDate getTime() {
         return this.time;
     }
 
@@ -195,7 +197,7 @@ public abstract class SmartDevice {
      * Método que altera o momento em que o estado do SmartDevice foi alterado pela última vez.
      * @param time Momento em que o estado do SmartDevice foi alterado pela última vez.
      */
-    public void setTime(LocalDateTime time) {
+    public void setTime(LocalDate time) {
         this.time = time;
     }
 }

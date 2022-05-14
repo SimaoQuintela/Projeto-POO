@@ -6,6 +6,7 @@ import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
 
+import java.io.Serializable;
 import java.util.*;
 
 import static java.util.stream.Collectors.toMap;
@@ -17,7 +18,7 @@ import static java.util.stream.Collectors.toMap;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class CasaInteligente {
+public class CasaInteligente implements Serializable {
     private String proprietario;
     //private int numeroDePorta;
     private int NIF;
@@ -25,6 +26,8 @@ public class CasaInteligente {
     private String fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
+
+    private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
 
     /**
      * Construtor por omissão de CasaInteligente.
@@ -35,6 +38,7 @@ public class CasaInteligente {
         this.fornecedor = "";
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
+        this.faturas = new ArrayList<>();
     }
 
     /**
@@ -49,6 +53,7 @@ public class CasaInteligente {
         this.fornecedor = fornecedor;
         this.devices = new HashMap<>();
         this.locations = new HashMap<>();
+        this.faturas = new ArrayList<>();
     }
 
 
@@ -66,6 +71,7 @@ public class CasaInteligente {
         this.locations = locations.entrySet()
                                   .stream()
                                   .collect(toMap(e-> e.getKey(), e->e.getValue()));
+        this.faturas = new ArrayList<>();
     }
 
     /**
@@ -95,7 +101,8 @@ public class CasaInteligente {
             this.NIF == c.NIF                         &&
             this.getFornecedor().equals(c.fornecedor) &&
             this.devices.equals(c.devices)            &&
-            this.locations.equals(c.locations)
+            this.locations.equals(c.locations)        &&
+            this.faturas.equals(c.faturas)
         );
     }
 
@@ -131,7 +138,6 @@ public class CasaInteligente {
 
             // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
             sb.append(this.devices.get(id).toString());
-            sb.append("id: ").append(id).append("\n");
         }
 
         sb.append("------------- Locations -------------\n");
@@ -154,7 +160,7 @@ public class CasaInteligente {
      */
     public void addRoom(String s) {
         List<String> roomDevices = new ArrayList<>();
-        this.locations.putIfAbsent(s, roomDevices);
+        this.locations.put(s, roomDevices);
     }
 
     /**
@@ -191,7 +197,7 @@ public class CasaInteligente {
      * @param location Divisão da casa à qual é adicionado o SmartDevice.
      */
     public void addDevice(SmartDevice s, String location) {
-        this.devices.putIfAbsent(s.getID(), s);
+        this.devices.put(s.getID(), s);
 
         if (hasRoom(location)) {
             this.locations.get(location).add(s.getID());
@@ -219,8 +225,13 @@ public class CasaInteligente {
         }
     }
 
+    public void addFatura(Fatura f){
+        this.faturas.add(f);
+    }
+
+
     public void addLocation(String location, List<String> ids){
-        this.locations.putIfAbsent(location, ids);
+        this.locations.put(location, ids);
     }
 
     // gets e sets
@@ -286,6 +297,10 @@ public class CasaInteligente {
         return new_locations;
     }
 
+    public List<Fatura> getFaturas() {
+
+        return new ArrayList<>(this.faturas);
+    }
 
     /**
      * Método que coloca na variável proprietário o nome passado como parâmetro
