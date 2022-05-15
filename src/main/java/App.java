@@ -1,32 +1,21 @@
-import CasaInteligente.*;
-import CasaInteligente.SmartDevices.SmartDevice;
-import ComercializadoresEnergia.*;
 
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.SocketImpl;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static java.lang.System.out;
 
 public class App {
     static Scanner scan = new Scanner(System.in);
-    static Comunidade comunidade = new Comunidade("Gualtar");
+    static Comunidade comunidade = new Comunidade("Jackson");
+    static Controller controller = new Controller(comunidade);
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
 
-    public static void main(String args[]) throws InterruptedException, IOException, ClassNotFoundException {
-        Comunidade comunidade = new Comunidade("Jackson");
-    //    Parser.parse(comunidade);   // dá parse aos dados da comunidade
+        //    Parser.parse(comunidade);   // dá parse aos dados da comunidade
 
-        Controller controller = new Controller(comunidade);
         View view = new View(controller, scan);
         view.run();
 
-        out.println("---- Inicio dos testes ----");
-        out.println(comunidade);
+
 
         /*
         TreeMap<String, List<List<String>>> actions = new TreeMap<>();

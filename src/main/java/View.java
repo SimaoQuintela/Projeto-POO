@@ -14,7 +14,6 @@ public class View {
 
     public void run() throws IOException, ClassNotFoundException {
         int opcao;
-        boolean sair = false;
         do {
             opcao = receberComandos();
             switch (opcao) {
@@ -25,46 +24,55 @@ public class View {
         //            criaCasa(this.controller.getComunidade());
                     break;
                 case 3:
-                    this.controller.saveProgram();
+                    out.print("Insira o nome do ficheiro: ");
+                    String objectFile = input.next();
+                    this.controller.saveProgramObjects(objectFile);
                     break;
                 case 4:
                     out.print("Insira o nome do ficheiro: ");
-                    String file = input.nextLine();
-                    Controller.loadProgram(file);
+                    String file = input.next();
+                    this.controller.loadProgramObjects(file);
                     break;
                 case 5:
-            //        gravarEmFicheiroObjetos();
+                    out.println("Insira o nome do ficheiro: ");
+                    String textFile = input.next();
+                    this.controller.saveProgramText(textFile);
                     break;
                 case 6:
-            //        carregarFicheiroObjetos();
+                    out.println("Insira o nome do ficheiro: ");
+                    String textFileName = input.next();
+                    this.controller.loadProgramText(textFileName);
                     break;
                 case 7:
             //        estatisticas();
                     break;
                 case 8:
-                    sair = true;
+                    this.controller.printComunity();
+                    break;
+                case 9:
                     break;
                 default:
-                    out.println("\nOpção Inválida. Escolha um numero entre 0 e 5.\n");
+                    out.println("\nOpcao Inválida. Escolha um numero entre 0 e 9.\n");
                     break;
             }
-        } while (!sair);
+        } while (opcao != 9);
     }
 
     public int receberComandos() {
         try {
-            out.println("Introduza o numero da opção que pretende:\n" +
+            out.println("Introduza o numero da opcao que pretende:\n" +
                     "1. Simular\n" +
                     "2. Adicionar Casa\n" +
-                    "3. Gravar em ficheiro\n" +
-                    "4. Carregar ficheiro\n" +
-                    "5. Gravar em ficheiro de objetos\n" +
-                    "6. Carregar ficheiro de objetos\n" +
+                    "3. Gravar em ficheiro de objetos\n" +
+                    "4. Carregar ficheiro de objetos\n" +
+                    "5. Gravar em ficheiro de texto\n" +
+                    "6. Carregar ficheiro de texto\n" +
                     "7. Estatisticas\n" +
-                    "8. Sair\n"
+                    "8. Mostrar a comunidade\n" +
+                    "9. Sair\n"
             );
 
-            out.print("Opção: ");
+            out.print("Opcao: ");
 
 
             return this.input.nextInt();
@@ -72,55 +80,5 @@ public class View {
             return 99;
         }
     }
-
-
-/*
-    public void gravarEmFicheiro() {
-        System.out.print("Introduza o nome do ficheiro onde pretende gravar: ");
-        String ficheiro = this.input.next();
-
-        try {
-            this.controller.gravarEstado(ficheiro);
-            System.out.println("\nGravação concluída.\n");
-        } catch (IOException e) {
-            System.out.println("\nImpossível gravar no ficheiro " + ficheiro + ".\n");
-        } catch (Exception e) {
-            System.out.println("\nOcorreu um erro. Tente outra vez.\n");
-        }
-    }
-
-    public void lerFicheiroObjetos() {
-        try {
-            System.out.print("Introduza o nome do ficheiro que pretende ler: ");
-
-            this.controller.lerCasasInteligentesObjetos(this.input.next());
-
-            System.out.println("\nInformação do ficheiro carregada.\n");
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("\nImpossivel ler ficheiro.\n" + e.toString());
-        } catch (Exception e) {
-            System.out.println("\nOcorreu um erro. Tente outra vez.\n");
-        }
-    }
-
-    public void gravarEmFicheiroObjetos() {
-        System.out.print("Introduza o nome do ficheiro onde pretende gravar: ");
-        String ficheiro = this.input.next();
-
-        try {
-            this.controller.gravarEstadoObjetos(ficheiro);
-            System.out.println("\nGravação concluída.\n");
-        } catch (IOException e) {
-            System.out.println("\nImpossível gravar no ficheiro " + ficheiro + ".\n");
-            System.out.println(e.toString());
-        } catch (Exception e) {
-            System.out.println("\nOcorreu um erro. Tente outra vez.\n");
-            System.out.println(e.toString());
-        }
-    }
-*/
-
-
-
 
 }

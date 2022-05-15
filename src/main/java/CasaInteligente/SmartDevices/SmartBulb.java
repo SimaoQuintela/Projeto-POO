@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -117,6 +119,25 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
         return sb.toString();
     }
+
+    public void writeInFile(FileWriter writer) throws IOException {
+        String tone = "";
+
+        if(this.getTone() == 80){
+            tone = "Warm";
+        } else if(this.getTone() == 60) {
+            tone = "Neutral";
+        } else {
+            tone = "Cold";
+        }
+
+        String line = "SmartBulb:" + tone + "," + this.getDimensions() + "," +
+                      super.getConsumptionPerDay() + "\n";
+
+        writer.write(line);
+        writer.flush();
+    }
+
 
     /**
      * Método que liga um SmartDevice

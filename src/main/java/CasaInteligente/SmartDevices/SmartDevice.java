@@ -1,5 +1,8 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -95,6 +98,8 @@ public abstract class SmartDevice implements Serializable {
      * @return string que representa o SmartDevice.
      */
     public abstract String toString();
+
+    public abstract void writeInFile(FileWriter writer) throws IOException;
 
     /**
      * Método que liga o SmartDevice.

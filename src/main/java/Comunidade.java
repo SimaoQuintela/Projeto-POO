@@ -4,8 +4,8 @@ import ComercializadoresEnergia.Comercializador;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
+
 public class Comunidade implements Serializable {
     private String nomeDaComunidade;
     private Map<String, CasaInteligente> casas;
@@ -145,7 +145,7 @@ public class Comunidade implements Serializable {
         Map<String, CasaInteligente> new_casas = new HashMap<>();
         new_casas = this.casas.entrySet()
                               .stream()
-                              .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
+                              .collect(toMap(e->e.getKey(), e->e.getValue()));
 
         return new_casas;
     }

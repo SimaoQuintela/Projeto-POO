@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parser {
-        public static void parse(Comunidade comunidade){
-            List<String> linhas = lerFicheiro("dados.txt");
+        public static void parse(Comunidade comunidade, String file){
+            List<String> linhas = lerFicheiro(file);
             int id_generator = 0;
             int imposto = 0;
             int valorBase = 0;
@@ -39,17 +39,20 @@ public class Parser {
                         Comercializador comercializador = new Comercializador(nomeEmpresa, numeroDispositivos, valorBase, imposto);
                         comunidade.setMercado(nomeEmpresa, comercializador);
                     }
+
                     case "Casa" -> {
                         casaMaisRecente = parseCasa(campos).clone();
                         String proprietario = campos[0];
                         comunidade.setCasas(proprietario, casaMaisRecente);
                     }
+
                     case "Divisao" -> {
                         if (casaMaisRecente == null) System.out.println("Linha inválida.");
                         divisaoMaisRecente = linhaPartida[1];
                         assert casaMaisRecente != null;
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addRoom(divisaoMaisRecente);
                     }
+
                     case "SmartBulb" -> {
                         if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
                         SmartBulb sd = parseSmartBulb(campos, Integer.toString(id_generator), valorBase);
@@ -57,6 +60,7 @@ public class Parser {
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sd, divisaoMaisRecente);
                         id_generator += 1;
                     }
+
                     case "SmartCamera" -> {
                         if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
                         SmartCamera sc = parseSmartCamera(campos, Integer.toString(id_generator), valorBase);
@@ -64,6 +68,7 @@ public class Parser {
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sc, divisaoMaisRecente);
                         id_generator += 1;
                     }
+
                     case "SmartSpeaker" -> {
                         if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
                         SmartSpeaker sp = parseSmartSpeaker(campos, Integer.toString(id_generator), valorBase);
@@ -71,7 +76,11 @@ public class Parser {
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sp, divisaoMaisRecente);
                         id_generator += 1;
                     }
-                    default -> System.out.println("Linha inválida.");
+
+                    default -> {
+                        System.out.println("Linha invalida 2.");
+                        System.out.println(linha);
+                    }
                 }
             }
         }

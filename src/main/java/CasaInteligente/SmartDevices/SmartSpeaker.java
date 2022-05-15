@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -106,7 +108,6 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
         StringBuilder sb = new StringBuilder();
         sb.append("Id: ").append(super.getID()).append("\n");
         sb.append("Estado: ").append(super.getOn()).append("\n");
-        sb.append("Momento da última atualização do estado: ").append(super.getTime()).append("\n");
         sb.append("Canal: ").append(this.getChannel()).append("\n");
         sb.append("Volume: ").append(this.getVolume()).append("\n");
         sb.append("Marca: ").append(this.getBrand()).append("\n");
@@ -116,6 +117,15 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
         return sb.toString();
     }
+
+    public void writeInFile(FileWriter writer) throws IOException {
+        String line = "SmartSpeaker:" + this.getVolume() + "," + this.getChannel() + "," +
+                      this.getBrand() + "," + super.getConsumptionPerDay() + "\n";
+
+        writer.write(line);
+        writer.flush();
+    }
+
 
     /**
      * Método que liga um SmartDevice

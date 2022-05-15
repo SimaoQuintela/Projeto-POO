@@ -25,19 +25,47 @@ public class Controller implements Serializable {
         return SimulParser.simulParser();
     }
 
-    public void saveProgram() throws FileNotFoundException, IOException {
-        FileOutputStream fos =  new FileOutputStream("gravar.csv");
+    public void saveProgramText(String textFile) throws IOException {
+        SaveProgramText.saveTextMode(this.comunidade, textFile);
+    }
+
+    public void loadProgramText(String textFile) throws IOException{
+        Parser.parse(this.comunidade, textFile);
+    }
+
+
+    public void saveProgramObjects(String objectFile) throws IOException {
+        FileOutputStream fos =  new FileOutputStream(objectFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(this);
         oos.flush();
         oos.close();
     }
 
+    public void loadProgramObjects(String file) throws IOException, ClassNotFoundException {
+        FileInputStream fis = new FileInputStream(file);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        Controller new_controlador = (Controller) ois.readObject();
+        this.comunidade.setNomeDaComunidade(new_controlador.comunidade.getNomeDaComunidade());
+        new_controlador.comunidade.getCasas().forEach((k,v) -> this.comunidade.setCasas(k,v));
+        new_controlador.comunidade.getMercado().forEach((k,v) -> this.comunidade.setMercado(k,v));
+
+    //    out.println(this.comunidade.getCasa("Vicente de Carvalho Castro").toString());
+
+        ois.close();
+        fis.close();
+    }
+
+    public void printComunity(){
+        out.println(this.comunidade);
+    }
+
 
     public void simulacao(Comunidade comunidade){
         this.actions = SimulParser.simulParser();
         LocalDate simulDate;
-        List<Fatura> faturas = new ArrayList<>();
+    //    List<Fatura> faturas = new ArrayList<>();
         for(String k: this.actions.keySet()){
             String[] data =  k.split("\\.");
             simulDate = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2]));
@@ -107,14 +135,6 @@ public class Controller implements Serializable {
 
     public Comunidade getComunidade() {
         return this.comunidade;
-    }
-
-    public static Comunidade loadProgram(String file) throws IOException, ClassNotFoundException {
-        FileInputStream fis = new FileInputStream(file);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        Comunidade c = (Comunidade) ois.readObject();
-        ois.close();
-        return c;
     }
 
 /*

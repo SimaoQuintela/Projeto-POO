@@ -6,9 +6,12 @@ import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
+import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -28,6 +31,23 @@ public class CasaInteligente implements Serializable {
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
     private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
+
+    public void writeInFile(FileWriter writer) throws IOException {
+        String line = "Casa:" + this.getProprietario() + "," + this.getNIF() + "," + this.getFornecedor() + "\n";
+        writer.write(line);
+        writer.flush();
+
+        for(String loc: this.locations.keySet()){
+            String line_aux = "Divisao:" + loc + "\n";
+            writer.write(line_aux);
+            writer.flush();
+            for(String idDevice: this.locations.get(loc)){
+                this.devices.get(idDevice).writeInFile(writer);
+            }
+        }
+
+
+    }
 
     /**
      * Construtor por omissão de CasaInteligente.
@@ -152,7 +172,6 @@ public class CasaInteligente implements Serializable {
 
         return sb.toString();
     }
-
 
     /**
      * Método que adiciona uma nova divisão à CasaInteligente.

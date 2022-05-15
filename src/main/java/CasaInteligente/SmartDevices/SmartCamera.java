@@ -1,5 +1,7 @@
 package CasaInteligente.SmartDevices;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -111,6 +113,15 @@ public class SmartCamera extends SmartDevice implements Serializable {
 
         return sb.toString();
     }
+
+    public void writeInFile(FileWriter writer) throws IOException {
+        String line = "SmartCamera:" + "(" + this.getxRes() + "x" + this.getyRes() + ")" +
+                      "," + this.getFileSize() + "," + super.getConsumptionPerDay() + "\n";
+
+        writer.write(line);
+        writer.flush();
+    }
+
 
     /**
      * Método que liga um SmartDevice

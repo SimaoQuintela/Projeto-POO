@@ -3,6 +3,8 @@ package ComercializadoresEnergia;
 import CasaInteligente.CasaInteligente;
 import CasaInteligente.SmartDevices.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -115,6 +117,13 @@ public class Comercializador implements Serializable {
 
         return sb.toString();
     }
+
+    public void writeInFile(FileWriter writer) throws IOException{
+        String line = "Fornecedor:" + this.getNomeEmpresa() + "," + this.getNumeroDispositivos() + "\n";
+        writer.write(line);
+        writer.flush();
+    }
+
 
     /**
      * Método que devolve o número de dispositivos.
