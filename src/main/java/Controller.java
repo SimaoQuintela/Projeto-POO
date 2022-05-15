@@ -20,6 +20,9 @@ public class Controller implements Serializable {
         this.idFatura = 1;
     }
 
+    public void cls() throws IOException, InterruptedException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
 
     public TreeMap<String, List<List<String>>> getActions(){
         return SimulParser.simulParser();
@@ -62,7 +65,7 @@ public class Controller implements Serializable {
     }
 
 
-    public void simulacao(Comunidade comunidade){
+    public void simulacao(Comunidade comunidade) throws IOException, InterruptedException {
         this.actions = SimulParser.simulParser();
         LocalDate simulDate;
     //    List<Fatura> faturas = new ArrayList<>();
@@ -87,6 +90,7 @@ public class Controller implements Serializable {
                     }
                     case "turnOn" -> {
                         String proprietario = l.get(0);
+                        out.println(proprietario);
                         String id = l.get(1);
                         comunidade.getCasa(proprietario).getDevice(id).turnOn();
                     }
@@ -121,13 +125,13 @@ public class Controller implements Serializable {
         for(String prop: comunidade.getCasas().keySet()){
             CasaInteligente c = this.comunidade.getCasa(prop);
             for(Fatura f: c.getFaturas()){
-                out.print("Proprietário: ");
+                out.print("Proprietario: ");
                 out.println(c.getProprietario());
                 out.println(f.toString());
             }
 
         }
-        out.println(" SIMULAÇÃO EFETUADA\n\n\n\n");
+
 
         //    out.println(comunidade);
 

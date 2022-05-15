@@ -76,10 +76,10 @@ public class Fatura implements Serializable {
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Nº de Fatura: ").append(this.codigo).append("\n");
+        sb.append("Numero de Fatura: ").append(this.codigo).append("\n");
         sb.append("Fornecedor: ").append(this.empresa).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");
-        sb.append("Data de emissão: ").append(this.getDataEmissao().toString()).append("\n");
+        sb.append("Data de emissao: ").append(this.getDataEmissao().toString()).append("\n");
 /* Para simplificação vamos colocar isto em comentário
         for(String id: this.consumoDevice.keySet()){
             sb.append("Id: ").append(this.devices.get(id).getID()).append(" | Consumo: ").append(this.consumoDevice.get(id)).append("\n");

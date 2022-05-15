@@ -11,6 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.out;
+
 public class Parser {
         public static void parse(Comunidade comunidade, String file){
             List<String> linhas = lerFicheiro(file);
@@ -41,20 +43,20 @@ public class Parser {
                     }
 
                     case "Casa" -> {
-                        casaMaisRecente = parseCasa(campos).clone();
+                        casaMaisRecente = parseCasa(campos);
                         String proprietario = campos[0];
                         comunidade.setCasas(proprietario, casaMaisRecente);
                     }
 
                     case "Divisao" -> {
-                        if (casaMaisRecente == null) System.out.println("Linha inválida.");
+                        if (casaMaisRecente == null) out.println("Linha inválida.");
                         divisaoMaisRecente = linhaPartida[1];
                         assert casaMaisRecente != null;
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addRoom(divisaoMaisRecente);
                     }
 
                     case "SmartBulb" -> {
-                        if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
+                        if (divisaoMaisRecente == null) out.println("Linha inválida.");
                         SmartBulb sd = parseSmartBulb(campos, Integer.toString(id_generator), valorBase);
                         assert casaMaisRecente != null;
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sd, divisaoMaisRecente);
@@ -62,7 +64,7 @@ public class Parser {
                     }
 
                     case "SmartCamera" -> {
-                        if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
+                        if (divisaoMaisRecente == null) out.println("Linha inválida.");
                         SmartCamera sc = parseSmartCamera(campos, Integer.toString(id_generator), valorBase);
                         assert casaMaisRecente != null;
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sc, divisaoMaisRecente);
@@ -70,7 +72,7 @@ public class Parser {
                     }
 
                     case "SmartSpeaker" -> {
-                        if (divisaoMaisRecente == null) System.out.println("Linha inválida.");
+                        if (divisaoMaisRecente == null) out.println("Linha inválida.");
                         SmartSpeaker sp = parseSmartSpeaker(campos, Integer.toString(id_generator), valorBase);
                         assert casaMaisRecente != null;
                         comunidade.getCasa(casaMaisRecente.getProprietario()).addDevice(sp, divisaoMaisRecente);
@@ -78,8 +80,8 @@ public class Parser {
                     }
 
                     default -> {
-                        System.out.println("Linha invalida 2.");
-                        System.out.println(linha);
+                        out.println("Linha invalida 2.");
+                        out.println(linha);
                     }
                 }
             }
@@ -100,7 +102,7 @@ public class Parser {
             default -> 0;
         };
 
-        if (tone == 0) System.out.println("Linha inválida.");
+        if (tone == 0) out.println("Linha inválida.");
 
         int diametro = Integer.parseInt(s[1]);
         float consumo = Float.parseFloat(s[2]);

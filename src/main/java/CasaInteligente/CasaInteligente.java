@@ -157,7 +157,7 @@ public class CasaInteligente implements Serializable {
             }
 
             // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
-            sb.append(this.devices.get(id).toString());
+        //    sb.append(this.devices.get(id).toString());
         }
 
         sb.append("------------- Locations -------------\n");

@@ -7966,4 +7966,3 @@ SmartSpeaker:99,Radio Comercial,Bang&Olufsen,3.82
 SmartBulb:Neutral,17,0.12
 SmartCamera:(2160x1440),11,0.32
 SmartBulb:Neutral,15,1.00
-
