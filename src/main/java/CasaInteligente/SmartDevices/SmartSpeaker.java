@@ -14,7 +14,7 @@ import java.time.temporal.ChronoUnit;
  * a regulação do seu nível de volume.
  */
 public class SmartSpeaker extends SmartDevice implements Serializable {
-    public static final int MAX = 100; //volume máximo
+    private static final int MAX = 100; //volume máximo
 
     private int volume;
     private String channel;
@@ -141,20 +141,17 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     public void turnOff() {
         super.setOn(false);
         super.setTime(LocalDate.now());
-        consumo(super.getTime());
     }
 
 
     /**
      * Método que calcula o consumo da SmartSpeaker.
      */
-    public void consumo(LocalDate anyTime){
+    public void consumo(LocalDate before, LocalDate after){
         if(this.getOn()){
-            float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
-            super.setConsumption(this.getVolume() * super.getConsumptionPerDay() * between);
-            super.setTime(anyTime);
-        } else {
-            super.setConsumption(0);
+            float between = ChronoUnit.DAYS.between(before, after);
+            super.setConsumption(super.getConsumption() + this.getVolume()/10 * super.getConsumptionPerDay() * between);
+            super.setTime(after);
         }
 
     }

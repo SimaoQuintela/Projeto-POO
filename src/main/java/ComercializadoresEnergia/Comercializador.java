@@ -206,40 +206,25 @@ public class Comercializador implements Serializable {
         this.imposto = imposto;
     }
 
-    /**
-     * Método que gera as Faturas de uma casa.
-     * @param codigo Número da Fatura.
-     * @param c CasaInteligente.
-     */
-    public void geraFatura(int codigo, CasaInteligente c, LocalDate anyTime) {
-        Map<String, Float> consumos = new HashMap<>();
 
-        double consumoDisp;
-        double total = 0;
-        for (String s : c.getDevices().keySet()) {
-            consumoDisp = this.contaConsumoDispositivo(c, c.getDevice(s), anyTime);
-            total += consumoDisp;
-            consumos.put(s, (float)consumoDisp);
-        }
-        Fatura f = new Fatura(codigo, consumos, c, total, anyTime);
-        c.addFatura(f);
-
-        if(this.faturas.containsKey(c.getProprietario())) {
-            this.faturas.get(c.getProprietario()).add(f);
+    public void adicionaFatura(String prop, Fatura f){
+        if(this.faturas.containsKey(prop)) {
+            this.faturas.get(prop).add(f);
         } else {
             List<Fatura> listaFaturas = new ArrayList<>();
             listaFaturas.add(f);
-            this.faturas.put(c.getProprietario(), listaFaturas);
+            this.faturas.put(prop, listaFaturas);
         }
     }
+
 
     /**
      * Método que calcula o consumo de um Dispositivo.
      */
-    public double contaConsumoDispositivo(CasaInteligente c, SmartDevice s, LocalDate anyTime){
+    public double contaConsumoDispositivo(SmartDevice s, LocalDate before, LocalDate after, int numDevices){
         double r = 0;
-        s.consumo(anyTime);
-        if(c.getDevices().keySet().size() > this.numeroDispositivos) {
+        s.consumo(before, after);
+        if(numDevices > this.numeroDispositivos) {
             r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.9;
         } else {
             r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.75;
@@ -249,25 +234,4 @@ public class Comercializador implements Serializable {
         return r;
     }
 
-    /**
-     * Método que calcula o consumo duma divisão da casa.
-     */
-    public double contaConsumoDivisao(CasaInteligente c, String location, LocalDate anyTime){
-        double r = 0;
-        for(String id : c.getLocations().get(location)){
-            r += contaConsumoDispositivo(c, c.getDevice(id), anyTime);
-        }
-        return r;
-    }
-
-    /**
-     * Método que calcula o consumo duma casa.
-     */
-    public double contaConsumoCasa(CasaInteligente c, LocalDate anyTime){
-        double r = 0;
-        for(String location: c.getLocations().keySet()){
-            r += contaConsumoDivisao(c, location, anyTime);
-        }
-        return r;
-    }
 }

@@ -18,7 +18,9 @@ public class View {
             opcao = receberComandos();
             switch (opcao) {
                 case 1 -> { // simulação
-                    this.controller.simulacao(controller.getComunidade());
+                    out.print("Data: ");
+                    String data = scan.next();
+                    this.controller.simulacao(data);
                 //    this.controller.cls();
                     out.println("Simulacao finalizada\n");
                 }

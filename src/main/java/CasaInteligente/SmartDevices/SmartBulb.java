@@ -14,9 +14,9 @@ import static java.lang.System.out;
  * (a cor da mesma).
  */
 public class SmartBulb extends SmartDevice implements Serializable {
-    public static final int WARM = 80;
-    public static final int NEUTRAL = 60;
-    public static final int COLD = 40;
+    private static final int WARM = 80;
+    private static final int NEUTRAL = 60;
+    private static final int COLD = 40;
 
     private int tone;
     private int dimensions;
@@ -152,20 +152,16 @@ public class SmartBulb extends SmartDevice implements Serializable {
     public void turnOff() {
         super.setOn(false);
         super.setTime(LocalDate.now());
-        consumo(super.getTime());
     }
-
 
     /**
      * Método que calcula o consumo da SmartBulb.
      */
-    public void consumo(LocalDate anyTime) {
+    public void consumo(LocalDate before, LocalDate after) {
         if(this.getOn()){
-            float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
-            super.setConsumption(this.getTone() * super.getConsumptionPerDay() * between);
-            super.setTime(anyTime);
-        } else {
-            super.setConsumption(0);
+            float between = ChronoUnit.DAYS.between(before, after);
+            super.setConsumption(super.getConsumption() + this.getTone()/80 * super.getConsumptionPerDay() * between);
+            super.setTime(after);
         }
 
     }

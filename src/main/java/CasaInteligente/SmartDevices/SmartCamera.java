@@ -136,19 +136,16 @@ public class SmartCamera extends SmartDevice implements Serializable {
     public void turnOff() {
         super.setOn(false);
         super.setTime(LocalDate.now());
-        consumo(super.getTime());
     }
 
     /**
      * Método que calcula o consumo da SmartCamera.
      */
-    public void consumo(LocalDate anyTime){
+    public void consumo(LocalDate before, LocalDate after){
         if(this.getOn()){
-            float between = ChronoUnit.DAYS.between(super.getTime(), anyTime);
-            super.setConsumption(( ((float)this.getxRes() *this.getyRes())/1000) * this.getFileSize() * super.getConsumptionPerDay() * between);
-            super.setTime(anyTime);
-        } else {
-            super.setConsumption(0);
+            float between = ChronoUnit.DAYS.between(before, after);
+            super.setConsumption( super.getConsumption() + ( ((float)this.getxRes() *this.getyRes())/70000) * this.getFileSize() * super.getConsumptionPerDay() * between);
+            super.setTime(after);
         }
 
     }

@@ -9,6 +9,7 @@ import ComercializadoresEnergia.Fatura;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -32,22 +33,19 @@ public class CasaInteligente implements Serializable {
 
     private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
 
-    public void writeInFile(FileWriter writer) throws IOException {
-        String line = "Casa:" + this.getProprietario() + "," + this.getNIF() + "," + this.getFornecedor() + "\n";
-        writer.write(line);
-        writer.flush();
 
-        for(String loc: this.locations.keySet()){
-            String line_aux = "Divisao:" + loc + "\n";
-            writer.write(line_aux);
-            writer.flush();
-            for(String idDevice: this.locations.get(loc)){
-                this.devices.get(idDevice).writeInFile(writer);
-            }
+
+    public Map<String, Float> simula(LocalDate before, LocalDate after, Comercializador c){
+        Map<String, Float> consumos = new HashMap<>();
+        double consumoDisp;
+        for (String s : this.devices.keySet()) {
+            consumoDisp = c.contaConsumoDispositivo(this.devices.get(s), before, after, this.devices.keySet().size());
+            consumos.put(s, (float)consumoDisp);
         }
 
-
+        return consumos;
     }
+
 
     /**
      * Construtor por omissão de CasaInteligente.
@@ -171,6 +169,21 @@ public class CasaInteligente implements Serializable {
         }
 
         return sb.toString();
+    }
+
+    public void writeInFile(FileWriter writer) throws IOException {
+        String line = "Casa:" + this.getProprietario() + "," + this.getNIF() + "," + this.getFornecedor() + "\n";
+        writer.write(line);
+        writer.flush();
+
+        for(String loc: this.locations.keySet()){
+            String line_aux = "Divisao:" + loc + "\n";
+            writer.write(line_aux);
+            writer.flush();
+            for(String idDevice: this.locations.get(loc)){
+                this.devices.get(idDevice).writeInFile(writer);
+            }
+        }
     }
 
     /**

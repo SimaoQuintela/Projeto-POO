@@ -17,9 +17,8 @@ public class Fatura implements Serializable {
     private int nif;
     LocalDate dataEmissao;
     private Map<String, Float> consumoDevice; //id -> consumo
-    private Map<String, SmartDevice> devices; //id -> SmartDevice
     private String empresa;
-    private double total;
+    private String cliente;
 
     /**
      * Construtor por omissão de ComercializadoresEnergia.Fatura.
@@ -29,8 +28,7 @@ public class Fatura implements Serializable {
         this.nif = 0;
         this.consumoDevice = new HashMap<>();
         this.empresa = "";
-        this.total = 0;
-        this.devices = new HashMap<>();
+        this.cliente = "";
         this.dataEmissao = LocalDate.now();
     }
 
@@ -38,19 +36,15 @@ public class Fatura implements Serializable {
      * Construtor parametrizado de ComercializadoresEnergia.Fatura.
      * @param codigo Código da ComercializadoresEnergia.Fatura.
      * @param consumoDevice Id's dos devices associados aos respetivos consumos.
-     * @param c CasaInteligente.
      */
-    public Fatura(int codigo, Map<String, Float> consumoDevice, CasaInteligente c, double total, LocalDate anyTime){
+    public Fatura(int codigo, Map<String, Float> consumoDevice, String fornecedor, int NIF, String cliente, LocalDate anyTime){
         this.codigo = codigo;
-        this.nif = c.getNIF();
-        this.empresa = c.getFornecedor();
-        this.total = total;
+        this.nif = NIF;
+        this.empresa = fornecedor;
+        this.cliente = cliente;
         this.consumoDevice = consumoDevice.entrySet()
                                           .stream()
                                           .collect(toMap(e->e.getKey(), e->e.getValue()));
-        this.devices = c.getDevices().entrySet()
-                                     .stream()
-                                     .collect(toMap(e->e.getKey(), e->e.getValue()));
         this.dataEmissao = anyTime;
     }
 
@@ -58,18 +52,15 @@ public class Fatura implements Serializable {
      * Construtor de cópia de ComercializadoresEnergia.Fatura.
      * @param f ComercializadoresEnergia.Fatura que é copiada.
      */
-    public Fatura(Fatura f, CasaInteligente c){
+    public Fatura(Fatura f){
         this.codigo = f.getCodigo();
         this.nif = f.getNif();
         this.empresa = f.getEmpresa();
         this.consumoDevice = f.getConsumoDevices().entrySet()
                                                   .stream()
                                                   .collect(toMap(e->e.getKey(), e->e.getValue()));
-        this.devices = c.getDevices().entrySet()
-                                     .stream()
-                                     .collect(toMap(e->e.getKey(), e->e.getValue()));
         this.dataEmissao = f.getDataEmissao();
-        this.total = f.getTotal();
+
     }
 
     /**
@@ -80,12 +71,12 @@ public class Fatura implements Serializable {
         sb.append("Fornecedor: ").append(this.empresa).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");
         sb.append("Data de emissao: ").append(this.getDataEmissao().toString()).append("\n");
-/* Para simplificação vamos colocar isto em comentário
-        for(String id: this.consumoDevice.keySet()){
-            sb.append("Id: ").append(this.devices.get(id).getID()).append(" | Consumo: ").append(this.consumoDevice.get(id)).append("\n");
+
+        float total = 0;
+        for(float consumo : this.consumoDevice.values()){
+            total += consumo;
         }
-*/
-        sb.append("Total: ").append(this.total).append("\n");
+        sb.append("Total: ").append(total).append("\n");
 
         return sb.toString();
     }
@@ -94,8 +85,8 @@ public class Fatura implements Serializable {
      * Método que cria uma cópia da ComercializadoresEnergia.Fatura original.
      * @return Cópia da ComercializadoresEnergia.Fatura original.
      */
-    public Fatura clone(CasaInteligente c){
-        return new Fatura(this, c);
+    public Fatura clone(){
+        return new Fatura(this);
     }
 
     /**
@@ -116,9 +107,8 @@ public class Fatura implements Serializable {
                 this.nif == f.getNif()                           &&
                 this.consumoDevice.equals(f.getConsumoDevices()) &&
                 this.dataEmissao.equals(f.getDataEmissao())      &&
-                this.devices.equals(f.getDevices())              &&
-                this.empresa.equals(f.getEmpresa())              &&
-                this.total == f.getTotal());
+                this.empresa.equals(f.getEmpresa())
+        );
     }
 
     /**
@@ -154,25 +144,8 @@ public class Fatura implements Serializable {
         return this.empresa;
     }
 
-    /**
-     * Método que devolve o valor total da ComercializadoresEnergia.Fatura.
-     * @return Valor total da ComercializadoresEnergia.Fatura.
-     */
-    public double getTotal(){
-        return this.total;
-    }
-
-    /**
-     * Método que devolve o Map com ID's dos SmartDevices associados aos respetivos SmartDevices.
-     * @return Map com ID's associados aos respetivos SmartDevices.
-     */
-    public Map<String, SmartDevice> getDevices(){
-        Map<String, SmartDevice> new_devices = new HashMap<>();
-        new_devices = this.devices.entrySet()
-                                  .stream()
-                                  .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
-
-        return new_devices;
+    public String getCliente() {
+        return this.cliente;
     }
 
     public LocalDate getDataEmissao() {
@@ -206,14 +179,8 @@ public class Fatura implements Serializable {
 
     }
 
-    /**
-     * Método que altera o Map com os ID's associados aos respetivos SmartDevices.
-     * @param devices Map com os ID's associados aos respetivos SmartDevices.
-     */
-    public void setDevices(Map<String, SmartDevice> devices){
-        for(String id: devices.keySet()){
-            this.devices.put(id, devices.get(id).clone());
-        }
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     /**

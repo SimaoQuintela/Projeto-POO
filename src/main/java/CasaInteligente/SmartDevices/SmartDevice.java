@@ -114,7 +114,7 @@ public abstract class SmartDevice implements Serializable {
     /**
      * Método que calcula o consumo do SmartDevice.
      */
-    public abstract void consumo(LocalDate reset_time);
+    public abstract void consumo(LocalDate before, LocalDate after);
 
     /**
      * Método que devolve o estado do SmartDevice.

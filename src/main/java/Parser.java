@@ -96,9 +96,9 @@ public class Parser {
 
     public static SmartBulb parseSmartBulb(String[] s, String id, int valorBase) {
         int tone = switch (s[0]) {
-            case "Warm" -> SmartBulb.WARM;
-            case "Neutral" -> SmartBulb.NEUTRAL;
-            case "Cold" -> SmartBulb.COLD;
+            case "Warm" -> 80;
+            case "Neutral" -> 60;
+            case "Cold" -> 40;
             default -> 0;
         };
 
