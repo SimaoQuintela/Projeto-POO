@@ -26,20 +26,40 @@ public class Controller implements Serializable {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
+    public CasaInteligente consultaCasa(int NIF){
+        for(CasaInteligente c: this.getComunidade().getCasas().values()){
+            if(c.getNIF() == NIF){
+                return c;
+            }
+        }
+
+        return null;
+    }
 
     public void ligarDesligarComunidade(boolean status){
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
-            ligarDesligarCasa(status, c.getProprietario());
+            ligarDesligarCasa(status, c.getNIF());
         }
     }
-    public void ligarDesligarCasa(boolean status, String prop){
-        for(SmartDevice s: this.getComunidade().getCasa(prop).getDevices().values()){
-            if(!status) {
+    public void ligarDesligarCasa(boolean status, int NIF){
+        CasaInteligente casa = null;
+        for(CasaInteligente c: this.getComunidade().getCasas().values()){
+            if(c.getNIF() == NIF){
+                casa = c;
+            }
+        }
+
+        assert casa != null;
+        for(SmartDevice s: casa.getDevices().values()) {
+            if (!status) {
                 s.turnOff();
             } else {
                 s.turnOn();
             }
         }
+
+
+
     }
 
     /**
@@ -174,7 +194,6 @@ public class Controller implements Serializable {
                 for (List<String> l : actions.get(k)) {
                     switch (l.get(2)) {
                         case "turnOff" -> {
-
                             String proprietario = l.get(0);
                             String id = l.get(1);
                             this.comunidade.getCasa(proprietario).getDevice(id).turnOff();
@@ -250,135 +269,23 @@ public class Controller implements Serializable {
         }
     }
 
-    /*
-    public void simulacao(String timeSimul, String file) {
-        LocalDate timeStart = this.timeNow;
-
-        String[] timeSimulSplitted = timeSimul.split("/");
-        LocalDate timeEnd = LocalDate.of(Integer.parseInt(timeSimulSplitted[2]), Integer.parseInt(timeSimulSplitted[1]), Integer.parseInt(timeSimulSplitted[0]));
-        int flag = 0;
-        TreeMap<String, List<List<String>>> actions;
-        actions = SimulParser.simulParser(file);
-        LocalDate simulDate;
-
-        for(String prop: this.comunidade.getCasas().keySet()) {  // iterar sobre cada casa
-            Map<String, Float> consumos = new HashMap<>();  // consumo de cada dispositivo para depois passar ao construtor da fatura
-            CasaInteligente casaAtual = this.comunidade.getCasa(prop);
-
-            for(String k: actions.keySet()) {
-                String[] data = k.split("\\.");
-                simulDate = LocalDate.of(Integer.parseInt(data[0]), Integer.parseInt(data[1]), Integer.parseInt(data[2])); // data para a qual vamos saltar
-                out.println(simulDate);
-                // feita a simulação e guardados os consumos no mapa consumos
-                    Map<String, Float> consumos_temp = new HashMap<>();
-                    consumos_temp.putAll(casaAtual.simula(this.timeNow, simulDate, comunidade.getFornecedor(casaAtual.getFornecedor()) ));
-
-                    for(String id: consumos_temp.keySet()){
-
-                //        out.println(consumos_temp.get(id));
-
-                        if(consumos.containsKey(id) ){
-                            consumos.replace(id, consumos.get(id) + consumos_temp.get(id)); // criar um novo consumo para um novo dispositivo
-                        } else {
-                            consumos.put(id, consumos_temp.get(id));           // incrementar ao consumo que existia
-                        }
-                    }
-                    this.timeNow = simulDate;
-
-                if(flag == 0) {
-                    for (List<String> l : actions.get(k)) {
-                        switch (l.get(2)) {
-                            case "turnOff" -> {
-                                if (prop.equals(l.get(0))) {
-                                    String proprietario = l.get(0);
-                                    String id = l.get(1);
-                                    this.comunidade.getCasa(proprietario).getDevice(id).turnOff();
-                                }
-                            }
-                            case "turnOn" -> {
-                                if (prop.equals(l.get(0))) {
-                                    String proprietario = l.get(0);
-                                    String id = l.get(1);
-                                    this.comunidade.getCasa(proprietario).getDevice(id).turnOn();
-                                }
-                            }
-                            case "mudar" -> {
-                                if (prop.equals(l.get(0))) {
-                                    String proprietario = l.get(0);
-                                    String novoFornecedor = l.get(1);
-                                    this.comunidade.getCasa(proprietario).setFornecedor(novoFornecedor);
-                                }
-                            }
-                            case "mudarNumDisp" -> {
-                                String proprietario = l.get(0);
-                                int numDisps = Integer.parseInt(l.get(1));
-                                this.comunidade.getFornecedor(proprietario).setNumeroDispositivos(numDisps);
-                            }
-                            case "novaLoc" -> {
-                                if (prop.equals(l.get(0))) {
-                                    String proprietario = l.get(0);
-                                    String id = l.get(1);
-                                    String novaLoc = l.get(3);
-                                    SmartDevice device = this.comunidade.getCasa(proprietario).getDevice(id).clone();
-                                    this.comunidade.getCasa(proprietario).removeDevice(id);
-                                    this.comunidade.getCasa(proprietario).addDevice(device, novaLoc);
-                                }
-                            }
-                            case "remover" -> {
-                                if (prop.equals(l.get(0))) {
-                                    String proprietario = l.get(0);
-                                    String id = l.get(1);
-                                    this.comunidade.getCasa(proprietario).removeDevice(id);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            flag = 1;
-
-            // SALTO PARA O TEMPO FINAL
-            Map<String, Float> consumos_temp2 = new HashMap<>();
-            consumos_temp2.putAll(casaAtual.simula(this.timeNow, timeEnd, comunidade.getFornecedor(casaAtual.getFornecedor()) ));
-
-            for(String id: consumos_temp2.keySet()){
-                if(consumos.containsKey(id) ){
-                    consumos.replace(id, consumos.get(id) + consumos_temp2.get(id)); // criar um novo consumo para um novo dispositivo
-                } else {
-                    consumos.put(id, consumos_temp2.get(id));           // incrementar ao consumo que existia
-                }
-            }
-
-            // GERA FATURA
-            Fatura f = new Fatura(idFatura, consumos, casaAtual.getFornecedor(), casaAtual.getNIF(), casaAtual.getProprietario(), timeEnd);
-            out.println(f);
-            casaAtual.addFatura(f);
-
-            String fornecedor = casaAtual.getFornecedor();
-            this.comunidade.getFornecedor(fornecedor).adicionaFatura(prop, f);
-            this.idFatura += 1;
-
-            this.timeNow = timeStart;
-        }
-        this.timeNow = timeEnd;
-
-        // NO FIM COLOCAR O CONSUMO DE TODOS OS DISPOSITIVOS A 0
-        for(CasaInteligente c : this.comunidade.getCasas().values()){
-            for(SmartDevice s : c.getDevices().values()){
-                s.setConsumption(0);
-            }
-        }
-    }
-    */
-
     public Comunidade getComunidade() {
         return this.comunidade;
     }
 
-    public TreeMap<String, List<List<String>>> getActions(String file){
-        return SimulParser.simulParser(file);
+    public int getIdFatura() {
+        return this.idFatura;
     }
 
+    public LocalDate getTimeNow() {
+        return this.timeNow;
+    }
 
+    public void setIdFatura(int idFatura) {
+        this.idFatura = idFatura;
+    }
 
+    public void setTimeNow(LocalDate timeNow) {
+        this.timeNow = timeNow;
+    }
 }

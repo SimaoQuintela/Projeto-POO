@@ -22,17 +22,12 @@ import static java.util.stream.Collectors.toMap;
  */
 public class CasaInteligente implements Serializable {
     private String proprietario;
-    //private int numeroDePorta;
     private int NIF;
-    //private String morada;
     private String fornecedor;
     private Map<String, SmartDevice> devices; // identificador -> SmartDevice
     private Map<String, List<String>> locations; // Espaço -> Lista codigo dos devices
 
     private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
-
-
-
 
     /**
      * Construtor por omissão de CasaInteligente.

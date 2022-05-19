@@ -15,6 +15,39 @@ public class View {
         this.scan = scan;
     }
 
+    public void estadoDispositivos(){
+            int escolha;
+            do {
+                escolha = comandosDispositivos();
+                switch (escolha){
+                    case 1 -> {
+                        this.controller.ligarDesligarComunidade(true);
+                    }
+                    case 2 -> {
+                        this.controller.ligarDesligarComunidade(false);
+                    }
+                    case 3 -> {
+                        out.print("NIF do proprietario da casa: ");
+                        int NIF = scan.nextInt();
+                        this.controller.ligarDesligarCasa(true, NIF);
+                    }
+                    case 4 -> {
+                        out.print("NIF do proprietario da casa: ");
+                        int NIF = scan.nextInt();
+                        this.controller.ligarDesligarCasa(false, NIF);
+                    }
+                    case 5 -> {
+
+                    }
+                    default -> {
+                        out.println("Opcao inexistente, escolha um numero entre 1 e 5");
+                    }
+
+                }
+            } while(escolha != 5);
+
+    }
+
     public int comandosDispositivos(){
         try {
             out.println("Introduza o numero da opcao que pretende:\n" +
@@ -29,39 +62,6 @@ public class View {
         } catch (Exception e) {
             return 99;
         }
-    }
-
-    public void estadoDispositivos(){
-            int escolha;
-            do {
-                escolha = comandosDispositivos();
-                switch (escolha){
-                    case 1 -> {
-                        this.controller.ligarDesligarComunidade(true);
-                    }
-                    case 2 -> {
-                        this.controller.ligarDesligarComunidade(false);
-                    }
-                    case 3 -> {
-                        out.print("Nome do proprietario da casa: ");
-                        String prop = scan.next();
-                        this.controller.ligarDesligarCasa(true, prop);
-                    }
-                    case 4 -> {
-                        out.print("Nome do proprietario da casa: ");
-                        String prop = scan.next();
-                        this.controller.ligarDesligarCasa(false, prop);
-                    }
-                    case 5 -> {
-
-                    }
-                    default -> {
-                        out.println("Opcao inexistente, escolha um numero entre 1 e 5");
-                    }
-
-                }
-            } while(escolha != 5);
-
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
@@ -86,41 +86,46 @@ public class View {
                     estadoDispositivos();
                 }
                 case 3 -> {
+                    out.print("Insira o NIF do proprietario: ");
+                    int NIF = scan.nextInt();
+                    out.println(this.controller.consultaCasa(NIF));
+                }
+                case 4 -> {
                     out.print("Insira o nome do ficheiro: ");
                     String objectFile = scan.next();
                     this.controller.saveProgramObjects(objectFile);
                     this.controller.cls();
                     out.println("Ficheiro gravado com sucesso!");
                 }
-                case 4 -> {
+                case 5 -> {
                     out.print("Insira o nome do ficheiro: ");
                     String file = scan.next();
                     this.controller.loadProgramObjects(file);
                     this.controller.cls();
                     out.println("Ficheiro carregado com sucesso!");
                 }
-                case 5 -> {
+                case 6 -> {
                     out.print("Insira o nome do ficheiro: ");
                     String textFile = scan.next();
                     this.controller.saveProgramText(textFile);
                     this.controller.cls();
                     out.println("Ficheiro gravado com sucesso!");
                 }
-                case 6 -> {
+                case 7 -> {
                     out.print("Insira o nome do ficheiro: ");
                     String textFileName = scan.next();
                     this.controller.loadProgramText(textFileName);
                     this.controller.cls();
                     out.println("Ficheiro carregado com sucesso!");
                 }
-                case 7 -> {
+                case 8 -> {
                     this.controller.cls();
                     estatisticas();
                 }
-                case 8 -> {
+                case 9 -> {
                     this.controller.printComunity();
                 }
-                case 9 -> {
+                case 10 -> {
 
                 }
                 default -> {
@@ -128,7 +133,7 @@ public class View {
                     out.println("\nOpcao Inválida. Escolha um numero entre 0 e 9.\n");
                 }
             }
-        } while (opcao != 9);
+        } while (opcao != 10);
     }
 
     public void estatisticas() throws IOException, InterruptedException {
@@ -180,7 +185,7 @@ public class View {
 
                 }
                 case 5 -> {
-
+                    this.controller.cls();
                 }
                 default -> {
                     out.println("Opcao inexistente, escolha um numero entre 1 e 5");
@@ -199,13 +204,14 @@ public class View {
             out.println("Introduza o numero da opcao que pretende:\n" +
                     "1. Simular\n" +
                     "2. Ligar/Desligar dispositivos\n" +
-                    "3. Gravar em ficheiro de objetos\n" +
-                    "4. Carregar ficheiro de objetos\n" +
-                    "5. Gravar em ficheiro de texto\n" +
-                    "6. Carregar ficheiro de texto\n" +
-                    "7. Estatisticas\n" +
-                    "8. Mostrar a comunidade\n" +
-                    "9. Sair\n"
+                    "3. Aceder a uma casa\n" +
+                    "4. Gravar em ficheiro de objetos\n" +
+                    "5. Carregar ficheiro de objetos\n" +
+                    "6. Gravar em ficheiro de texto\n" +
+                    "7. Carregar ficheiro de texto\n" +
+                    "8. Estatisticas\n" +
+                    "9. Mostrar a comunidade\n" +
+                    "10. Sair\n"
             );
 
             out.print("Opcao: ");
