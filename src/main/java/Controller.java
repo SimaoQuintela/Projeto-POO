@@ -16,25 +16,16 @@ public class Controller implements Serializable {
     private LocalDate timeNow;
 
 
-    /**
-     * Construtor por omissão de Controller.
-     */
     public Controller() {
         this.comunidade = new Comunidade();
         this.idFatura = 1;
         this.timeNow = LocalDate.now();
     }
 
-    /**
-     * Método que limpa a consola.
-     * @throws IOException
-     * @throws InterruptedException
-     */
     public void cls() throws IOException, InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
-<<<<<<< Updated upstream
     public CasaInteligente consultaCasa(int NIF){
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
             if(c.getNIF() == NIF){
@@ -45,18 +36,11 @@ public class Controller implements Serializable {
         return null;
     }
 
-=======
-    /**
-     * Método que liga/desliga todos os SmartDevices de todas as Casas da Comunidade.
-     * @param status Booleano que indica se o método liga ou desliga.
-     */
->>>>>>> Stashed changes
     public void ligarDesligarComunidade(boolean status){
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
             ligarDesligarCasa(status, c.getNIF());
         }
     }
-<<<<<<< Updated upstream
     public void ligarDesligarCasa(boolean status, int NIF){
         CasaInteligente casa = null;
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
@@ -68,24 +52,11 @@ public class Controller implements Serializable {
         assert casa != null;
         for(SmartDevice s: casa.getDevices().values()) {
             if (!status) {
-=======
-
-    /**
-     * Método que liga/desliga todos os SmartDevices de uma determinada CasaInteligente.
-     * @param status Booleano que indica se o método liga ou desliga.
-     * @param prop Nome do proprietário da CasaInteligente.
-     */
-    public void ligarDesligarCasa(boolean status, String prop){
-        for(SmartDevice s: this.getComunidade().getCasa(prop).getDevices().values()){
-            if(!status) {
->>>>>>> Stashed changes
                 s.turnOff();
             } else {
                 s.turnOn();
             }
         }
-
-
 
     }
 
