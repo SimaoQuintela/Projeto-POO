@@ -15,6 +15,55 @@ public class View {
         this.scan = scan;
     }
 
+    public int comandosDispositivos(){
+        try {
+            out.println("Introduza o numero da opcao que pretende:\n" +
+                    "1. Ligar todos os dispositivos da comunidade\n" +
+                    "2. Desligar todos os dispositivos da comunidade\n" +
+                    "3. Ligar todos os dispositivos duma casa\n" +
+                    "4. Desligar todos os dispositivos duma casa\n" +
+                    "5. Sair\n"
+            );
+            out.print("Opcao: ");
+            return this.scan.nextInt();
+        } catch (Exception e) {
+            return 99;
+        }
+    }
+
+    public void estadoDispositivos(){
+            int escolha;
+            do {
+                escolha = comandosDispositivos();
+                switch (escolha){
+                    case 1 -> {
+                        this.controller.ligarDesligarComunidade(true);
+                    }
+                    case 2 -> {
+                        this.controller.ligarDesligarComunidade(false);
+                    }
+                    case 3 -> {
+                        out.print("Nome do proprietario da casa: ");
+                        String prop = scan.next();
+                        this.controller.ligarDesligarCasa(true, prop);
+                    }
+                    case 4 -> {
+                        out.print("Nome do proprietario da casa: ");
+                        String prop = scan.next();
+                        this.controller.ligarDesligarCasa(false, prop);
+                    }
+                    case 5 -> {
+
+                    }
+                    default -> {
+                        out.println("Opcao inexistente, escolha um numero entre 1 e 5");
+                    }
+
+                }
+            } while(escolha != 5);
+
+    }
+
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         int opcao;
         do {
@@ -25,12 +74,16 @@ public class View {
                     String data = scan.next();
                     out.print("Ficheiro: ");
                     String file = scan.next();
+                    if(file.equals("None")){
+                        file = null;
+                    }
                     this.controller.simulacao(data, file);
                 //    this.controller.cls();
                     out.println("Simulacao finalizada\n");
                 }
                 case 2 -> {
-                    //            criaCasa(this.controller.getComunidade());
+                    this.controller.cls();
+                    estadoDispositivos();
                 }
                 case 3 -> {
                     out.print("Insira o nome do ficheiro: ");
@@ -69,13 +122,6 @@ public class View {
                 }
                 case 9 -> {
 
-                }
-                case 10 -> {
-                    String s = scan.next();
-                    List<Fatura> l  =this.controller.getComunidade().getCasa(s).getFaturas();
-                    for(Fatura f: l){
-                        out.println(f);
-                    }
                 }
                 default -> {
                     this.controller.cls();
@@ -152,7 +198,7 @@ public class View {
         try {
             out.println("Introduza o numero da opcao que pretende:\n" +
                     "1. Simular\n" +
-                    "2. Adicionar Casa\n" +
+                    "2. Ligar/Desligar dispositivos\n" +
                     "3. Gravar em ficheiro de objetos\n" +
                     "4. Carregar ficheiro de objetos\n" +
                     "5. Gravar em ficheiro de texto\n" +

@@ -7,8 +7,8 @@ import static java.lang.System.out;
 
 public class App {
     static Scanner scan = new Scanner(System.in);
-    static Comunidade comunidade = new Comunidade("Jackson");
-    static Controller controller = new Controller(comunidade);
+    //static Comunidade comunidade = new Comunidade("Jackson");
+    static Controller controller = new Controller();
     public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException {
 
         View view = new View(controller, scan);

@@ -1,7 +1,6 @@
 package CasaInteligente;
 import CasaInteligente.SmartDevices.SmartBulb;
 import CasaInteligente.SmartDevices.SmartCamera;
-import CasaInteligente.SmartDevices.SmartSpeaker;
 import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
@@ -12,7 +11,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-import static java.lang.System.out;
 import static java.util.stream.Collectors.toMap;
 
 /**
@@ -34,17 +32,6 @@ public class CasaInteligente implements Serializable {
     private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
 
 
-
-    public Map<String, Float> simula(LocalDate before, LocalDate after, Comercializador c){
-        Map<String, Float> consumos = new HashMap<>();
-        double consumoDisp;
-        for (String s : this.devices.keySet()) {
-            consumoDisp = c.contaConsumoDispositivo(this.devices.get(s), before, after, this.devices.keySet().size());
-            consumos.put(s, (float)consumoDisp);
-        }
-
-        return consumos;
-    }
 
 
     /**
@@ -155,7 +142,7 @@ public class CasaInteligente implements Serializable {
             }
 
             // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
-        //    sb.append(this.devices.get(id).toString());
+            sb.append(this.devices.get(id).toString());
         }
 
         sb.append("------------- Locations -------------\n");
@@ -262,6 +249,17 @@ public class CasaInteligente implements Serializable {
     }
 
 
+    public float simula(LocalDate before, LocalDate after, Comercializador c){
+        float total = 0;
+        double consumoDisp;
+        for (String s : this.devices.keySet()) {
+            consumoDisp = c.contaConsumoDispositivo(this.devices.get(s), before, after, this.devices.keySet().size());
+            total += consumoDisp;
+        }
+
+        return total;
+    }
+
     public void addLocation(String location, List<String> ids){
         this.locations.put(location, ids);
     }
@@ -308,7 +306,7 @@ public class CasaInteligente implements Serializable {
         Map<String, SmartDevice> new_devices = new HashMap<>();
         new_devices = this.devices.entrySet()
                                   .stream()
-                                  .collect(toMap(e->e.getKey(), e->e.getValue().clone()));
+                                  .collect(toMap(e->e.getKey(), e->e.getValue()));
 
 
         return new_devices;

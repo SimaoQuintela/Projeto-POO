@@ -122,7 +122,7 @@ public class Comercializador implements Serializable {
         float faturacao = 0;
         for(List<Fatura> l: this.faturas.values()){
             for(Fatura f: l){
-                faturacao += f.valorTotal();
+                faturacao += f.getTotal();
             }
         }
 
@@ -151,7 +151,7 @@ public class Comercializador implements Serializable {
         } else {
             r = s.getConsumption()/1500 * (1 + ((float)this.imposto)/100) * 0.75;
         }
-        r = Math.round(r*100)/100.0;
+        r = Math.round(r*100)/100;
 
         return r;
     }

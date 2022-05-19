@@ -15,7 +15,7 @@ public class Comunidade implements Serializable {
      * Construtor que inicializa a classe Comunidade
      */
     public Comunidade(){
-        this.nomeDaComunidade = "";
+        this.nomeDaComunidade = "Jackson";
         this.casas = new HashMap<>();
         this.mercado = new HashMap<>();
     }

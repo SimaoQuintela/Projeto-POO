@@ -6,6 +6,6 @@ public class ConsumeComparator implements Comparator<Tuple> {
         float a1 = t1.getP2();
         float a2 = t2.getP2();
 
-        return Float.compare(a1, a2);
+        return Float.compare(a2, a1);
     }
 }
