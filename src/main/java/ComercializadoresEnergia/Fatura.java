@@ -68,6 +68,7 @@ public class Fatura implements Serializable {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append("Numero de Fatura: ").append(this.codigo).append("\n");
+        sb.append("Cliente: ").append(this.cliente).append("\n");
         sb.append("Fornecedor: ").append(this.empresa).append("\n");
         sb.append("NIF: ").append(this.nif).append("\n");
         sb.append("Data de emissao: ").append(this.getDataEmissao().toString()).append("\n");
@@ -109,6 +110,14 @@ public class Fatura implements Serializable {
                 this.dataEmissao.equals(f.getDataEmissao())      &&
                 this.empresa.equals(f.getEmpresa())
         );
+    }
+
+    public float valorTotal(){
+        int total = 0;
+        for(Float f: this.consumoDevice.values()){
+            total += f;
+        }
+        return total;
     }
 
     /**

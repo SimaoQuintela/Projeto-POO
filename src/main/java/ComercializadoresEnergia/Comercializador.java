@@ -118,11 +118,50 @@ public class Comercializador implements Serializable {
         return sb.toString();
     }
 
+    public float calculaFaturacao(){
+        float faturacao = 0;
+        for(List<Fatura> l: this.faturas.values()){
+            for(Fatura f: l){
+                faturacao += f.valorTotal();
+            }
+        }
+
+        return faturacao;
+    }
+
+    public void adicionaFatura(String prop, Fatura f){
+        if(this.faturas.containsKey(prop)) {
+            this.faturas.get(prop).add(f);
+        } else {
+            List<Fatura> listaFaturas = new ArrayList<>();
+            listaFaturas.add(f);
+            this.faturas.put(prop, listaFaturas);
+        }
+    }
+
+
+    /**
+     * Método que calcula o consumo de um Dispositivo.
+     */
+    public double contaConsumoDispositivo(SmartDevice s, LocalDate before, LocalDate after, int numDevices){
+        double r = 0;
+        s.consumo(before, after);
+        if(numDevices > this.numeroDispositivos) {
+            r = s.getConsumption()/1500 * (1 + ((float)this.imposto)/100) * 0.9;
+        } else {
+            r = s.getConsumption()/1500 * (1 + ((float)this.imposto)/100) * 0.75;
+        }
+        r = Math.round(r*100)/100.0;
+
+        return r;
+    }
+
     public void writeInFile(FileWriter writer) throws IOException{
         String line = "Fornecedor:" + this.getNomeEmpresa() + "," + this.getNumeroDispositivos() + "\n";
         writer.write(line);
         writer.flush();
     }
+
 
 
     /**
@@ -206,32 +245,5 @@ public class Comercializador implements Serializable {
         this.imposto = imposto;
     }
 
-
-    public void adicionaFatura(String prop, Fatura f){
-        if(this.faturas.containsKey(prop)) {
-            this.faturas.get(prop).add(f);
-        } else {
-            List<Fatura> listaFaturas = new ArrayList<>();
-            listaFaturas.add(f);
-            this.faturas.put(prop, listaFaturas);
-        }
-    }
-
-
-    /**
-     * Método que calcula o consumo de um Dispositivo.
-     */
-    public double contaConsumoDispositivo(SmartDevice s, LocalDate before, LocalDate after, int numDevices){
-        double r = 0;
-        s.consumo(before, after);
-        if(numDevices > this.numeroDispositivos) {
-            r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.9;
-        } else {
-            r = s.getConsumption()/10000 * (1 + ((float)this.imposto)/100) * 0.75;
-        }
-        r = Math.round(r*100)/100;
-
-        return r;
-    }
 
 }

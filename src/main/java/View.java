@@ -1,4 +1,7 @@
+import ComercializadoresEnergia.Fatura;
+
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -20,7 +23,9 @@ public class View {
                 case 1 -> { // simulação
                     out.print("Data: ");
                     String data = scan.next();
-                    this.controller.simulacao(data);
+                    out.print("Ficheiro: ");
+                    String file = scan.next();
+                    this.controller.simulacao(data, file);
                 //    this.controller.cls();
                     out.println("Simulacao finalizada\n");
                 }
@@ -65,6 +70,13 @@ public class View {
                 case 9 -> {
 
                 }
+                case 10 -> {
+                    String s = scan.next();
+                    List<Fatura> l  =this.controller.getComunidade().getCasa(s).getFaturas();
+                    for(Fatura f: l){
+                        out.println(f);
+                    }
+                }
                 default -> {
                     this.controller.cls();
                     out.println("\nOpcao Inválida. Escolha um numero entre 0 e 9.\n");
@@ -73,34 +85,53 @@ public class View {
         } while (opcao != 9);
     }
 
-    public void estatisticas(){
+    public void estatisticas() throws IOException, InterruptedException {
         int opcao;
         do {
             opcao = comandosEstatisticas();
             switch (opcao){
                 case 1 -> {
-                    out.print("Data de inicio: ");
-                    String inicio = scan.next();
-                    out.print("Data de fim: ");
-                    String fim = scan.next();
-                    // CHAMAR MÉTODO
+                    out.print("Data de simulacao: ");
+                    String simulacao = scan.next();
+                    String[] line_splitted = simulacao.split("/");
+                    LocalDate s = LocalDate.of(Integer.parseInt(line_splitted[2]), Integer.parseInt(line_splitted[1]), Integer.parseInt(line_splitted[0]));
+                    Tuple t = this.controller.casaQueMaisGastou(s);
+                    this.controller.cls();
+                    out.println("Proprietario da casa que mais gastou: " + t.getP1());
+                    out.println("Gastou: " + t.getP2() + " euros");
                 }
                 case 2 -> {
-                    // CHAMAR MÉTODO QUE CALCULA O FORNECEDOR COM MAIOR VOLUME DE FATURAÇÃO
+                    Tuple t = this.controller.comercializadorQueMaisFatura();
+                    this.controller.cls();
+                    out.println("O comercializador que mais faturou foi: " + t.getP1());
+                    out.println("Faturou: " + t.getP2() + " euros");
                 }
 
                 case 3 -> {
                     out.print("Fornecedor: ");
                     String fornecedor = scan.next();
-                    // CHAMAR MÉTODO QUE LISTA AS FATURAS DESTE FORNECEDOR
+                    Map<String,List<Fatura>> listaFaturas = this.controller.listaFaturas(fornecedor);
+                    this.controller.cls();
+                    out.println("Lista de faturas emitidas por: " + fornecedor);
+                    for(String prop: listaFaturas.keySet()) {
+                        for(Fatura f: listaFaturas.get(prop)){
+                            out.println(f);
+                        }
+                        out.println("\n");
+                    }
                 }
                 case 4 -> {
-                    out.print("Data de inicio: ");
-                    String inicio = scan.next();
-                    out.print("Data de fim: ");
-                    String fim = scan.next();
-                    // CHAMAR MÉTODO QUE ORDENA OS MAIORES CONSUMIDORES DE ENERGIA. HINT: USAR O CASE 1
-                    int x = 10;
+                    out.print("Data de simulacao: ");
+                    String simulacao = scan.next();
+                    String[] line_splitted = simulacao.split("/");
+                    LocalDate s = LocalDate.of(Integer.parseInt(line_splitted[2]), Integer.parseInt(line_splitted[1]), Integer.parseInt(line_splitted[0]));
+                    List<Tuple> listaOrdenada = this.controller.ordenaConsumidores(s);
+                    this.controller.cls();
+                    for(Tuple t : listaOrdenada){
+                        out.println("Proprietario: " + t.getP1());
+                        out.println("Gastou: " + t.getP2());
+                    }
+
                 }
                 case 5 -> {
 
@@ -147,7 +178,7 @@ public class View {
     public int comandosEstatisticas(){
         try{
             out.println("Introduza o numero da opcao que pretende:\n" +
-                        "1. Casa que mais gastou num período\n" +
+                        "1. Casa que mais gastou num periodo\n" +
                         "2. Comercializador com maior volume de faturacao\n" +
                         "3. Listagem de faturas emitidas por um fornecedor\n" +
                         "4. Ordenacao dos maiores consumidores de energia num periodo\n" +

@@ -150,7 +150,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     public void consumo(LocalDate before, LocalDate after){
         if(this.getOn()){
             float between = ChronoUnit.DAYS.between(before, after);
-            super.setConsumption(super.getConsumption() + this.getVolume()/10 * super.getConsumptionPerDay() * between);
+            super.setConsumption((float) (super.getConsumption() + this.getVolume()/20.0 * super.getConsumptionPerDay() * between));
             super.setTime(after);
         }
 

@@ -160,7 +160,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
     public void consumo(LocalDate before, LocalDate after) {
         if(this.getOn()){
             float between = ChronoUnit.DAYS.between(before, after);
-            super.setConsumption(super.getConsumption() + this.getTone()/80 * super.getConsumptionPerDay() * between);
+            super.setConsumption((float) (super.getConsumption() + this.getTone() * super.getConsumptionPerDay() * between));
             super.setTime(after);
         }
 

@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class SimulParser {
-    public static TreeMap<String, List<List<String>>> simulParser(){
-        List<String> linhas = lerFicheiro("simulacao.txt");
+    public static TreeMap<String, List<List<String>>> simulParser(String file){
+        List<String> linhas = lerFicheiro(file);
         List<String[]> linhasSplitted = new ArrayList<>();
         TreeMap<String, List<List<String>>> actions = new TreeMap<>();
 
