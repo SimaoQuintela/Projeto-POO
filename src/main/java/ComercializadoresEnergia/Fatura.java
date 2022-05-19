@@ -6,6 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * A Fatura é responsável pelo processo de faturação.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class Fatura implements Serializable {
     private int codigo;
     private int nif;
@@ -54,6 +60,7 @@ public class Fatura implements Serializable {
     }
 
     /**
+     * Método que devolve a Fatura em formato de texto.
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -96,6 +103,10 @@ public class Fatura implements Serializable {
         );
     }
 
+    /**
+     * Método que devolve o valor total da Fatura.
+     * @return Valor total da Fatura.
+     */
     public float getTotal(){
 
         return this.total;
@@ -108,6 +119,7 @@ public class Fatura implements Serializable {
     public int getCodigo(){
         return this.codigo;
     }
+
     /**
      * Método que devolve o número de identificação fiscal do cliente.
      * @return Número de identificação fiscal.
@@ -115,16 +127,6 @@ public class Fatura implements Serializable {
     public int getNif(){
         return this.nif;
     }
-
-    public Map<String, Float> getConsumoDevices(){
-        Map<String, Float> new_consumos = new HashMap<>();
-        //new_consumos = this.consumoDevice.entrySet()
-        //                                 .stream()
-        //                                 .collect(toMap(e->e.getKey(), e->e.getValue()));
-
-        return new_consumos;
-    }
-
 
     /**
      * Método que devolve o Comercializador.
@@ -134,10 +136,18 @@ public class Fatura implements Serializable {
         return this.empresa;
     }
 
+    /**
+     * Método que devolve o nome do Cliente.
+     * @return Nome do cliente.
+     */
     public String getCliente() {
         return this.cliente;
     }
 
+    /**
+     * Método que devolve a data em que a Fatura foi emitida.
+     * @return Data de emissão da Fatura.
+     */
     public LocalDate getDataEmissao() {
         return this.dataEmissao;
     }
@@ -158,11 +168,18 @@ public class Fatura implements Serializable {
         this.nif = nif;
     }
 
-
+    /**
+     * Método que altera o valor total da Fatura.
+     * @param total Valor total da Fatura.
+     */
     public void setTotal(float total) {
         this.total = total;
     }
 
+    /**
+     * Método que altera o nome do Cliente na Fatura.
+     * @param cliente Nome do cliente.
+     */
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
@@ -175,6 +192,10 @@ public class Fatura implements Serializable {
         this.empresa = empresa;
     }
 
+    /**
+     * Método que altera a data de emissão da Fatura.
+     * @param dataEmissao Data de emissão da Fatura.
+     */
     public void setDataEmissao(LocalDate dataEmissao) {
         this.dataEmissao = dataEmissao;
     }

@@ -16,7 +16,10 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * Tornar coerente a escrita. Quando se trata do objeto da classe usar this, quando se trata dum objeto fora da classe usar gets/setss
+ * O Comercializador fornece serviço energético às CasasInteligentes que tenham contrato com o mesmo.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
  */
 
 public class Comercializador implements Serializable {
@@ -118,6 +121,10 @@ public class Comercializador implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Método que calcula o valor total das faturas geradas.
+     * @return Valor total das faturas geradas.
+     */
     public float calculaFaturacao(){
         float faturacao = 0;
         for(List<Fatura> l: this.faturas.values()){
@@ -129,6 +136,11 @@ public class Comercializador implements Serializable {
         return faturacao;
     }
 
+    /**
+     * Método que adiciona uma Fatura à lista de Faturas de um determinado proprietário.
+     * @param prop Proprietário da CasaInteligente.
+     * @param f Fatura que é adicionada.
+     */
     public void adicionaFatura(String prop, Fatura f){
         if(this.faturas.containsKey(prop)) {
             this.faturas.get(prop).add(f);
@@ -156,6 +168,11 @@ public class Comercializador implements Serializable {
         return r;
     }
 
+    /**
+     * Método que escreve o objeto em ficheiro.
+     * @param writer Descritor de escrita.
+     * @throws IOException
+     */
     public void writeInFile(FileWriter writer) throws IOException{
         String line = "Fornecedor:" + this.getNomeEmpresa() + "," + this.getNumeroDispositivos() + "\n";
         writer.write(line);
@@ -197,8 +214,8 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * FALTA DOCUMENTAR
-     * @return
+     * Método que devolve o Map que contém as Faturas associadas aos respetivos proprietários de CasasInteligentes.
+     * @return Map com mapeamento de proprietário de uma CasaInteligente para a sua lista de Faturas.
      */
     public Map<String, List<Fatura>> getFaturas() {
         Map<String, List<Fatura>> new_faturas = new HashMap<>();
@@ -209,6 +226,11 @@ public class Comercializador implements Serializable {
         return new_faturas;
     }
 
+    /**
+     * Método que devolve a lista de Faturas de um determinado proprietário de uma CasaInteligente.
+     * @param prop Proprietário da CasaInteligente.
+     * @return Lista de Faturas de uma CasaInteligente.
+     */
     public List<Fatura> getListaFaturas(String prop){
         return this.faturas.get(prop);
     }

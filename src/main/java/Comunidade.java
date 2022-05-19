@@ -6,6 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
+
+/**
+ * A Comunidade faz a gestão de um determinado grupo de CasasInteligentes.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class Comunidade implements Serializable {
     private String nomeDaComunidade;
     private Map<String, CasaInteligente> casas;
@@ -114,6 +121,11 @@ public class Comunidade implements Serializable {
         return this.casas.get(proprietario);
     }
 
+    /**
+     * Método que devolve um Comercializador existente na comunidade mediante o seu nome.
+     * @param fornecedor nome do Comercializador.
+     * @return
+     */
     public Comercializador getFornecedor(String fornecedor){
         return this.mercado.get(fornecedor);
     }
