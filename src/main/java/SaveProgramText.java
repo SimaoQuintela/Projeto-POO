@@ -12,10 +12,7 @@ public class SaveProgramText {
         int tax = 0;
         int baseValue = 0;
 
-        /**
-         * Disclaimer: não me orgulho disto. Tentar mudar isto ou o stor provavelmente
-         * vai-me mandar atirar abaixo de uma ponte bem alta :).
-         */
+
         for(Comercializador com: c.getMercado().values()){
             tax = com.getImposto();
             baseValue = com.getValorBase();

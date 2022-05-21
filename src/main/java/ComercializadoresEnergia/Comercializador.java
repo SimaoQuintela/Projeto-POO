@@ -28,7 +28,6 @@ public class Comercializador implements Serializable {
     private int valorBase;
     private int imposto;
     private Map<String, List<Fatura>> faturas;  // Proprietário -> Lista de Faturas
-    //private double precoDiaPorDispositivo = numeroDispositivos > 10?(valorBase * consumoDispositivo * (1 + imposto)) * 0.9 : (valorBase * consumoDispositivo * (1 + imposto)) * 0.75;
 
     /**
      * Construtor por omissão de Comercializador.
