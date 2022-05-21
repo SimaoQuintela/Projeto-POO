@@ -16,9 +16,8 @@ public class SmartDeviceTest {
     /**
      * Default constructor for test class SmartDeviceTest
      */
- //   public SmartDeviceTest()
- //   {
- //   }
+    public SmartDeviceTest() {
+    }
 
     /**
      * Sets up the test fixture.

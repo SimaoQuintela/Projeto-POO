@@ -4,7 +4,6 @@ import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
-import com.sun.source.tree.Tree;
 
 import java.io.FileWriter;
 import java.io.IOException;
