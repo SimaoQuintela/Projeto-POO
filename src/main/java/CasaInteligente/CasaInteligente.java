@@ -4,6 +4,7 @@ import CasaInteligente.SmartDevices.SmartCamera;
 import CasaInteligente.SmartDevices.SmartDevice;
 import ComercializadoresEnergia.Comercializador;
 import ComercializadoresEnergia.Fatura;
+import com.sun.source.tree.Tree;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -127,17 +128,24 @@ public class CasaInteligente implements Serializable {
         sb.append("Fornecedor: ").append(this.getFornecedor()).append("\n");
 
         sb.append("------------- Devices -------------\n");
+
         for(String id: this.devices.keySet()){
-            if(this.devices.get(id) instanceof SmartBulb){
-                sb.append("     Smart Bulb\n");
-            } else if(this.devices.get(id) instanceof SmartCamera){
-                sb.append("     Smart Camera\n");
+            String estado = "";
+            if(this.devices.get(id).getOn()){
+                estado = "On";
             } else {
-                sb.append("     Smart Speaker\n");
+                estado = "Off";
+            }
+            if(this.devices.get(id) instanceof SmartBulb){
+                sb.append("     Smart Bulb ID:").append(id).append(" Estado: ").append(estado).append("\n");
+            } else if(this.devices.get(id) instanceof SmartCamera){
+                sb.append("     Smart Camera ID:").append(id).append(" Estado: ").append(estado).append("\n");
+            } else {
+                sb.append("     Smart Speaker ID: ").append(id).append(" Estado: ").append(estado).append("\n");
             }
 
             // CASO NAO QUEIRA MOSTRAR O CONTEÚDO DO DEVICE METO ISTO EM COMENTARIO
-            sb.append(this.devices.get(id).toString());
+            //sb.append(this.devices.get(id).toString());
         }
 
         sb.append("------------- Locations -------------\n");

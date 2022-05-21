@@ -84,8 +84,10 @@ public class View {
                 case 2 -> {
                     this.controller.cls();
                     estadoDispositivos();
+                    this.controller.cls();
                 }
                 case 3 -> {
+
                     out.print("Insira o NIF do proprietario: ");
                     int NIF = scan.nextInt();
                     out.println(this.controller.consultaCasa(NIF));
@@ -123,7 +125,9 @@ public class View {
                     estatisticas();
                 }
                 case 9 -> {
-                    this.controller.printComunity();
+                    this.controller.cls();
+                    Comunidade c = new Comunidade(this.controller.printComunity());
+                    out.println(c);
                 }
                 case 10 -> {
 

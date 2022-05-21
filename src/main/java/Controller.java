@@ -152,8 +152,8 @@ public class Controller implements Serializable {
         fis.close();
     }
 
-    public void printComunity(){
-        out.println(this.comunidade);
+    public Comunidade printComunity(){
+        return this.getComunidade();
     }
 
 

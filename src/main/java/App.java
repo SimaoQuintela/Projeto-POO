@@ -13,7 +13,6 @@ import static java.lang.System.out;
  */
 public class App {
     static Scanner scan = new Scanner(System.in);
-    //static Comunidade comunidade = new Comunidade("Jackson");
     static Controller controller = new Controller();
 
     /**
