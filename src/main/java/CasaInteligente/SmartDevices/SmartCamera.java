@@ -7,6 +7,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Uma SmartCamera e uma camera inteligente que liga e desliga (ja que
+ * e subclasse de SmartDevice) e tambem contem informaçoes sobre a mesma.
+ */
 public class SmartCamera extends SmartDevice implements Serializable {
     private int xRes;
     private int yRes;
@@ -14,7 +18,7 @@ public class SmartCamera extends SmartDevice implements Serializable {
     private float custoInstalacao;
 
     /**
-     * Construtor por omissão de SmartCamera.
+     * Construtor por omissao de SmartCamera.
      */
     public SmartCamera(){
         super();
@@ -26,10 +30,10 @@ public class SmartCamera extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado.
-     * @param id Código que identifica a SmartCamera.
+     * @param id Codigo que identifica a SmartCamera.
      * @param status Estado da SmartCamera.
-     * @param xRes Resolução da SmartCamera no eixo do x.
-     * @param yRes Resolução da SmartCamera no eixo do y
+     * @param xRes Resoluçao da SmartCamera no eixo do x.
+     * @param yRes Resoluçao da SmartCamera no eixo do y
      * @param fileSize Tamanho do ficheiro da SmartCamera.
      */
     public SmartCamera(String id, boolean status, int xRes, int yRes, int fileSize, float consumptionPerDay,  int custoInstalacao){
@@ -42,7 +46,7 @@ public class SmartCamera extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado.
-     * @param id Código que identifica a SmartCamera.
+     * @param id Codigo que identifica a SmartCamera.
      * @param status Estado da SmartCamera.
      */
     public SmartCamera(String id, boolean status){
@@ -54,8 +58,8 @@ public class SmartCamera extends SmartDevice implements Serializable {
     }
 
     /**
-     * Construtor de cópia da SmartCamera.
-     * @param s SmartCamera que é copiada para a nova.
+     * Construtor de copia da SmartCamera.
+     * @param s SmartCamera que e copiada para a nova.
      */
     public SmartCamera(SmartCamera s){
         super(s.getID(), s.getOn(), s.getConsumptionPerDay(), s.getCustoInstalacao());
@@ -66,9 +70,9 @@ public class SmartCamera extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que verifica a igualdade entre a SmartCamera e um outro objeto.
-     * @param obj Objeto que é comparado com a SmartCamera.
-     * @return Booleano que indica se são iguais.
+     * Metodo que verifica a igualdade entre a SmartCamera e um outro objeto.
+     * @param obj Objeto que e comparado com a SmartCamera.
+     * @return Booleano que indica se sao iguais.
      */
     public boolean equals(Object obj){
         if(obj == this){
@@ -87,15 +91,15 @@ public class SmartCamera extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que devolve uma cópia da SmartCamera.
-     * @return cópia da SmartCamera.
+     * Metodo que devolve uma copia da SmartCamera.
+     * @return copia da SmartCamera.
      */
     public SmartCamera clone(){
         return new SmartCamera(this);
     }
 
     /**
-     * Método que produz uma string na qual está representada a SmartCamera.
+     * Metodo que produz uma string na qual esta representada a SmartCamera.
      * @return String que representa a SmartCamera.
      */
     public String toString(){
@@ -114,6 +118,11 @@ public class SmartCamera extends SmartDevice implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Metodo que escreve a SmartCamera num ficheiro.
+     * @param writer Ficheiro.
+     * @throws IOException
+     */
     public void writeInFile(FileWriter writer) throws IOException {
         String line = "SmartCamera:" + "(" + this.getxRes() + "x" + this.getyRes() + ")" +
                       "," + this.getFileSize() + "," + super.getConsumptionPerDay() + "\n";
@@ -124,14 +133,14 @@ public class SmartCamera extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que liga um SmartDevice
+     * Metodo que liga um SmartDevice
      */
     public void turnOn() {
         super.setOn(true);
         super.setTime(LocalDate.now());
     }
     /**
-     * Método que desliga um SmartDevice
+     * Metodo que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
@@ -139,7 +148,7 @@ public class SmartCamera extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que calcula o consumo da SmartCamera.
+     * Metodo que calcula o consumo da SmartCamera.
      */
     public void consumo(LocalDate before, LocalDate after){
         if(this.getOn()){
@@ -151,23 +160,23 @@ public class SmartCamera extends SmartDevice implements Serializable {
     }
 
     /**
-     * Getter que nos dá a resolução no eixo do x
-     * @return resolução no eixo do x
+     * Getter que nos da a resolução no eixo do x
+     * @return resoluçao no eixo do x
      */
     public int getxRes() {
         return this.xRes;
     }
 
     /**
-     * Getter que nos dá a resolução no eixo do y
-     * @return resolução no eixo do y
+     * Getter que nos da a resoluçao no eixo do y
+     * @return resoluçao no eixo do y
      */
     public int getyRes() {
         return this.yRes;
     }
 
     /**
-     * Método que devolve o tamanho do ficheiro da SmartCamera.
+     * Metodo que devolve o tamanho do ficheiro da SmartCamera.
      * @return Tamanho do ficheiro.
      */
     public int getFileSize(){
@@ -177,22 +186,22 @@ public class SmartCamera extends SmartDevice implements Serializable {
 
     /**
      * setter que nos coloca em xRes o valor passado como parâmetro
-     * @param xRes resolução no eixo do x
+     * @param xRes resoluçao no eixo do x
      */
     public void setxRes(int xRes) {
         this.xRes = xRes;
     }
 
     /**
-     * setter que nos coloca em yRes o valor passado como parâmetro
-     * @param yRes resolução no eixo do y
+     * setter que nos coloca em yRes o valor passado como parametro
+     * @param yRes resoluçao no eixo do y
      */
     public void setyRes(int yRes) {
         this.yRes = yRes;
     }
 
     /**
-     * Método que altera o tamanho do ficheiro da SmartCamera.
+     * Metodo que altera o tamanho do ficheiro da SmartCamera.
      * @param size Novo tamanho do ficheiro.
      */
     public void setFileSize(int size){

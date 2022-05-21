@@ -9,6 +9,12 @@ import ComercializadoresEnergia.Fatura;
 
 import static java.lang.System.out;
 
+/**
+ * Controller e o controlador que responde a pedidos da View.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class Controller implements Serializable {
 
     private Comunidade comunidade;
@@ -16,16 +22,29 @@ public class Controller implements Serializable {
     private LocalDate timeNow;
 
 
+    /**
+     * Construtor por omissao de Controller.
+     */
     public Controller() {
         this.comunidade = new Comunidade();
         this.idFatura = 1;
         this.timeNow = LocalDate.now();
     }
 
+    /**
+     * Metodo que limpa a consola.
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void cls() throws IOException, InterruptedException {
         new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
     }
 
+    /**
+     * Metodo que devolve uma CasaInteligente tendo em conta um determinado NIF.
+     * @param NIF NIF do proprietario.
+     * @return CasaInteligente do proprietario com um determinado NIF.
+     */
     public CasaInteligente consultaCasa(int NIF){
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
             if(c.getNIF() == NIF){
@@ -36,11 +55,21 @@ public class Controller implements Serializable {
         return null;
     }
 
+    /**
+     * Metodo que liga/desliga todos os SmartDevices de todas as Casas de uma Comunidade.
+     * @param status Booleano que indica o efeito provocado pelo metodo (ligar/desligar).
+     */
     public void ligarDesligarComunidade(boolean status){
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
             ligarDesligarCasa(status, c.getNIF());
         }
     }
+
+    /**
+     * Metodo que liga/desliga todos os SmartDevices de uma determinada CasaInteligente.
+     * @param status Booleano que indica o efeito provocado pelo metodo (ligar/desligar).
+     * @param NIF NIF do proprietario da CasaInteligente.
+     */
     public void ligarDesligarCasa(boolean status, int NIF){
         CasaInteligente casa = null;
         for(CasaInteligente c: this.getComunidade().getCasas().values()){
@@ -61,9 +90,9 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Método que diz qual a casa que mais gastou num certo período de tempo
-     * @param periodo período de tempo
-     * @return proprietário da casa que mais gastou durante o período passado como parâmetro
+     * Metodo que diz qual a casa que mais gastou num certo periodo de tempo
+     * @param periodo periodo de tempo
+     * @return proprietario da casa que mais gastou durante o periodo passado como parametro
      */
     public Tuple casaQueMaisGastou(LocalDate periodo){
         float max = 0;
@@ -81,6 +110,10 @@ public class Controller implements Serializable {
         return t;
     }
 
+    /**
+     * Metodo que devolve o Comercializador com maior volume de faturaçao.
+     * @return Tuplo com o Comercializador com maior volume de faturaçao associado ao respetivo valor de faturaçao.
+     */
     public Tuple comercializadorQueMaisFatura(){
         String comMaisFaturou = "";
         float max = 0;
@@ -96,10 +129,20 @@ public class Controller implements Serializable {
         return t;
     }
 
+    /**
+     * Metodo que devolve um Map com toda a faturaçao de um determinado Comercializador.
+     * @param fornecedor Nome do Comercializador.
+     * @return Faturaçao de um determinado Comercializador.
+     */
     public Map<String,List<Fatura>> listaFaturas(String fornecedor){
         return this.getComunidade().getFornecedor(fornecedor).getFaturas();
     }
 
+    /**
+     * Metodo que devolve um ordenaçao dos maiores consumidores de energia durante um determinado período de tempo.
+     * @param periodo Periodo de tempo.
+     * @return Lista de Tuplos ordenada decrescentemente conforme o valor total de faturaçao de cada Comercializador.
+     */
     public List<Tuple> ordenaConsumidores(LocalDate periodo){
         List<Tuple> consumidores_ordenados = new ArrayList<>();
 
@@ -118,18 +161,29 @@ public class Controller implements Serializable {
         return consumidores_ordenados;
     }
 
-
-
-
+    /**
+     * Metodo que guarda a Comunidade num ficheiro de texto.
+     * @param textFile Ficheiro onde e guardada a Comunidade.
+     * @throws IOException
+     */
     public void saveProgramText(String textFile) throws IOException {
         SaveProgramText.saveTextMode(this.getComunidade(), textFile);
     }
 
+    /**
+     * Metodo que carrega o ficheiro que contem uma Comunidade.
+     * @param textFile
+     * @throws IOException
+     */
     public void loadProgramText(String textFile) throws IOException{
         Parser.parse(this.getComunidade(), textFile);
     }
 
-
+    /**
+     * Metodo que guarda todos os objetos num ficheiro.
+     * @param objectFile Ficheiro onde sao guardados os objetos.
+     * @throws IOException
+     */
     public void saveProgramObjects(String objectFile) throws IOException {
         FileOutputStream fos =  new FileOutputStream(objectFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -138,6 +192,12 @@ public class Controller implements Serializable {
         oos.close();
     }
 
+    /**
+     * Metodo que carrega o ficheiro que contem objetos.
+     * @param file Ficheiro que e carregado.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void loadProgramObjects(String file) throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream(file);
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -152,11 +212,19 @@ public class Controller implements Serializable {
         fis.close();
     }
 
+    /**
+     * Metodo que devolve a Comunidade.
+     * @return Comunidade.
+     */
     public Comunidade printComunity(){
         return this.getComunidade();
     }
 
-
+    /**
+     * Metodo responsavel pela execuçao da Simulaçao.
+     * @param timeSimul Tempo que e avançado na simulaçao.
+     * @param file Ficheiro de simulaçao.
+     */
     public void simulacao(String timeSimul, String file) {
         LocalDate timeStart = this.timeNow;
 
@@ -267,22 +335,42 @@ public class Controller implements Serializable {
         }
     }
 
+    /**
+     * Metodo que devolve a Comunidade.
+     * @return Comunidade.
+     */
     public Comunidade getComunidade() {
         return this.comunidade;
     }
 
+    /**
+     * Metodo que devolve o numero de identificaçao da Fatura.
+     * @return ID da Fatura.
+     */
     public int getIdFatura() {
         return this.idFatura;
     }
 
+    /**
+     * Metodo que devolve o tempo corrente.
+     * @return Tempo corrente.
+     */
     public LocalDate getTimeNow() {
         return this.timeNow;
     }
 
+    /**
+     * Metodo que altera o ID da Fatura.
+     * @param idFatura Novo ID da Fatura.
+     */
     public void setIdFatura(int idFatura) {
         this.idFatura = idFatura;
     }
 
+    /**
+     * Metodo que altera o tempo corrente.
+     * @param timeNow Novo tempo corrente.
+     */
     public void setTimeNow(LocalDate timeNow) {
         this.timeNow = timeNow;
     }

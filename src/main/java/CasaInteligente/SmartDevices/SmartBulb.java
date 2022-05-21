@@ -9,8 +9,8 @@ import java.time.temporal.ChronoUnit;
 import static java.lang.System.out;
 
 /**
- * Uma SmartBulb é uma lâmpada inteligente que além de ligar e desligar (já que
- * é subclasse de SmartDevice) também permite escolher a intensidade da iluminação 
+ * Uma SmartBulb e uma lampada inteligente que alem de ligar e desligar (ja que
+ * e subclasse de SmartDevice) tambem permite escolher a intensidade da iluminaçao
  * (a cor da mesma).
  */
 public class SmartBulb extends SmartDevice implements Serializable {
@@ -23,7 +23,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
 
     /**
-     * Construtor por omissão de uma SmartBulb
+     * Construtor por omissao de uma SmartBulb
      */
     public SmartBulb() {
         super();
@@ -33,9 +33,9 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de uma SmartBulb.
-     * @param id Código que identifica a SmartBulb.
-     * @param tone Tonalidade da lâmpada.
-     * @param dimensions Dimensões da lâmpada.
+     * @param id Codigo que identifica a SmartBulb.
+     * @param tone Tonalidade da lampada.
+     * @param dimensions Dimensoes da lampada.
      */
     public SmartBulb(String id, boolean status, int tone, int dimensions, float consumptionPerDay, int custoInstalacao) {
         super(id, status, consumptionPerDay, custoInstalacao);
@@ -45,7 +45,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de uma SmartBulb.
-     * @param id Código que identifica a SmartBulb.
+     * @param id Codigo que identifica a SmartBulb.
      */
     public SmartBulb(String id) {
         super(id);
@@ -55,7 +55,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de uma SmartBulb.
-     * @param id Código que identifica a SmartBulb.
+     * @param id Codigo que identifica a SmartBulb.
      */
     public SmartBulb(String id, boolean status) {
         super(id, status);
@@ -64,8 +64,8 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Construtor de cópia de uma SmartBulb.
-     * @param s SmartBulb que é copiada para a nova.
+     * Construtor de copia de uma SmartBulb.
+     * @param s SmartBulb que e copiada para a nova.
      */
     public SmartBulb(SmartBulb s){
         super(s.getID(), s.getOn(), s.getConsumptionPerDay(), s.getCustoInstalacao());
@@ -74,17 +74,17 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que cria uma cópia da SmartBulb recetora da mensagem.
-     * @return cópia da SmartBulb recetora da mensagem.
+     * Metodo que cria uma copia da SmartBulb recetora da mensagem.
+     * @return copia da SmartBulb recetora da mensagem.
      */
     public SmartBulb clone(){
         return new SmartBulb(this);
     }
 
     /**
-     * Método que verifica a igualdade entre a SmartBulb e um outro objeto.
+     * Metodo que verifica a igualdade entre a SmartBulb e um outro objeto.
      * @param o Objeto comparado com a SmartBulb.
-     * @return Booleano que indica se são iguais.
+     * @return Booleano que indica se sao iguais.
      */
     public boolean equals(Object o){
         if(o == this)
@@ -102,7 +102,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que produz uma string na qual está representada a SmartBulb.
+     * Metodo que produz uma string na qual esta representada a SmartBulb.
      * @return string que representa a SmartBulb.
      */
     public String toString(){
@@ -119,6 +119,11 @@ public class SmartBulb extends SmartDevice implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Metodo que escreve a SmartBulb num ficheiro.
+     * @param writer Ficheiro.
+     * @throws IOException
+     */
     public void writeInFile(FileWriter writer) throws IOException {
         String tone = "";
 
@@ -139,7 +144,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que liga um SmartDevice
+     * Metodo que liga um SmartDevice
      */
     public void turnOn() {
         super.setOn(true);
@@ -147,7 +152,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que desliga um SmartDevice
+     * Metodo que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
@@ -155,7 +160,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que calcula o consumo da SmartBulb.
+     * Metodo que calcula o consumo da SmartBulb.
      */
     public void consumo(LocalDate before, LocalDate after) {
         if(this.getOn()){
@@ -167,7 +172,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que devolve a tonalidade da SmartBulb.
+     * Metodo que devolve a tonalidade da SmartBulb.
      * @return Tonalidade da SmartBulb.
      */
     public int getTone() {
@@ -175,8 +180,8 @@ public class SmartBulb extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que devolve as dimensões da SmartBulb.
-     * @return Dimensões da SmartBulb.
+     * Metodo que devolve as dimensoes da SmartBulb.
+     * @return Dimensoes da SmartBulb.
      */
     public int getDimensions(){
         return this.dimensions;
@@ -184,8 +189,8 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que altera as dimensões da SmartBulb.
-     * @param dim Novas dimensões da SmartBulb.
+     * Metodo que altera as dimensoes da SmartBulb.
+     * @param dim Novas dimensoes da SmartBulb.
      */
     public void setDimensions(int dim){
         this.dimensions = dim;
@@ -193,7 +198,7 @@ public class SmartBulb extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que altera a tonalidade da SmartBulb.
+     * Metodo que altera a tonalidade da SmartBulb.
      * @param t Nova tonalidade da SmartBulb.
      */
     public void setTone(int t) {

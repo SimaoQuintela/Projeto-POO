@@ -16,7 +16,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * O Comercializador fornece serviço energético às CasasInteligentes que tenham contrato com o mesmo.
+ * O Comercializador fornece serviço energetico as CasasInteligentes que tenham contrato com o mesmo.
  *
  * @author (your name)
  * @version (a version number or a date)
@@ -30,7 +30,7 @@ public class Comercializador implements Serializable {
     private Map<String, List<Fatura>> faturas;  // Proprietário -> Lista de Faturas
 
     /**
-     * Construtor por omissão de Comercializador.
+     * Construtor por omissao de Comercializador.
      */
     public Comercializador(){
         this.nomeEmpresa = "";
@@ -56,7 +56,7 @@ public class Comercializador implements Serializable {
      * Construtor parametrizado de Comercializador.
      * @param nomeEmpresa Nome do Comercializador.
      * @param numeroDispositivos Número de dispositivos.
-     * @param valorBase Valor mínimo do custo do serviço.
+     * @param valorBase Valor minimo do custo do serviço.
      * @param imposto Imposto aplicado no calculo do custo final.
      */
     public Comercializador(String nomeEmpresa, int numeroDispositivos, int valorBase, int imposto){
@@ -68,16 +68,16 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Construtor de cópia de Comercializador.
-     * @param c Comercializador que é copiada.
+     * Construtor de copia de Comercializador.
+     * @param c Comercializador que e copiada.
      */
     public Comercializador(Comercializador c){
         this(c.nomeEmpresa, c.numeroDispositivos, c.valorBase,/* c.consumoDispositivo,*/ c.imposto);
     }
 
     /**
-     * Método que verifica a igualdade entre o Comercializador e um outro objeto.
-     * @param o Objeto que é comparado com o Comercializador.
+     * Metodo que verifica a igualdade entre o Comercializador e um outro objeto.
+     * @param o Objeto que e comparado com o Comercializador.
      * @return Booleano que indica o resultado da comparação.
      */
     public boolean equals(Object o){
@@ -98,15 +98,15 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que devolve uma cópia da Comercializador recetora da mensagem.
-     * @return Cópia do comercializador.
+     * Metodo que devolve uma copia da Comercializador recetora da mensagem.
+     * @return Copia do comercializador.
      */
     public Comercializador clone(){
         return new Comercializador(this);
     }
 
     /**
-     * Método que produz uma string na qual está representado o Comercializador.
+     * Metodo que produz uma string na qual esta representado o Comercializador.
      * @return String que representa o comercializador.
      */
     public String toString(){
@@ -121,7 +121,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que calcula o valor total das faturas geradas.
+     * Metodo que calcula o valor total das faturas geradas.
      * @return Valor total das faturas geradas.
      */
     public float calculaFaturacao(){
@@ -136,9 +136,9 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que adiciona uma Fatura à lista de Faturas de um determinado proprietário.
-     * @param prop Proprietário da CasaInteligente.
-     * @param f Fatura que é adicionada.
+     * Metodo que adiciona uma Fatura a lista de Faturas de um determinado proprietario.
+     * @param prop Proprietario da CasaInteligente.
+     * @param f Fatura que e adicionada.
      */
     public void adicionaFatura(String prop, Fatura f){
         if(this.faturas.containsKey(prop)) {
@@ -152,7 +152,7 @@ public class Comercializador implements Serializable {
 
 
     /**
-     * Método que calcula o consumo de um Dispositivo.
+     * Metodo que calcula o consumo de um Dispositivo.
      */
     public double contaConsumoDispositivo(SmartDevice s, LocalDate before, LocalDate after, int numDevices){
         double r = 0;
@@ -168,7 +168,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que escreve o objeto em ficheiro.
+     * Metodo que escreve o objeto em ficheiro.
      * @param writer Descritor de escrita.
      * @throws IOException
      */
@@ -181,15 +181,15 @@ public class Comercializador implements Serializable {
 
 
     /**
-     * Método que devolve o número de dispositivos.
-     * @return Número de dispositivos.
+     * Metodo que devolve o numero de dispositivos.
+     * @return Numero de dispositivos.
      */
     public int getNumeroDispositivos(){
         return this.numeroDispositivos;
     }
 
     /**
-     * Método que devolve o valor base.
+     * Metodo que devolve o valor base.
      * @return Valor base.
      */
     public int getValorBase(){
@@ -197,7 +197,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que devolve o nome do comercializador correspondente
+     * Metodo que devolve o nome do comercializador correspondente
      * @return Nome do comercializador
      */
     public String getNomeEmpresa() {
@@ -205,7 +205,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que devolve a taxa de imposto.
+     * Metodo que devolve a taxa de imposto.
      * @return Taxa de imposto.
      */
     public int getImposto(){
@@ -213,8 +213,8 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que devolve o Map que contém as Faturas associadas aos respetivos proprietários de CasasInteligentes.
-     * @return Map com mapeamento de proprietário de uma CasaInteligente para a sua lista de Faturas.
+     * Metodo que devolve o Map que contem as Faturas associadas aos respetivos proprietarios de CasasInteligentes.
+     * @return Map com mapeamento de proprietario de uma CasaInteligente para a sua lista de Faturas.
      */
     public Map<String, List<Fatura>> getFaturas() {
         Map<String, List<Fatura>> new_faturas = new HashMap<>();
@@ -226,8 +226,8 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que devolve a lista de Faturas de um determinado proprietário de uma CasaInteligente.
-     * @param prop Proprietário da CasaInteligente.
+     * Metodo que devolve a lista de Faturas de um determinado proprietario de uma CasaInteligente.
+     * @param prop Proprietario da CasaInteligente.
      * @return Lista de Faturas de uma CasaInteligente.
      */
     public List<Fatura> getListaFaturas(String prop){
@@ -235,7 +235,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Coloca na variável de instância nomeEmpresa a string passada como parâmetro
+     * Coloca na variavel de instancia nomeEmpresa a string passada como parametro
      * @param nomeEmpresa Nome do comercializador
      */
     public void setNomeEmpresa(String nomeEmpresa) {
@@ -243,15 +243,15 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que altera o número de dispositivos.
-     * @param num Número de dispositivos.
+     * Metodo que altera o numero de dispositivos.
+     * @param num Numero de dispositivos.
      */
     public void setNumeroDispositivos(int num){
         this.numeroDispositivos = num;
     }
 
     /**
-     * Método que altera o valor base.
+     * Metodo que altera o valor base.
      * @param valor Valor base.
      */
     public void setValorBase(int valor){
@@ -259,7 +259,7 @@ public class Comercializador implements Serializable {
     }
 
     /**
-     * Método que altera a taxa de imposto.
+     * Metodo que altera a taxa de imposto.
      * @param imposto Taxa de imposto.
      */
     public void setImposto(int imposto){

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * A classe SmartDevice é um contactor simples.
+ * A classe SmartDevice e um contactor simples.
  * Permite ligar ou desligar circuitos.
  */
 public abstract class SmartDevice implements Serializable {
@@ -20,7 +20,7 @@ public abstract class SmartDevice implements Serializable {
     private int custoInstalacao;
 
     /**
-     * Construtor por omissão de um SmartDevice.
+     * Construtor por omissao de um SmartDevice.
      */
     public SmartDevice() {
         this.id = "";
@@ -33,7 +33,7 @@ public abstract class SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de um SmartDevice.
-     * @param id Código que identifica o SmartDevice.
+     * @param id Codigo que identifica o SmartDevice.
      */
     public SmartDevice(String id) {
         this.id = id;
@@ -46,7 +46,7 @@ public abstract class SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de um SmartDevice.
-     * @param id Código que identifica o SmartDevice.
+     * @param id Codigo que identifica o SmartDevice.
      * @param status Estado do SmartDevice.
      */
     public SmartDevice(String id, boolean status) {
@@ -60,7 +60,7 @@ public abstract class SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de um SmartDevice.
-     * @param id Código que identifica o SmartDevice.
+     * @param id Codigo que identifica o SmartDevice.
      * @param status Estado (ligado ou desligado) do SmartDevice.
      */
     public SmartDevice(String id, boolean status, float consumptionPerDay, int custoInstalacao){
@@ -73,28 +73,28 @@ public abstract class SmartDevice implements Serializable {
     }
 
     /**
-     * Construtor de cópia de um SmartDevice.
-     * @param s SmartDevice utilizado no processo de cópia para o novo SmartDevice.
+     * Construtor de copia de um SmartDevice.
+     * @param s SmartDevice utilizado no processo de copia para o novo SmartDevice.
      */
     public SmartDevice(SmartDevice s) {
         this(s.getID(), s.getOn(), s.getConsumptionPerDay(), s.getCustoInstalacao());
     }
 
     /**
-     * Método que devolve uma cópia do SmartDevice recetor da mensagem.
-     * @return cópia do SmartDevice recetor da mensagem.
+     * Metodo que devolve uma copia do SmartDevice recetor da mensagem.
+     * @return copia do SmartDevice recetor da mensagem.
      */
     public abstract SmartDevice clone();
 
     /**
-     * Método que verifica a igualdade entre um objeto e o SmartDevice recetor da mensagem.
+     * Metodo que verifica a igualdade entre um objeto e o SmartDevice recetor da mensagem.
      * @param o objeto comparado com o SmartDevice.
-     * @return booleano que indica se são iguais.
+     * @return booleano que indica se sao iguais.
      */
     public abstract boolean equals(Object o);
 
     /**
-     * Método que produz uma String na qual está representado o SmartDevice.
+     * Metodo que produz uma String na qual esta representado o SmartDevice.
      * @return string que representa o SmartDevice.
      */
     public abstract String toString();
@@ -102,34 +102,34 @@ public abstract class SmartDevice implements Serializable {
     public abstract void writeInFile(FileWriter writer) throws IOException;
 
     /**
-     * Método que liga o SmartDevice.
+     * Metodo que liga o SmartDevice.
      */
     public abstract void turnOn();
 
     /**
-     * Método que desliga o SmartDevice.
+     * Metodo que desliga o SmartDevice.
      */
     public abstract void turnOff();
 
     /**
-     * Método que calcula o consumo do SmartDevice.
+     * Metodo que calcula o consumo do SmartDevice.
      */
     public abstract void consumo(LocalDate before, LocalDate after);
 
     /**
-     * Método que devolve o estado do SmartDevice.
+     * Metodo que devolve o estado do SmartDevice.
      * @return Estado do SmartDevice.
      */
     public boolean getOn() {return this.on;}
 
     /**
-     * Método que devolve o código que identifica o SmartDevice.
-     * @return Código que identifica o SmartDevice.
+     * Metodo que devolve o codigo que identifica o SmartDevice.
+     * @return Codigo que identifica o SmartDevice.
      */
     public String getID() {return this.id;}
 
     /**
-     * Método que devolve o consumo de energia do SmartDevice.
+     * Metodo que devolve o consumo de energia do SmartDevice.
      * @return Consumo do SmartDevice.
      */
     public float getConsumption(){
@@ -137,31 +137,31 @@ public abstract class SmartDevice implements Serializable {
     }
 
     /**
-     * Método que devolve o consumo diário do SmartDevice.
-     * @return Consumo diário do SmartDevice.
+     * Metodo que devolve o consumo diario do SmartDevice.
+     * @return Consumo diario do SmartDevice.
      */
     public float getConsumptionPerDay() {
         return this.consumptionPerDay;
     }
 
     /**
-     * Método que devolve o custo de instalação do SmartDevice.
-     * @return Custo de instalação do SmartDevice.
+     * Metodo que devolve o custo de instalaçao do SmartDevice.
+     * @return Custo de instalaçao do SmartDevice.
      */
     public int getCustoInstalacao() {
         return this.custoInstalacao;
     }
 
     /**
-     * Método que devolve o momento em que o estado do SmartDevice foi alterado pela última vez.
-     * @return Momento em que o estado do SmartDevice foi alterado pela última vez.
+     * Metodo que devolve o momento em que o estado do SmartDevice foi alterado pela ultima vez.
+     * @return Momento em que o estado do SmartDevice foi alterado pela ultima vez.
      */
     public LocalDate getTime() {
         return this.time;
     }
 
     /**
-     * Método que altera o estado do SmartDevice.
+     * Metodo que altera o estado do SmartDevice.
      * @param b Novo estado do SmartDevice.
      */
     public void setOn(boolean b) {this.on = b;}
@@ -175,32 +175,32 @@ public abstract class SmartDevice implements Serializable {
     }
 
     /**
-     * Método que altera o consumo energético da SmartCamera.
-     * @param consumption Novo consumo energético da SmartCamera.
+     * Metodo que altera o consumo energetico da SmartCamera.
+     * @param consumption Novo consumo energetico da SmartCamera.
      */
     public void setConsumption(float consumption){
         this.consumption = consumption;
     }
 
     /**
-     * Método que altera o custo de instalação do SmartDevice.
-     * @param custoInstalacao Custo de instalação do SmartDevice.
+     * Metodo que altera o custo de instalaçao do SmartDevice.
+     * @param custoInstalacao Custo de instalaçao do SmartDevice.
      */
     public void setCustoInstalacao(int custoInstalacao) {
         this.custoInstalacao = custoInstalacao;
     }
 
     /**
-     * Método que altera o consumo diário do SmartDevice.
-     * @param consumptionPerDay Consumo diário do SmartDevice.
+     * Metodo que altera o consumo diario do SmartDevice.
+     * @param consumptionPerDay Consumo diario do SmartDevice.
      */
     public void setConsumptionPerDay(float consumptionPerDay) {
         this.consumptionPerDay = consumptionPerDay;
     }
 
     /**
-     * Método que altera o momento em que o estado do SmartDevice foi alterado pela última vez.
-     * @param time Momento em que o estado do SmartDevice foi alterado pela última vez.
+     * Metodo que altera o momento em que o estado do SmartDevice foi alterado pela ultima vez.
+     * @param time Momento em que o estado do SmartDevice foi alterado pela ultima vez.
      */
     public void setTime(LocalDate time) {
         this.time = time;

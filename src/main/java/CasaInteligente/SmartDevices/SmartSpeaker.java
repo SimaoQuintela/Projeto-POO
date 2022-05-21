@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 /**
- * Um SmartSpeaker é um SmartDevice que além de ligar e desligar permite também
+ * Um SmartSpeaker e um SmartDevice que alem de ligar e desligar permite tambem
  * reproduzir som.
- * Consegue ligar-se a um canal (por simplificação uma rádio online) e permite
- * a regulação do seu nível de volume.
+ * Consegue ligar-se a um canal (por simplificaçao uma radio online) e permite
+ * a regulaçao do seu nivel de volume.
  */
 public class SmartSpeaker extends SmartDevice implements Serializable {
     private static final int MAX = 100; //volume máximo
@@ -22,7 +22,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
 
     /**
-     * Construtor por omissão de SmartSpeaker.
+     * Construtor por omissao de SmartSpeaker.
      */
     public SmartSpeaker() {
         // initialise instance variables
@@ -33,10 +33,9 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * ACABAR DOCUMENTAÇAO
      * Construtor parametrizado de SmartSpeaker.
      * @param id ID do dispositivo.
-     * @param channel Canal de rádio.
+     * @param channel Canal de radio.
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
@@ -50,8 +49,8 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
     /**
      * Construtor parametrizado de SmartSpeaker.
-     * @param cod Código que identifica a SmartSpeaker.
-     * @param channel Canal de rádio.
+     * @param cod Codigo que identifica a SmartSpeaker.
+     * @param channel Canal de radio.
      * @param volume Volume da SmartSpeaker.
      * @param brand Marca da SmartSpeaker.
      */
@@ -64,25 +63,25 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * Construtor de cópia de SmartSpeaker.
-     * @param s SmartSpeaker que é copiada.
+     * Construtor de copia de SmartSpeaker.
+     * @param s SmartSpeaker que e copiada.
      */
     public SmartSpeaker(SmartSpeaker s){
         this(s.getID() , s.getOn(), s.getChannel(), s.getVolume(), s.getBrand(), s.getConsumptionPerDay(), s.getCustoInstalacao());
     }
 
     /**
-     * Método que cria uma cópia de uma SmartSpeaker.
-     * @return Cópia da SmartSpeaker.
+     * Metodo que cria uma copia de uma SmartSpeaker.
+     * @return Copia da SmartSpeaker.
      */
     public SmartSpeaker clone(){
         return new SmartSpeaker(this);
     }
 
     /**
-     * Método que verifica a igualdade entre a SmartSpeaker e um outro objeto.
+     * Metodo que verifica a igualdade entre a SmartSpeaker e um outro objeto.
      * @param o objeto comparado com a SmartSpeaker.
-     * @return Booleano que indica o resultado da comparação.
+     * @return Booleano que indica o resultado da comparaçao.
      */
     public boolean equals(Object o){
         if(this == o)
@@ -101,7 +100,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que produz uma string na qual está representada a SmartSpeaker.
+     * Metodo que produz uma string na qual esta representada a SmartSpeaker.
      * @return String que representa a SmartSpeaker.
      */
     public String toString(){
@@ -118,6 +117,11 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Metodo que escreve a SmartSpeaker num Ficheiro.
+     * @param writer Ficheiro.
+     * @throws IOException
+     */
     public void writeInFile(FileWriter writer) throws IOException {
         String line = "SmartSpeaker:" + this.getVolume() + "," + this.getChannel() + "," +
                       this.getBrand() + "," + super.getConsumptionPerDay() + "\n";
@@ -128,7 +132,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que liga um SmartDevice
+     * Metodo que liga um SmartDevice
      */
     public void turnOn() {
         super.setOn(true);
@@ -136,7 +140,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que desliga um SmartDevice
+     * Metodo que desliga um SmartDevice
      */
     public void turnOff() {
         super.setOn(false);
@@ -145,7 +149,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que calcula o consumo da SmartSpeaker.
+     * Metodo que calcula o consumo da SmartSpeaker.
      */
     public void consumo(LocalDate before, LocalDate after){
         if(this.getOn()){
@@ -157,33 +161,33 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que aumenta uma unidade no volume da SmartSpeaker.
+     * Metodo que aumenta uma unidade no volume da SmartSpeaker.
      */
     public void volumeUp() {
         if (this.volume<MAX) this.volume++;
     }
 
     /**
-     * Método que reduz uma unidade no volume da SmartSpeaker.
+     * Metodo que reduz uma unidade no volume da SmartSpeaker.
      */
     public void volumeDown() {
         if (this.volume>0) this.volume--;
     }
 
     /**
-     * Método que devolve o volume da SmartSpeaker.
+     * Metodo que devolve o volume da SmartSpeaker.
      * @return Volume da SmartSpeaker.
      */
     public int getVolume() {return this.volume;}
 
     /**
-     * Método que devolve o canal de rádio que está a tocar na SmartSpeaker.
-     * @return Canal de rádio que está a tocar na SmartSpeaker.
+     * Metodo que devolve o canal de radio que esta a tocar na SmartSpeaker.
+     * @return Canal de radio que esta a tocar na SmartSpeaker.
      */
     public String getChannel() {return this.channel;}
 
     /**
-     * Método que devolve a marca da SmartSpeaker.
+     * Metodo que devolve a marca da SmartSpeaker.
      * @return Marca da SmartSpeaker.
      */
     public String getBrand(){
@@ -192,13 +196,13 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
 
 
     /**
-     * Método que altera o canal de rádio que toca na SmartSpeaker.
-     * @param c Novo canal de rádio que toca na SmartSpeaker.
+     * Metodo que altera o canal de radio que toca na SmartSpeaker.
+     * @param c Novo canal de radio que toca na SmartSpeaker.
      */
     public void setChannel(String c) {this.channel = c;}
 
     /**
-     * Método que altera a marca da SmartSpeaker.
+     * Metodo que altera a marca da SmartSpeaker.
      * @param s Nova marca da SmartSpeaker.
      */
     public void setBrand(String s){
@@ -206,7 +210,7 @@ public class SmartSpeaker extends SmartDevice implements Serializable {
     }
 
     /**
-     * Método que altera o volume da SmartSpeaker.
+     * Metodo que altera o volume da SmartSpeaker.
      * @param i Novo volume da SmartSpeaker.
      */
     public void setVolume(int i){

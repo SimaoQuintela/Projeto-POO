@@ -9,10 +9,10 @@ import java.util.Comparator;
 public class ConsumeComparator implements Comparator<Tuple> {
 
     /**
-     * Método que compara dois tuplos.
+     * Metodo que compara dois tuplos.
      * @param t1 the first object to be compared.
      * @param t2 the second object to be compared.
-     * @return Valor que indica o resultado da comparação.
+     * @return Valor que indica o resultado da comparaçao.
      */
     public int compare(Tuple t1, Tuple t2) {
         float a1 = t1.getP2();

@@ -13,8 +13,20 @@ import java.util.List;
 
 import static java.lang.System.out;
 
+/**
+ * A classe Parser gera todos os objetos resultantes da leitura de um ficheiro.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class Parser {
-        public static void parse(Comunidade comunidade, String file){
+
+    /**
+     * Metodo responsavel pelo particionamento do que conteudo lido do ficheiro e consequente criaçao de objetos.
+     * @param comunidade Comunidade a qual sao atribuidos os objetos.
+     * @param file Ficheiro do qual e lido o conteudo.
+     */
+    public static void parse(Comunidade comunidade, String file){
             List<String> linhas = lerFicheiro(file);
             int id_generator = 0;
             int imposto = 0;
@@ -85,8 +97,13 @@ public class Parser {
                     }
                 }
             }
-        }
+    }
 
+    /**
+     * Metodo que le o ficheiro de simulaçao.
+     * @param nomeFich Ficheiro do qual e lida a informaçao.
+     * @return
+     */
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }
@@ -94,6 +111,13 @@ public class Parser {
         return lines;
     }
 
+    /**
+     * Metodo responsavel pela construçao de uma SmartBulb.
+     * @param s String que contem as informaçoes sobre a SmartBulb.
+     * @param id Identificador da SmartBulb.
+     * @param valorBase Consumo da SmartBulb.
+     * @return SmartBulb criada.
+     */
     public static SmartBulb parseSmartBulb(String[] s, String id, int valorBase) {
         int tone = switch (s[0]) {
             case "Warm" -> 80;
@@ -114,6 +138,13 @@ public class Parser {
         return new_bulb.clone();
     }
 
+    /**
+     * Metodo responsavel pela construçao de uma SmartCamera.
+     * @param campos String que contem a informaçao sobre a SmartCamera.
+     * @param id Identificador da SmartCamera.
+     * @param valorBase Consumo da SmartCamera.
+     * @return SmartCamera criada.
+     */
     public static SmartCamera parseSmartCamera(String[] campos, String id, int valorBase){
 
             String[] splitByRightParenthesis = campos[0].split("x", 2);
@@ -130,6 +161,13 @@ public class Parser {
             return new_camera.clone();
     }
 
+    /**
+     * Metodo responsavel pela construçao de um SmartSpeaker.
+     * @param campos String que contem a informaçao sobre o SmartSpeaker.
+     * @param id Identificador do SmartSpeaker.
+     * @param valorBase Consumo do SmartSpeaker.
+     * @return SmartSpeaker criado.
+     */
     public static SmartSpeaker parseSmartSpeaker(String[] campos, String id, int valorBase) {
             int volume = Integer.parseInt(campos[0]);
             String channel = campos[1];
@@ -142,6 +180,12 @@ public class Parser {
             SmartSpeaker new_speaker = new SmartSpeaker(id, true, channel, volume, brand, consumo, 7);
             return new_speaker.clone();
     }
+
+    /**
+     * Metodo responsavel pela construçao de uma CasaInteligente.
+     * @param input String que contem a informaçao sobre a casa.
+     * @return CasaInteligente criada.
+     */
     public static CasaInteligente parseCasa(String[] input){
             String nome = input[0];
             int NIF = Integer.parseInt(input[1]);

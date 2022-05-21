@@ -5,7 +5,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * A classe SimulParser le o ficheiro de configuraçao de um simulaçao.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class SimulParser {
+
+    /**
+     * Metodo que responsavel pelo particionamento do conteudo do ficheiro de simulaçao
+     * @param file Ficheiro de simulaçao.
+     * @return TreeMap que contem o conteudo do ficheiro particionado.
+     */
     public static TreeMap<String, List<List<String>>> simulParser(String file){
         List<String> linhas = lerFicheiro(file);
         List<String[]> linhasSplitted = new ArrayList<>();
@@ -41,6 +53,11 @@ public class SimulParser {
         return actions;
     }
 
+    /**
+     * Metodo que le o conteudo de um ficheiro.
+     * @param nomeFich Ficheiro.
+     * @return Lista de Strings lidas do ficheiro.
+     */
     public static List<String> lerFicheiro(String nomeFich) {
         List<String> lines;
         try { lines = Files.readAllLines(Paths.get(nomeFich), StandardCharsets.UTF_8); }

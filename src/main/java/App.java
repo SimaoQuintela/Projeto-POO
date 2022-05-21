@@ -6,7 +6,7 @@ import java.util.*;
 import static java.lang.System.out;
 
 /**
- * A App é responsável pela execução do programa.
+ * A App e responsável pela execuçao do programa.
  *
  * @author (your name)
  * @version (a version number or a date)
@@ -16,7 +16,7 @@ public class App {
     static Controller controller = new Controller();
 
     /**
-     * Método main que corre o programa.
+     * Metodo main que corre o programa.
      * @param args
      * @throws InterruptedException
      * @throws IOException

@@ -14,7 +14,7 @@ import java.util.*;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * A CasaInteligente faz a gestão dos SmartDevices que existem e dos
+ * A CasaInteligente faz a gestao dos SmartDevices que existem e dos
  * espaços (as salas) que existem na casa.
  *
  * @author (your name)
@@ -30,7 +30,7 @@ public class CasaInteligente implements Serializable {
     private List<Fatura> faturas; // lista de faturas que foram geradas e associadas à casa
 
     /**
-     * Construtor por omissão de CasaInteligente.
+     * Construtor por omissao de CasaInteligente.
      */
     public CasaInteligente() {
         this.proprietario = "";
@@ -42,9 +42,9 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * ESTE CONSTRUTOR É O CORRETO
-     * @param proprietario Nome do proprietário
-     * @param NIF Número de identificação fiscal do proprietário.
+     * Construtor parametrizado de CasaInteligente.
+     * @param proprietario Nome do proprietario
+     * @param NIF Numero de identificaçao fiscal do proprietario.
      * @param fornecedor Fornecedor.
      */
     public CasaInteligente(String proprietario, int NIF, String fornecedor){
@@ -60,7 +60,7 @@ public class CasaInteligente implements Serializable {
     /**
      * Construtor parametrizado de CasaInteligente.
      * @param devices Dispositivos existentes na casa.
-     * @param locations Divisões da CasaInteligente.
+     * @param locations Divisoes da CasaInteligente.
      */
     public CasaInteligente(String proprietario, int NIF, String fornecedor, Map<String, SmartDevice> devices, Map<String, List<String>> locations){
         this(proprietario, NIF, fornecedor);
@@ -75,17 +75,17 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Construtor de cópia de CasaInteligente.
-     * @param c CasaInteligente que é copiada.
+     * Construtor de copia de CasaInteligente.
+     * @param c CasaInteligente que e copiada.
      */
     public CasaInteligente(CasaInteligente c){
         this(c.proprietario, c.NIF, c.fornecedor, c.devices, c.locations);
     }
 
     /**
-     * Método que verifica a igualdade entre a CasaInteligente e um outro objeto.
-     * @param o Objeto que é compara com a CasaInteligente.
-     * @return Booleano que indica o resultado da comparação.
+     * Metodo que verifica a igualdade entre a CasaInteligente e um outro objeto.
+     * @param o Objeto que e compara com a CasaInteligente.
+     * @return Booleano que indica o resultado da comparaçao.
      */
     public boolean equals(Object o){
         if (o ==this)
@@ -107,15 +107,15 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que devolve uma cópia da CasaInteligente recetora da mensagem.
-     * @return Cópia da CasaInteligente.
+     * Metodo que devolve uma copia da CasaInteligente recetora da mensagem.
+     * @return Copia da CasaInteligente.
      */
     public CasaInteligente clone(){
         return new CasaInteligente(this);
     }
 
     /**
-     * Método que produz uma string na qual está representada a CasaInteligente.
+     * Metodo que produz uma string na qual esta representada a CasaInteligente.
      * @return String que representa a CasaInteligente.
      */
     public String toString(){
@@ -160,6 +160,11 @@ public class CasaInteligente implements Serializable {
         return sb.toString();
     }
 
+    /**
+     * Metodo que escreve a CasaInteligente num ficheiro de texto.
+     * @param writer
+     * @throws IOException
+     */
     public void writeInFile(FileWriter writer) throws IOException {
         String line = "Casa:" + this.getProprietario() + "," + this.getNIF() + "," + this.getFornecedor() + "\n";
         writer.write(line);
@@ -176,8 +181,8 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que adiciona uma nova divisão à CasaInteligente.
-     * @param s Nova divisão da CasaInteligente.
+     * Metodo que adiciona uma nova divisao a CasaInteligente.
+     * @param s Nova divisao da CasaInteligente.
      */
     public void addRoom(String s) {
         List<String> roomDevices = new ArrayList<>();
@@ -185,37 +190,37 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que verifica se uma determinada divisão existe na CasaInteligente.
-     * @param s Divisão que se pretende saber se existe na CasaInteligente.
-     * @return Booleano que indica se a Divisão existe na CasaInteligente.
+     * Metodo que verifica se uma determinada divisao existe na CasaInteligente.
+     * @param s Divisao que se pretende saber se existe na CasaInteligente.
+     * @return Booleano que indica se a Divisao existe na CasaInteligente.
      */
     public boolean hasRoom(String s) {
         return this.locations.containsKey(s);
     }
 
     /**
-     * Método que verifica se um determinado SmartDevice existe numa determinada divisão da CasaInteligente.
-     * @param s1 Divisão da CasaInteligente.
-     * @param s2 Código de identificação do SmartDevice.
-     * @return Booleano que indica se o SmartDevice existe na divisão da CasaInteligente.
+     * Metodo que verifica se um determinado SmartDevice existe numa determinada divisao da CasaInteligente.
+     * @param s1 Divisao da CasaInteligente.
+     * @param s2 Codigo de identificaçao do SmartDevice.
+     * @return Booleano que indica se o SmartDevice existe na divisao da CasaInteligente.
      */
     public boolean roomHasDevice(String s1, String s2) {
         return this.locations.get(s1).contains(s2);
     }
 
     /**
-     * Método que verifica se um determinado SmartDevice existe na CasaInteligente.
-     * @param id Código de identificação do SmartDevice.
-     * @return
+     * Metodo que verifica se um determinado SmartDevice existe na CasaInteligente.
+     * @param id Codigo de identificaçao do SmartDevice.
+     * @return Booleano que indica se o SmartDevice existe na Casa.
      */
     public boolean existsDevice(String id) {
         return this.devices.containsKey(id);
     }
 
     /**
-     * Método que adiciona um SmartDevice a uma determinada divisão da CasaInteligente.
-     * @param s SmartDevice que é adicionado.
-     * @param location Divisão da casa à qual é adicionado o SmartDevice.
+     * Metodo que adiciona um SmartDevice a uma determinada divisao da CasaInteligente.
+     * @param s SmartDevice que e adicionado.
+     * @param location Divisao da casa a qual e adicionado o SmartDevice.
      */
     public void addDevice(SmartDevice s, String location) {
         this.devices.put(s.getID(), s);
@@ -230,8 +235,8 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que remove um device da casa
-     * @param id
+     * Metodo que remove um device da casa
+     * @param id ID do SmartDevice.
      */
     public void removeDevice(String id){
         this.devices.remove(id);
@@ -246,11 +251,21 @@ public class CasaInteligente implements Serializable {
         }
     }
 
+    /**
+     * Metodo que adiciona uma fatura a lista de faturas.
+     * @param f Fatura que e adicionada.
+     */
     public void addFatura(Fatura f){
         this.faturas.add(f);
     }
 
-
+    /**
+     * Metodo que calula o consumo total dos dispositivos perante uma simulaçao de tempo.
+     * @param before Tempo inicial.
+     * @param after Tempo final.
+     * @param c Comercializador.
+     * @return
+     */
     public float simula(LocalDate before, LocalDate after, Comercializador c){
         float total = 0;
         double consumoDisp;
@@ -262,38 +277,43 @@ public class CasaInteligente implements Serializable {
         return total;
     }
 
+    /**
+     * Metodo que adiciona uma divisao a casa.
+     * @param location Nova divisao da casa.
+     * @param ids Lista de dispositivos dessa divisao.
+     */
     public void addLocation(String location, List<String> ids){
         this.locations.put(location, ids);
     }
 
     // gets e sets
     /**
-     * Método que devolve o nome do proprietário
-     * @return Nome do proprietário da casa
+     * Metodo que devolve o nome do proprietario
+     * @return Nome do proprietario da casa
      */
     public String getProprietario() {
         return this.proprietario;
     }
 
     /**
-     * Método que devolve o NIF do proprietário da casa
-     * @return NIF do proprietário da casa
+     * Metodo que devolve o NIF do proprietario da casa
+     * @return NIF do proprietario da casa
      */
     public int getNIF() {
         return this.NIF;
     }
 
     /**
-     * Método que devolve o nome do fornecedor de energia
-     * @return
+     * Metodo que devolve o nome do fornecedor de energia
+     * @return Nome do fornecedor.
      */
     public String getFornecedor() {
         return this.fornecedor;
     }
 
     /**
-     * Método que devolve um determinado SmartDevice através de um código de identificação.
-     * @param s Código de identificação do SmartDevice.
+     * Metodo que devolve um determinado SmartDevice atraves de um codigo de identificaçao.
+     * @param s Codigo de identificaçao do SmartDevice.
      * @return SmartDevice.
      */
     public SmartDevice getDevice(String s) {
@@ -301,7 +321,7 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que devolve a estrutura como todos os devices da casa
+     * Metodo que devolve a estrutura como todos os devices da casa
      * @return HashMap com os devices da casa
      */
     public Map<String, SmartDevice> getDevices() {
@@ -315,8 +335,8 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que devolve o Map com as divisões da casa associadas à lista de ID's de devices presentes nas respetivas divisões.
-     * @return Map com as divisões da casa.
+     * Metodo que devolve o Map com as divisoes da casa associadas a lista de ID's de devices presentes nas respetivas divisoes.
+     * @return Map com as divisoes da casa.
      */
     // dúvidas aqui ao adicionar os values
     public Map<String, List<String>> getLocations() {
@@ -335,23 +355,23 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que coloca na variável proprietário o nome passado como parâmetro
-     * @param proprietario String passada como parâmetro que vai ser colocada na variável proprietário
+     * Metodo que coloca na variavel proprietario o nome passado como parametro
+     * @param proprietario String passada como parametro que vai ser colocada na variavel proprietario
      */
     public void setProprietario(String proprietario) {
         this.proprietario = proprietario;
     }
 
     /**
-     * Método que coloca na variável NIF o double passado como parâmetro
-     * @param NIF Double passado como parâmetro que vai ser colocado na variável NIF
+     * Metodo que coloca na variavel NIF o double passado como parametro
+     * @param NIF Double passado como parametro que vai ser colocado na variavel NIF
      */
     public void setNIF(int NIF) {
         this.NIF = NIF;
     }
 
     /**
-     * Método que coloca na variável fornecedor o valor passado como parâmetro
+     * Metodo que coloca na variavel fornecedor o valor passado como parametro
      * @param fornecedor Nome do fornecedor
      */
     public void setFornecedor(String fornecedor) {
@@ -359,7 +379,7 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que altera o Map com os ID's associados aos respetivos dispositivos.
+     * Metodo que altera o Map com os ID's associados aos respetivos dispositivos.
      * @param devices Map com os dispositivos.
      */
     // discutir com o grupo estes dois métodos
@@ -370,8 +390,8 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que altera o Map com as divisões da casa associadas à lista de dispositivos presentes nas respetivas divisões.
-     * @param locations Map com as divisões da casa.
+     * Metodo que altera o Map com as divisoes da casa associadas a lista de dispositivos presentes nas respetivas divisoes.
+     * @param locations Map com as divisoes da casa.
      */
     public void setLocations(Map<String, List<String>> locations) {
         this.locations = locations.entrySet()
@@ -380,41 +400,41 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que liga um SmartDevice através do seu código de identificação.
-     * @param devCode Código de identificação do SmartDevice.
+     * Metodo que liga um SmartDevice atraves do seu codigo de identificaçao.
+     * @param devCode Codigo de identificaçao do SmartDevice.
      */
     public void setDeviceOn(String devCode) {
         this.devices.get(devCode).turnOn();
     }
 
     /**
-     * Método que desliga um SmartDevice através do seu código de identificação.
-     * @param devCode Código de indentificação do SmartDevice.
+     * Metodo que desliga um SmartDevice atraves do seu codigo de identificaçao.
+     * @param devCode Codigo de indentificaçao do SmartDevice.
      */
     public void setDeviceOff(String devCode){
         this.devices.get(devCode).turnOff();
     }
 
     /**
-     * Método que atribui um estado a um determinado SmartDevice através do código de identificação.
-     * @param s Código de identificação do SmartDevice.
-     * @param b Estado atribuído ao SmartDevice.
+     * Metodo que atribui um estado a um determinado SmartDevice atraves do codigo de identificaçao.
+     * @param s Codigo de identificaçao do SmartDevice.
+     * @param b Estado atribuido ao SmartDevice.
      */
     public void setOn(String s, boolean b) {
         this.getDevice(s).setOn(b);
     }
 
     /**
-     * Método que atribui um determinado estado a todos os SmartDevices da CasaInteligente.
-     * @param b Estado atribuído a todos os SmartDevices.
+     * Metodo que atribui um determinado estado a todos os SmartDevices da CasaInteligente.
+     * @param b Estado atribuido a todos os SmartDevices.
      */
     public void setAllOn(boolean b) {
         this.devices.values().forEach(s -> s.setOn(b));
     }
 
     /**
-     * Método que liga todos os SmartDevices de uma determinada divisão da CasaInteligente.
-     * @param location Divisão da CasaInteligente.
+     * Metodo que liga todos os SmartDevices de uma determinada divisao da CasaInteligente.
+     * @param location Divisao da CasaInteligente.
      */
     public void turnOnDevicesFromLocation(String location){
         List<String> temp = this.locations.get(location);
@@ -424,8 +444,8 @@ public class CasaInteligente implements Serializable {
     }
 
     /**
-     * Método que desliga todos os SmartDevices de uma determinada divisão da CasaInteligente.
-     * @param location Divisão da CasaInteligente.
+     * Metodo que desliga todos os SmartDevices de uma determinada divisao da CasaInteligente.
+     * @param location Divisao da CasaInteligente.
      */
     public void turnOffDevicesFromLocation(String location){
         List<String> temp = this.locations.get(location);

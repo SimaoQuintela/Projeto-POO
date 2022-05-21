@@ -7,7 +7,7 @@ import java.util.Map;
 
 
 /**
- * A Fatura é responsável pelo processo de faturação.
+ * A Fatura e responsável pelo processo de faturaçao.
  *
  * @author (your name)
  * @version (a version number or a date)
@@ -21,7 +21,7 @@ public class Fatura implements Serializable {
     private String cliente;
 
     /**
-     * Construtor por omissão de ComercializadoresEnergia.Fatura.
+     * Construtor por omissao de ComercializadoresEnergia.Fatura.
      */
     public Fatura(){
         this.codigo = 0;
@@ -35,7 +35,7 @@ public class Fatura implements Serializable {
 
     /**
      * Construtor parametrizado de ComercializadoresEnergia.Fatura.
-     * @param codigo Código da ComercializadoresEnergia.Fatura.
+     * @param codigo Codigo da ComercializadoresEnergia.Fatura.
      */
     public Fatura(int codigo, float total, String fornecedor, int NIF, String cliente, LocalDate anyTime){
         this.codigo = codigo;
@@ -47,8 +47,8 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Construtor de cópia de ComercializadoresEnergia.Fatura.
-     * @param f ComercializadoresEnergia.Fatura que é copiada.
+     * Construtor de copia de ComercializadoresEnergia.Fatura.
+     * @param f ComercializadoresEnergia.Fatura que e copiada.
      */
     public Fatura(Fatura f){
         this.codigo = f.getCodigo();
@@ -60,7 +60,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que devolve a Fatura em formato de texto.
+     * Metodo que devolve a Fatura em formato de texto.
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -75,15 +75,15 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que cria uma cópia da ComercializadoresEnergia.Fatura original.
-     * @return Cópia da ComercializadoresEnergia.Fatura original.
+     * Metodo que cria uma copia da ComercializadoresEnergia.Fatura original.
+     * @return Copia da ComercializadoresEnergia.Fatura original.
      */
     public Fatura clone(){
         return new Fatura(this);
     }
 
     /**
-     * Método que averigua a igualdade entre a ComercializadoresEnergia.Fatura e um outro objeto.
+     * Metodo que averigua a igualdade entre a ComercializadoresEnergia.Fatura e um outro objeto.
      * @param obj Objeto comparado com a ComercializadoresEnergia.Fatura.
      * @return Booleano que indica o resultado da comparação.
      */
@@ -104,7 +104,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que devolve o valor total da Fatura.
+     * Metodo que devolve o valor total da Fatura.
      * @return Valor total da Fatura.
      */
     public float getTotal(){
@@ -113,23 +113,23 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que devolve o código identificador da ComercializadoresEnergia.Fatura.
-     * @return Código identificador da ComercializadoresEnergia.Fatura.
+     * Metodo que devolve o codigo identificador da ComercializadoresEnergia.Fatura.
+     * @return Codigo identificador da ComercializadoresEnergia.Fatura.
      */
     public int getCodigo(){
         return this.codigo;
     }
 
     /**
-     * Método que devolve o número de identificação fiscal do cliente.
-     * @return Número de identificação fiscal.
+     * Metodo que devolve o numero de identificaçao fiscal do cliente.
+     * @return Numero de identificaçao fiscal.
      */
     public int getNif(){
         return this.nif;
     }
 
     /**
-     * Método que devolve o Comercializador.
+     * Metodo que devolve o Comercializador.
      * @return Comercializador.
      */
     public String getEmpresa(){
@@ -137,7 +137,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que devolve o nome do Cliente.
+     * Metodo que devolve o nome do Cliente.
      * @return Nome do cliente.
      */
     public String getCliente() {
@@ -145,23 +145,23 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que devolve a data em que a Fatura foi emitida.
-     * @return Data de emissão da Fatura.
+     * Metodo que devolve a data em que a Fatura foi emitida.
+     * @return Data de emissao da Fatura.
      */
     public LocalDate getDataEmissao() {
         return this.dataEmissao;
     }
 
     /**
-     * Método que altera o código identificador da ComercializadoresEnergia.Fatura.
-     * @param codigo Código identificador da ComercializadoresEnergia.Fatura.
+     * Metodo que altera o codigo identificador da ComercializadoresEnergia.Fatura.
+     * @param codigo Codigo identificador da ComercializadoresEnergia.Fatura.
      */
     public void setCodigo(int codigo){
         this.codigo = codigo;
     }
 
     /**
-     * Método que altera o número de identificação fiscal.
+     * Metodo que altera o numero de identificaçao fiscal.
      * @param nif
      */
     public void setNif(int nif){
@@ -169,7 +169,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que altera o valor total da Fatura.
+     * Metodo que altera o valor total da Fatura.
      * @param total Valor total da Fatura.
      */
     public void setTotal(float total) {
@@ -177,7 +177,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que altera o nome do Cliente na Fatura.
+     * Metodo que altera o nome do Cliente na Fatura.
      * @param cliente Nome do cliente.
      */
     public void setCliente(String cliente) {
@@ -185,7 +185,7 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que altera o Comercializador.
+     * Metodo que altera o Comercializador.
      * @param empresa Comercializador.
      */
     public void setEmpresa(String empresa){
@@ -193,8 +193,8 @@ public class Fatura implements Serializable {
     }
 
     /**
-     * Método que altera a data de emissão da Fatura.
-     * @param dataEmissao Data de emissão da Fatura.
+     * Metodo que altera a data de emissao da Fatura.
+     * @param dataEmissao Data de emissao da Fatura.
      */
     public void setDataEmissao(LocalDate dataEmissao) {
         this.dataEmissao = dataEmissao;

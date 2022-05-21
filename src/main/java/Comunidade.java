@@ -8,7 +8,7 @@ import static java.util.stream.Collectors.toMap;
 
 
 /**
- * A Comunidade faz a gestão de um determinado grupo de CasasInteligentes.
+ * A Comunidade faz a gestao de um determinado grupo de CasasInteligentes.
  *
  * @author (your name)
  * @version (a version number or a date)
@@ -40,8 +40,8 @@ public class Comunidade implements Serializable {
     /**
      * Construtor que inicializa a classe Comunidade
      * @param nomeDaComunidade Nome da Comunidade
-     * @param casas Estrutura que mapeia todas as casas da comunidade em que a Key é a morada e o Value é a Casa
-     * @param mercado Estrutura que mapeia todos os comercializadores de energia em que a Key é o nome da companhia e o Value é a Companhia
+     * @param casas Estrutura que mapeia todas as casas da comunidade em que a Key e a morada e o Value e a Casa
+     * @param mercado Estrutura que mapeia todos os comercializadores de energia em que a Key e o nome da companhia e o Value e a Companhia
      */
     public Comunidade(String nomeDaComunidade, Map<String, CasaInteligente> casas, Map<String, Comercializador> mercado){
         this.nomeDaComunidade = nomeDaComunidade;
@@ -63,8 +63,8 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método equals que verifica se o objeto passado como parâmetro é igual ao objeto em questão
-     * @param o Objeto passado como parâmetro
+     * Metodo equals que verifica se o objeto passado como parametro e igual ao objeto em questão
+     * @param o Objeto passado como parametro
      * @return true se for igual false se for diferente
      */
     public boolean equals(Object o){
@@ -83,16 +83,16 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método que cria um clone do objeto atual
-     * @return cópia do objeto atual
+     * Metodo que cria um clone do objeto atual
+     * @return copia do objeto atual
      */
     public Comunidade clone(){
         return new Comunidade(this);
     }
 
     /**
-     * Método que devolve uma String com informação acerca da classe
-     * @return Devolve uma String com informação acerca da classe
+     * Metodo que devolve uma String com informaçao acerca da classe
+     * @return Devolve uma String com informaçao acerca da classe
      */
     public String toString(){
         StringBuilder sb = new StringBuilder();
@@ -113,27 +113,27 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Devolve a casa correspondente à string passada como parâmetro
-     * @param proprietario Proprietário da casa
-     * @return Casa cuja morada corresponde à passada como parâmetro
+     * Devolve a casa correspondente a string passada como parametro
+     * @param proprietario Proprietario da casa
+     * @return Casa cuja morada corresponde a passada como parametro
      */
     public CasaInteligente getCasa(String proprietario){
         return this.casas.get(proprietario);
     }
 
     /**
-     * Método que devolve um Comercializador existente na comunidade mediante o seu nome.
+     * Metodo que devolve um Comercializador existente na comunidade mediante o seu nome.
      * @param fornecedor nome do Comercializador.
-     * @return
+     * @return Comercializador.
      */
     public Comercializador getFornecedor(String fornecedor){
         return this.mercado.get(fornecedor);
     }
 
     /**
-     * Adiciona uma casa à comunidade
-     * @param proprietario Proprietário da casa
-     * @param casa Objeto Casa Inteligente que vai ser adicionado à comunidade
+     * Adiciona uma casa a comunidade
+     * @param proprietario Proprietario da casa
+     * @param casa Objeto Casa Inteligente que vai ser adicionado a comunidade
      */
     public void addCasa(String proprietario, CasaInteligente casa){
         this.casas.put(proprietario, casa.clone());
@@ -142,7 +142,7 @@ public class Comunidade implements Serializable {
 
     //gets e sets
     /**
-     * Método que devolve o nome da Comunidade
+     * Metodo que devolve o nome da Comunidade
      * @return Nome da comunidade
      */
     public String getNomeDaComunidade() {
@@ -150,8 +150,8 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método que devolve uma cópia da estrutura das casas
-     * @return Devolve uma cópia da estrutura das casas
+     * Metodo que devolve uma copia da estrutura das casas
+     * @return Devolve uma copia da estrutura das casas
      */
     public Map<String, CasaInteligente> getCasas() {
         Map<String, CasaInteligente> new_casas = new HashMap<>();
@@ -163,8 +163,8 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método que devolve uma cópia da estrutura dos comercializadores de energia
-     * @return Devolve uma cópia da estrutura dos comercializadores de energia
+     * Metodo que devolve uma copia da estrutura dos comercializadores de energia
+     * @return Devolve uma copia da estrutura dos comercializadores de energia
      */
     public Map<String, Comercializador> getMercado() {
         Map<String, Comercializador> new_mercado = new HashMap<>();
@@ -176,7 +176,7 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método que define o nomeDaComunidade
+     * Metodo que define o nomeDaComunidade
      * @param nomeDaComunidade Nome da Comunidade
      */
     public void setNomeDaComunidade(String nomeDaComunidade) {
@@ -184,16 +184,16 @@ public class Comunidade implements Serializable {
     }
 
     /**
-     * Método que adiciona uma casa à estrutura das casas
+     * Metodo que adiciona uma casa a estrutura das casas
      * @param proprietario Proprietario da casa
-     * @param casa Objeto Casa qeu vai ser associado à morada passada como parâmetro
+     * @param casa Objeto Casa qeu vai ser associado a morada passada como parametro
      */
     public void setCasas(String proprietario, CasaInteligente casa) {
         this.casas.put(proprietario, casa.clone());
     }
 
     /**
-     * Método que adiciona uma companhia à estrutura dos comercializadores de energia
+     * Metodo que adiciona uma companhia a estrutura dos comercializadores de energia
      * @param companhia Nome da companhia
      * @param comercializador Objeto comercializador de energia
      */

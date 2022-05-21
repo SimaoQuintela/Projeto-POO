@@ -6,15 +6,29 @@ import java.util.*;
 
 import static java.lang.System.out;
 
+/**
+ * A View interage com o utilizador atraves de operaçoes solicitadas ao Controller.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
 public class View {
     private Controller controller;
     private Scanner scan;
 
+    /**
+     * Construtor parametrizado de View.
+     * @param controller Controller.
+     * @param scan Scanner.
+     */
     public View(Controller controller, Scanner scan) {
         this.controller = controller;
         this.scan = scan;
     }
 
+    /**
+     * Metodo que, conforme o pedido do utilizador, atribui um estado a todos os dispositivos da Comunidade ou apenas aos dispositivos de uma determinada Casa.
+     */
     public void estadoDispositivos(){
             int escolha;
             do {
@@ -48,6 +62,10 @@ public class View {
 
     }
 
+    /**
+     * Metodo que trata do pedido do utilizador quanto ao estado dos dispositivos.
+     * @return Inteiro que indica a funcionalidade que vai ser aplicada na Comunidade.
+     */
     public int comandosDispositivos(){
         try {
             out.println("Introduza o numero da opcao que pretende:\n" +
@@ -64,6 +82,12 @@ public class View {
         }
     }
 
+    /**
+     * Metodo que executa a Simulaçao.
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         int opcao;
         do {
@@ -140,6 +164,11 @@ public class View {
         } while (opcao != 10);
     }
 
+    /**
+     * Metodo que executa funcionalidades estatisticas.
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void estatisticas() throws IOException, InterruptedException {
         int opcao;
         do {
@@ -200,8 +229,8 @@ public class View {
     }
 
     /**
-     * Comandos para a interface principal
-     * @return
+     * Comandos para a interface principal.
+     * @return Inteiro que indica a opçao escolhida.
      */
     public int receberComandos() {
         try {
@@ -228,8 +257,8 @@ public class View {
     }
 
     /**
-     * Interface para as opções de escolha das estatisticas
-     * @return
+     * Interface para as opçoes de escolha das estatisticas.
+     * @return Inteiro que indica a opçao escolhida.
      */
     public int comandosEstatisticas(){
         try{
